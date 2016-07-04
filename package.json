@@ -1,0 +1,26 @@
+{
+  "name": "storyteller",
+  "version": "0.0.1",
+  "description": "storyteller",
+  "dependencies": {
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.19.0",
+    "jade": "^1.11.0",
+    "jade-loader": "^0.8.0",
+    "jquery": "^2.2.4",
+    "livescript": "^1.4.0",
+    "livescript-loader": "^0.1.5",
+    "markdown-loader": "^0.1.7",
+    "style-loader": "^0.13.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.1.0",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/webpack -p",
+    "start": "./node_modules/.bin/webpack-dev-server"
+  }
+}
