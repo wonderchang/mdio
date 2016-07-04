@@ -1,0 +1,11 @@
+#! /usr/local/bin/node
+var ghpages = require('gh-pages');
+var path = require('path');
+var child_process = require('child_process')
+ 
+child_process.exec("npm run build", function(err) {
+  ghpages.publish(path.join(__dirname, 'dist'), function(err) {
+    if(err) throw err;
+    console.log("Deploy successfully")
+  });
+});
