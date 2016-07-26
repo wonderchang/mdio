@@ -69,7 +69,7 @@ The story content should be written at `book.md`, which the editting format is m
 		
 For Example
 
-	# Ｔhe Three Little Pigs
+	# The Three Little Pigs
 		
 	![three pigs](img/three-pigs.png)
 		
