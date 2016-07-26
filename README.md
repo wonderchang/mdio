@@ -59,7 +59,7 @@ The story content should be written at `book.md`, which the editting format is m
 		
 2. Embadded Image 
 
-		![three pigs](three-pigs.png)
+		![three pigs](img/three-pigs.png)
 			
 3. Normal text with new line
 
@@ -71,7 +71,7 @@ For Example
 
 	# Ｔhe Three Little Pigs
 		
-	![three pigs](three-pigs.png)
+	![three pigs](img/three-pigs.png)
 		
 	Once upon a time, high up in the mountains
 		
