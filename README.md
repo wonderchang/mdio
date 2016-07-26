@@ -24,7 +24,7 @@ open browser with [https://your-username.github.io/storyteller/?陳文成事件]
 
 ### File Location
 
-Each story have its own folder to store the resource. The folder name is the title of the story, which corresponding the parameter given in the url. Inside the folder, conventionally, the story script write in `book.md`, and the related image shown in story should saved at `img/`. The file structure of the story should be as follow.
+Each story has its own folder to store the resource. The folder name is the title of the story, which corresponding the parameter given in the url. Inside the folder, conventionally, the story script write in `book.md`, and the related image shown in story should saved at `img/`. The file structure of the story should be as follow.
 
 	app/
 		story/
