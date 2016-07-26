@@ -49,7 +49,7 @@ It seems there are three stories in the folder. If build and deploy successfully
 * [https://your-username.github.io/storyteller/?story-title2](https://your-username.github.io/storyteller/?story-title2)
 * [https://your-username.github.io/storyteller/?story-title3](https://your-username.github.io/storyteller/?story-title3)
 
-### Story Editting Format
+### Story Editting Convention
 
 The story content should be written at `book.md`, which the editting format is markdown. However, the editting format only allow three types of markdown syntax:
 
