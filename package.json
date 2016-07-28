@@ -4,7 +4,10 @@
   "description": "storyteller",
   "dependencies": {
     "css-loader": "^0.23.1",
+    "express": "^4.14.0",
     "file-loader": "^0.8.5",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.19.0",
     "jade": "^1.11.0",
@@ -12,7 +15,7 @@
     "jquery": "^2.2.4",
     "livescript": "^1.4.0",
     "livescript-loader": "^0.1.5",
-    "markdown-loader": "^0.1.7",
+    "request": "^2.74.0",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.1.0",
@@ -21,9 +24,15 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/webpack -p",
-    "start": "./node_modules/.bin/webpack-dev-server"
+    "start": "./node_modules/.bin/gulp --require livescript dev-server",
+    "dev": "./node_modules/.bin/webpack-dev-server --port 8860",
+    "server": "./node_modules/.bin/gulp --require livescript server",
+    "test": "./node_modules/.bin/gulp --require livescript test"
   },
   "devDependencies": {
-    "gh-pages": "^0.11.0"
+    "chai": "^3.5.0",
+    "gh-pages": "^0.11.0",
+    "gulp-plumber": "^1.1.0",
+    "mocha": "^2.5.3"
   }
 }
