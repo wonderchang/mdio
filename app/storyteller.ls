@@ -4,9 +4,7 @@ Storyteller = (element, story) !->
 
   e = {}
   e.stage = document.query-selector element
-  e.stage.style.background = \#222
-  e.stage.style.width = \100%
-  e.stage.style.height = \100%
+  e.stage.style.position = \relative
   e.story = story
 
   e.scene = document.create-element \div
