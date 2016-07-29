@@ -1,4 +1,4 @@
-require! <[request]>
+require! <[https]>
 
 Engine = (url) !->
 
@@ -10,21 +10,15 @@ Engine = (url) !->
   this.token = if this.provider then url.split \/ .pop! else undefined
 
   this.markdown-parser =
-
-    hackmd: !->
-
-      if it is /<div id="doc" class="container markdown-body">((.|\n)*?)<\/div>/
-        return that.1
-      else
-        return null
-
-    hackpad: !->
-      return null
+    hackmd:  !-> return if it is /<div id="doc" class="container markdown-body">((.|\n)*?)<\/div>/ then that.1 else null
+    hackpad: !-> return null
 
 Engine.prototype.request-story = (cb) !->
   engine = this
-  (err, res, body) <-! request engine.url
-  story = engine.markdown-parser[engine.provider] body
-  cb story
+  req = https.get engine.url, (res) !->
+    data = ''
+    res.on \data, !-> data += it.to-string!
+    res.on \end,  !-> cb engine.markdown-parser[engine.provider] data
+  req.on \error, !->
 
 module.exports = Engine

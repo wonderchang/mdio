@@ -2,49 +2,49 @@ Timer = require \./timer.ls
 
 Storyteller = (element, story) !->
 
-  this.stage = document.query-selector element
-  this.stage.style.background = \#222
-  this.stage.style.width = \100%
-  this.stage.style.height = \100%
-  this.story = story
+  e = {}
+  e.stage = document.query-selector element
+  e.stage.style.background = \#222
+  e.stage.style.width = \100%
+  e.stage.style.height = \100%
+  e.story = story
 
-  this.scene = document.create-element \div
-  this.scene.id = \scene
-  this.scene-img = document.create-element \img
-  this.scene.append-child this.scene-img
-  this.stage.append-child this.scene
+  e.scene = document.create-element \div
+  e.scene.id = \scene
+  e.scene-img = document.create-element \img
+  e.scene.append-child e.scene-img
+  e.stage.append-child e.scene
 
-  this.subtitle = document.create-element \div
-  this.subtitle.id = \subtitle
-  this.stage.append-child this.subtitle
+  e.subtitle = document.create-element \div
+  e.subtitle.id = \subtitle
+  e.stage.append-child e.subtitle
 
-  this.screen = document.create-element \svg
-  this.screen.id = \screen
-  this.play-symbol = document.create-element \g
-  this.play-symbol.id = \play-symbol
-  this.circle = document.create-element \circle
-  this.polygon = document.create-element \polygon
-  this.play-symbol.append-child this.circle
-  this.play-symbol.append-child this.polygon
-  this.screen.append-child this.play-symbol
-  this.stage.append-child this.screen
+  e.screen = document.create-element \svg
+  e.screen.id = \screen
+  e.play-symbol = document.create-element \g
+  e.play-symbol.id = \play-symbol
+  e.circle = document.create-element \circle
+  e.polygon = document.create-element \polygon
+  e.play-symbol.append-child e.circle
+  e.play-symbol.append-child e.polygon
+  e.screen.append-child e.play-symbol
+  e.stage.append-child e.screen
 
-  this.prev-btn = document.create-element \div
-  this.prev-btn.id = \prev-btn
-  this.next-btn = document.create-element \div
-  this.next-btn.id = \next-btn
-  this.time = document.create-element \div
-  this.time.id = \time
-  this.progress = document.create-element \div
-  this.progress.id = \progress
+  e.prev-btn = document.create-element \div
+  e.prev-btn.id = \prev-btn
+  e.next-btn = document.create-element \div
+  e.next-btn.id = \next-btn
+  e.time = document.create-element \div
+  e.time.id = \time
+  e.progress = document.create-element \div
+  e.progress.id = \progress
 
-  this.stage.append-child this.prev-btn
-  this.stage.append-child this.next-btn
-  this.stage.append-child this.time
-  this.stage.append-child this.progress
+  e.stage.append-child e.prev-btn
+  e.stage.append-child e.next-btn
+  e.stage.append-child e.time
+  e.stage.append-child e.progress
 
-  timer = new Timer this.time.id
-  console.log story
+  timer = new Timer time.id
   book = story.book.split '\n'
 
   script = []; i = 0; scene = ''
@@ -55,21 +55,10 @@ Storyteller = (element, story) !->
   for line in book
     continue if /^#.*/ is line
     continue if /^\s*$/ is line or /<!--.*-->/ is line
-    if /^![.*]\((.*)\)/ is line then scene = that.1
+    if /^\!\[.*\]\((.*)\)/ is line then scene = that.1
     else script.push text: line, scene: scene, id: ++i
   script-len = script.length
-
-  # Parse the script from html
-  /*
-  script = []; i = 0; scene = ''
-  if doc is /<h1.*?>(.+?)<\/h1>/ then $ \title .text title = that.1
-  for d in doc.split /<p>(.*?)<\/p>/
-    continue if /<h1.*?<\/h1>/ is d
-    continue if /^\s*$/ is d or /<!--.*-->/ is d
-    if /<img src="?(.+?)"? alt="">/ is d then scene = that.1
-    else script.push text: d, scene: scene, id: ++i
-  script-len = script.length
-  */
+  cover = script.0.scene
 
   if window.inner-width > window.inner-height
     radius = window.inner-height / 4
@@ -112,12 +101,12 @@ Storyteller = (element, story) !->
   speech-record = 0
 
   # Click event handler
-  $ \#screen   .click player
-  $ \#prev-btn .click prev
-  $ \#next-btn .click next
+  e.screen.add-event-listener \click, player
+  e.prev-btn.add-event-listener \click, prev
+  e.next-btn.add-event-listener \click, next
 
   # Keydown event handler
-  $ window .keydown !->
+  window.add-event-listener \keydown, !->
     switch it.key-code
     | 32 => player! # space key
     | 37 => prev!   # left key
@@ -182,13 +171,13 @@ Storyteller = (element, story) !->
     status := \start
     window.speech-synthesis.cancel!
     show-start-screen!
-    history.push-state {}, null, base-url
+    history.push-state {}, null, location.href
 
   !function show-start-screen
-    $ \#play-symbol .css \display, \block
-    $ \#screen .css \opacity 0.8
-    $ '#scene img' .attr \src ''
-    $ \#subtitle .text title
+    e.play-symbol.style.display = \block
+    e.screen.style.opacity = 0.8
+    e.scene-img.src = cover
+    e.subtitle.innerHTML = title
     update-progresser!
 
   !function action
@@ -197,9 +186,10 @@ Storyteller = (element, story) !->
     speech sb.text
 
   !function change-scene sb
-    $ \#subtitle .html sb.text
-    $ '#scene img' .attr \src sb.scene
-    history.push-state {}, null, "#baseUrl?#{sb.id}"
+    e.subtitle.innerHTML = sb.text
+    e.scene-img.src = sb.scene
+    new-url = if location.href is /(.*)\?\d*$/ then that.1+'?'+sb.id else location.href+'?'+sb.id
+    history.push-state {}, null, new-url
     update-progresser!
 
   !function speech subtitle
@@ -208,10 +198,10 @@ Storyteller = (element, story) !->
     window.utterance.lang = \zh-tw
     window.utterance.rate = 1.2
     window.utterance.onstart = ->
-      $ \#subtitle .html subtitle.substring 0, 3
+      e.subtitle.innerHTML = subtitle.substring 0, 3
     window.utterance.onboundary = ->
       speech-record := speech-record + 1
-      $ \#subtitle .html subtitle.substring 0, it.char-index+3
+      e.subtitle.innerHTML = subtitle.substring 0, it.char-index+3
     window.utterance.onend = ->
       return if \playing isnt status or window.speech-synthesis.speaking
       storyboard-i := storyboard-i + 1
@@ -221,15 +211,15 @@ Storyteller = (element, story) !->
     window.speech-synthesis.speak window.utterance
 
   !function update-progresser
-    $ \#progress .text "#{storyboard-i + 1} / #script-len"
+    e.progress.innerHTML = "#{storyboard-i + 1} / #script-len"
 
   !function show-play-screen
-    $ \#play-symbol .css \display, \block
-    $ \#screen .css \opacity 0.8
+    e.play-symbol.style.display = \block
+    e.screen.style.opacity = 0.8
 
   !function hide-play-screen
-    $ \#play-symbol .css \display \none
-    $ \#screen .css \opacity 0
+    e.play-symbol.style.display = \none
+    e.screen.style.opacity = 0
 
 module.exports = Storyteller
 

@@ -1,5 +1,5 @@
-require! <[request fs]>
-require! <[./lib/markdown-engine]>
+require! <[fs
+  ./lib/markdown-engine]>
 
 module.exports =
 
