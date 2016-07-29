@@ -1,5 +1,3 @@
-Timer = require \./timer.ls
-
 Storyteller = (element, story) !->
 
   e = {}
@@ -32,17 +30,13 @@ Storyteller = (element, story) !->
   e.prev-btn.id = \prev-btn
   e.next-btn = document.create-element \div
   e.next-btn.id = \next-btn
-  e.time = document.create-element \div
-  e.time.id = \time
   e.progress = document.create-element \div
   e.progress.id = \progress
 
   e.stage.append-child e.prev-btn
   e.stage.append-child e.next-btn
-  e.stage.append-child e.time
   e.stage.append-child e.progress
 
-  timer = new Timer time.id
   book = story.book.split '\n'
 
   script = []; i = 0; scene = ''
@@ -118,13 +112,11 @@ Storyteller = (element, story) !->
 
   !function start
     storyboard-i := 0
-    timer.reset!
     play!
 
   !function play
     status := \playing
     hide-play-screen!
-    timer.run!
     if window.speech-synthesis.paused
       window.speech-synthesis.resume!
       # Workaround:
@@ -139,7 +131,6 @@ Storyteller = (element, story) !->
   !function paused
     status := \paused
     show-play-screen!
-    timer.stop!
     window.speech-synthesis.pause!
 
   !function prev
@@ -205,7 +196,6 @@ Storyteller = (element, story) !->
       storyboard-i := storyboard-i + 1
       return action! if storyboard-i < script-len
       set-to-start!
-      timer.stop!
     window.speech-synthesis.speak window.utterance
 
   !function update-progresser
