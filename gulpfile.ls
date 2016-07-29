@@ -1,8 +1,11 @@
 require! <[fs gulp gulp-mocha gulp-plumber webpack webpack-dev-server express]>
 
 opt =
-  dev-port: 3000 port: 8080 host: \localhost
   mocha: reporter: \spec compiler: \ls:livescript
+  dev-port: 3000 port: 8080 host: \localhost
+
+try opt = opt <<< JSON.parse fs.read-file-sync \config.json, \utf8
+catch then console.log "No config.json, config by default"
 
 test-run = <[markdown-engine]>
 
