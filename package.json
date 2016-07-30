@@ -4,10 +4,12 @@
   "description": "storyteller",
   "dependencies": {
     "css-loader": "^0.23.1",
+    "chai": "^3.5.0",
     "express": "^4.14.0",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.19.0",
     "jade": "^1.11.0",
@@ -15,6 +17,7 @@
     "jquery": "^2.2.4",
     "livescript": "^1.4.0",
     "livescript-loader": "^0.1.5",
+    "mocha": "^2.5.3",
     "request": "^2.74.0",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
@@ -29,10 +32,8 @@
     "server": "./node_modules/.bin/gulp --require livescript server",
     "test": "./node_modules/.bin/gulp --require livescript test"
   },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "gh-pages": "^0.11.0",
-    "gulp-plumber": "^1.1.0",
-    "mocha": "^2.5.3"
+  "author": {
+    "name": "Wonder Chang",
+    "email": "iwonder.tw@gmail.com"
   }
 }
