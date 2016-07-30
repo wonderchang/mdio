@@ -1,10 +1,14 @@
 {
   "name": "storyteller",
-  "version": "0.0.1",
-  "description": "storyteller",
+  "version": "0.1.0",
+  "description": "A text-to-speech robot via markdown",
+  "main": "storyteller.js",
+  "directories": {
+    "test": "test"
+  },
   "dependencies": {
-    "css-loader": "^0.23.1",
     "chai": "^3.5.0",
+    "css-loader": "^0.23.1",
     "express": "^4.14.0",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.1",
@@ -15,25 +19,46 @@
     "jade": "^1.11.0",
     "jade-loader": "^0.8.0",
     "jquery": "^2.2.4",
-    "livescript": "^1.4.0",
+    "livescript": "^1.5.0",
     "livescript-loader": "^0.1.5",
     "mocha": "^2.5.3",
     "request": "^2.74.0",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.1.0",
+    "uglify-js": "^2.7.0",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "build": "./node_modules/.bin/webpack -p",
+    "build": "./node_modules/.bin/lsc -c storyteller.ls && uglifyjs storyteller.js -c \"evaluate=false\" -m --source-map storyteller-min.map -o storyteller-min.js",
     "start": "./node_modules/.bin/gulp --require livescript dev-server",
     "dev": "./node_modules/.bin/webpack-dev-server --port 8860",
     "server": "./node_modules/.bin/gulp --require livescript server",
     "test": "./node_modules/.bin/gulp --require livescript test"
   },
-  "author": {
-    "name": "Wonder Chang",
-    "email": "iwonder.tw@gmail.com"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonderchang/storyteller.git"
+  },
+  "keywords": [
+    "markdown",
+    "hackmd",
+    "hackpad",
+    "text-to-speech",
+    "storyteller",
+    "video",
+    "player"
+  ],
+  "author": "Wonder Chang <iwonder.tw@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wonderchang/storyteller/issues"
+  },
+  "homepage": "https://github.com/wonderchang/storyteller#readme",
+  "files": [
+    "storyteller.js",
+    "storyteller-min.js",
+    "storyteller-min.map"
+  ]
 }

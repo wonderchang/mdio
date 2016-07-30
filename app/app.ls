@@ -23,29 +23,28 @@ module.exports = !->
         $ \.story     .css \display, \block
         opt = do
           element: \.stage, markdown: it.markdown
-          progress-render: !-> $ \.progress .text it
         storyteller = new Storyteller opt
         init-stage storyteller
 
   !function init-stage storyteller
-      title = storyteller.get-title!
-      length = storyteller.get-length!
-      $ \title      .text "Storyteller - #title"
-      $ '.header p' .text title
-      $ \.progress  .text "0 / #length"
+    title = storyteller.get-title!
+    length = storyteller.get-length!
+    $ \title      .text "Storyteller - #title"
+    $ '.header p' .text title
+    $ \.progress  .text "0 / #length"
 
-      $ window .resize !->
-        header-height = $ \.header .outer-height!
-        footer-height = $ \.footer .outer-height!
-        $ \.stage .css \height, window.inner-height - header-height - footer-height
-      .resize!
+    $ window .resize !->
+      header-height = $ \.header .outer-height!
+      footer-height = $ \.footer .outer-height!
+      $ \.stage .css \height, window.inner-height - header-height - footer-height
+    .resize!
 
-      $ \.prev-btn .click !-> storyteller.prev!
-      $ \.next-btn .click !-> storyteller.next!
-      $ \.stage .click !->
-        switch storyteller.get-status!
-        | \paused, \start => storyteller.play!
-        | \playing        => storyteller.pause!
-        | \finished       => storyteller.play!
+    $ \.prev-btn .click !-> storyteller.prev!
+    $ \.next-btn .click !-> storyteller.next!
+    $ \.stage .click !->
+      switch storyteller.get-status!
+      | \paused, \start => storyteller.play!
+      | \playing        => storyteller.pause!
+      | \finished       => storyteller.play!
 
   function push-state then history.push-state {}, null, it

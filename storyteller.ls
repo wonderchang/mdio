@@ -47,6 +47,7 @@ Storyteller = (->
   Storyteller.prototype.play  = !-> _play.call  @
   Storyteller.prototype.pause = !-> _pause.call @
   Storyteller.prototype.next  = !-> _next.call  @
+  Storyteller.prototype.prev  = !-> _prev.call  @
   Storyteller.prototype.get-title  = -> @title
   Storyteller.prototype.get-status = -> @status
   Storyteller.prototype.get-length = -> @action-len
