@@ -1,4 +1,4 @@
-Storyteller = require \./st.ls
+Storyteller = require \./storyteller.ls
 
 module.exports = !->
 
@@ -23,25 +23,29 @@ module.exports = !->
           element: \.stage, markdown: it.markdown
           progress-render: !-> $ \.progress .text it
         storyteller = new Storyteller opt
-        title = storyteller.get-title!
-        length = storyteller.get-length!
-        $ \.homepage .css \display, \none
-        $ \.story .css \display, \block
-        $ \title .text "Storyteller - #title"
-        $ '.header p' .text title
-        $ \.progress .text "0 / #length"
-        $ window .resize !->
-          header-height = $ \.header .outer-height!
-          footer-height = $ \.footer .outer-height!
-          $ \.stage .css \height, window.inner-height - header-height - footer-height
-        .resize!
+        init-stage storyteller
 
-        $ \.prev-btn .click !-> storyteller.prev!
-        $ \.next-btn .click !-> storyteller.next!
-        $ \.stage .click !->
-          switch storyteller.get-status!
-          | \paused, \start => storyteller.play!
-          | \playing        => storyteller.pause!
-          | \finished       => storyteller.play!
+  function init-stage storyteller
+      title = storyteller.get-title!
+      length = storyteller.get-length!
+      $ \.homepage  .css \display, \none
+      $ \.story     .css \display, \block
+      $ \title      .text "Storyteller - #title"
+      $ '.header p' .text title
+      $ \.progress  .text "0 / #length"
+
+      $ window .resize !->
+        header-height = $ \.header .outer-height!
+        footer-height = $ \.footer .outer-height!
+        $ \.stage .css \height, window.inner-height - header-height - footer-height
+      .resize!
+
+      $ \.prev-btn .click !-> storyteller.prev!
+      $ \.next-btn .click !-> storyteller.next!
+      $ \.stage .click !->
+        switch storyteller.get-status!
+        | \paused, \start => storyteller.play!
+        | \playing        => storyteller.pause!
+        | \finished       => storyteller.play!
 
   function push-state then history.push-state {}, null, it
