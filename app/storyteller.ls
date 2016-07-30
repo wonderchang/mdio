@@ -10,19 +10,29 @@ module.exports = (->
 
     # Create scene block
     @scene = document.create-element \div
-    @scene-img = document.create-element \img
     @scene.id = \scene
-    @scene.append-child @scene-img
+    @scene.style.position = \absolute
+    @scene.style.text-align = \center
+    @scene.style.width = \100%
     @stage.append-child @scene
+    @scene-img = document.create-element \img
+    @scene.append-child @scene-img
 
     # Create subtitle block
     @subtitle = document.create-element \div
     @subtitle.id = \subtitle
     @stage.append-child @subtitle
+    @subtitle.style.position = \absolute
+    @subtitle.style.text-align = \center
+    @subtitle.style.color = \#FFF
+    @subtitle.style.font-family = \Helvetica
+    @subtitle.style.width = \100%
+    @subtitle.style.display = \flex
+    @subtitle.style.align-items = \center
+    @subtitle.style.justify-content = \center
 
     @actions = []
     @action-i = 0
-    @scene = null
     @speech-record = 0
 
     # Parse story
@@ -48,6 +58,31 @@ module.exports = (->
       @action-i = 0
       @status = \start
       show-cover.call @
+
+    resize = !->
+      w = window.inner-width
+      h = window.inner-height
+      if w > h # landscape
+        @scene.style.height = \80%
+        @scene.style.top = 0
+        @subtitle.style.height = \20%
+        @subtitle.style.bottom = 0
+        @subtitle.style.font-size = \2.5vw
+      else     # portrait
+        @scene.style.height = \70%
+        @scene.style.top = 0
+        @subtitle.style.height = \30%
+        @subtitle.style.bottom = 0
+        @subtitle.style.font-size = \4vh
+
+      if @scene-img.width > @scene-img.height
+        @scene-img.style.width = \100%
+      else
+        @scene-img.style.height = \100%
+    resize.call @
+    self = @
+    window.add-event-listener \resize, !->
+      resize.call self
 
   !function play
     @status = \playing
@@ -120,11 +155,6 @@ module.exports = (->
     window.utterance = new SpeechSynthesisUtterance text
     window.utterance.lang = \en-us
     window.utterance.rate = 1
-    window.utterance.onstart = ->
-      self.subtitle.innerHTML = text.substring 0, 3
-    window.utterance.onboundary = ->
-      self.speech-record += 1
-      self.subtitle.innerHTML = text.substring 0, it.char-index+3
     window.utterance.onend = ->
       return if \playing isnt self.status or window.speech-synthesis.speaking
       self.action-i += 1

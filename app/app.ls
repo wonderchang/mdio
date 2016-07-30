@@ -19,17 +19,17 @@ module.exports = !->
         $ \.err-msg .text 'Loading ...' .css \display, \block
       success: !->
         push-state location.origin+location.pathname+'?'+it.url
+        $ \.homepage  .css \display, \none
+        $ \.story     .css \display, \block
         opt = do
           element: \.stage, markdown: it.markdown
           progress-render: !-> $ \.progress .text it
         storyteller = new Storyteller opt
         init-stage storyteller
 
-  function init-stage storyteller
+  !function init-stage storyteller
       title = storyteller.get-title!
       length = storyteller.get-length!
-      $ \.homepage  .css \display, \none
-      $ \.story     .css \display, \block
       $ \title      .text "Storyteller - #title"
       $ '.header p' .text title
       $ \.progress  .text "0 / #length"
