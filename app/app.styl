@@ -8,41 +8,61 @@ body
   height 100%
   width 100%
 
-#stage
+.story
+  display none
   height 100%
   width 100%
 
-#homepage
-  height 100%
-  width 100%
+  .header
+    background-color #000
+    text-align center
+    width 100%
+    a
+      font-family "Lucida Console"
+      display block
+      color #FFF
+      text-decoration none
+    p
+      font-family "Lucida Console"
+      color #FFF
+      margin 0
+
+  .footer
+    bottom 0
+    background-color #000
+    text-align center
+    width 100%
+    color #FFF
+    div
+      display inline-block
+      cursor pointer
+      width 33.3333333%
+    div:hover
+      background-color #444
+
+  .stage
+    height 100%
+    width 100%
+
+.homepage
+
   color #FFF
   font-family "Lucida Console"
-
-  h1
-    font-size 4rem
-    text-align center
+  text-align center
 
   h2
-    font-size 2rem
-    text-align center
+    padding 0 3%
 
-  #md-url
-    margin-top 3rem
-    text-align center
-
-   input 
+  .md-url
+    input 
+      color #222
       outline none
       display inline-block
-      width 40%
+      border 1px solid #b7b7b7
+      text-align center
       -webkit-box-sizing content-box
       -moz-box-sizing content-box
       box-sizing content-box
-      padding 1rem 1.4rem
-      border 1px solid #b7b7b7
-      -webkit-border-radius 1rem
-      border-radius 1rem
-      font normal 1.5rem/normal "Lucida Console", Monaco, monospace
-      color #222
       -o-text-overflow clip
       text-overflow clip
       background rgba(252,252,252,1)
@@ -50,8 +70,70 @@ body
       box-shadow 2px 2px 2px 0 rgba(0,0,0,0.2) inset
       text-shadow 1px 1px 0 rgba(255,255,255,0.66) 
 
-  #err-msg
-    color pink
+  .err-msg
     display none
-    font-size 2rem
-    text-align center
+    color pink
+
+@media (orientation: portrait)
+
+  .homepage
+    h1
+      font-size 10vw
+    h2
+      font-size 7vw
+      line-height 10vw
+    .md-url
+      input
+        width 80%
+        padding 2vw 0
+        font normal 6vw/normal "Lucida Console", Monaco, monospace
+        -webkit-border-radius 2vw
+        border-radius 2vw
+    .err-msg
+      font-size 5vw
+      margin-top 6vw
+
+  .story
+    .header
+      padding 2vw 0
+      a
+        font normal 6vw/normal "Lucida Console", Monaco, monospace
+      p
+        font normal 3vw/normal "Lucida Console", Monaco, monospace
+        padding-top 1vw
+    .footer
+      div
+        font normal 4vw/normal "Lucida Console", Monaco, monospace
+        padding 5vw 0
+
+@media (orientation: landscape)
+
+  .homepage
+    h1
+      font-size 10vh
+    h2
+      font-size 6vh
+      line-height 10vh
+    .md-url
+      input
+        width 60%
+        padding 2vh 0
+        font normal 4.5vh/normal "Lucida Console", Monaco, monospace
+        -webkit-border-radius 2vh
+        border-radius 2vh
+    .err-msg
+      font-size 4vh
+      margin-top 5vh
+
+  .story
+    .header
+      padding 2.5vh 0
+      a 
+        font normal 4.5vh/normal "Lucida Console", Monaco, monospace
+      p 
+        padding-top 1vh
+        font normal 3vh/normal "Lucida Console", Monaco, monospace
+    .footer
+      div
+        font normal 3vh/normal "Lucida Console", Monaco, monospace
+        padding 2vh 0

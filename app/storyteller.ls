@@ -41,8 +41,7 @@ Storyteller = (element, story) !->
 
   script = []; i = 0; scene = ''
   title = if book.0 is /^#\s*(.*)/ then that.1 else 'No title'
-  title-dom = document.query-selector \title
-  title-dom.innerHTML += " - #title"
+  this.title = title
 
   for line in book
     continue if /^#.*/ is line
@@ -52,6 +51,7 @@ Storyteller = (element, story) !->
   script-len = script.length
   cover = script.0.scene
 
+  /*
   if window.inner-width > window.inner-height
     radius = window.inner-height / 4
   else
@@ -77,6 +77,7 @@ Storyteller = (element, story) !->
           x: center.x + radius
           y: center.y
     ).map (-> "#{it.x},#{it.y}")) * ' '
+  */ 
 
   # Init data
   if /\?.+?\?(\d+)$/ is location.search

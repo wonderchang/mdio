@@ -4,10 +4,19 @@ html
     title Storyteller
   body
     .container
-      #homepage
+      .homepage
         h1 Storyteller
         h2 A text-to-speech player via markdown
-        #md-url
-          input(placeholder="Enter HackMD/Hackpad URL ...")
-        #err-msg
-      #stage
+        .md-url
+          input(placeholder="HackMD/Hackpad URL")
+        .err-msg
+
+      .story
+        .header
+          a(href='/') Storyteller
+          p
+        .stage
+        .footer
+          .prev-btn <<
+          .play-btn >
+          .next-btn >>
