@@ -155,6 +155,8 @@ module.exports = (->
     window.utterance = new SpeechSynthesisUtterance text
     window.utterance.lang = \en-us
     window.utterance.rate = 1
+    window.utterance.onstart = ->
+      self.subtitle.innerHTML = text
     window.utterance.onend = ->
       return if \playing isnt self.status or window.speech-synthesis.speaking
       self.action-i += 1
