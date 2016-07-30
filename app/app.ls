@@ -19,13 +19,17 @@ module.exports = !->
         $ \.err-msg .text 'Loading ...' .css \display, \block
       success: !->
         push-state location.origin+location.pathname+'?'+it.url
-        opt = element: \.stage, markdown: it.markdown
+        opt = do
+          element: \.stage, markdown: it.markdown
+          progress-render: !-> $ \.progress .text it
         storyteller = new Storyteller opt
         title = storyteller.get-title!
+        length = storyteller.get-length!
         $ \.homepage .css \display, \none
         $ \.story .css \display, \block
         $ \title .text "Storyteller - #title"
         $ '.header p' .text title
+        $ \.progress .text "0 / #length"
         $ window .resize !->
           header-height = $ \.header .outer-height!
           footer-height = $ \.footer .outer-height!
@@ -34,10 +38,10 @@ module.exports = !->
 
         $ \.prev-btn .click !-> storyteller.prev!
         $ \.next-btn .click !-> storyteller.next!
-        $ \.play-btn .click !->
+        $ \.stage .click !->
           switch storyteller.get-status!
-          | \paused, \start => storyteller.play!;  $ \.play-btn .text '||'
-          | \playing        => storyteller.pause!; $ \.play-btn .text '>'
-          | \finished       => storyteller.play!;  $ \.play-btn .text '↺'
+          | \paused, \start => storyteller.play!
+          | \playing        => storyteller.pause!
+          | \finished       => storyteller.play!
 
   function push-state then history.push-state {}, null, it

@@ -2,6 +2,8 @@ module.exports = (->
 
   Storyteller = (opt) ->
 
+    @progress-render = opt.progress-render
+
     # Create stage
     @stage = document.query-selector opt.element
     @stage.style.position = \relative
@@ -102,6 +104,7 @@ module.exports = (->
   !function change-scene
     @subtitle.innerHTML = it.text
     @scene-img.src = it.scene
+    @progress-render "#{@actions[@action-i].id} / #{@action-len}"
     rewrite-url @base-url+'?'+@actions[@action-i].id.to-string!
 
   !function action
@@ -128,6 +131,7 @@ module.exports = (->
       return (action.call self) if self.action-i < self.action-len
       set-to-start.call self
     window.speech-synthesis.speak window.utterance
+    window.onbeforeunload = -> self.pause!
 
   !function rewrite-url
     history.push-state {}, null, it
@@ -139,5 +143,7 @@ module.exports = (->
 
   Storyteller.prototype.get-title  = -> @title
   Storyteller.prototype.get-status = -> @status
+  Storyteller.prototype.get-length = -> @action-len
+
   Storyteller
 )!
