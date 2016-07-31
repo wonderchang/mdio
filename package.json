@@ -24,6 +24,7 @@
     "livescript": "^1.5.0",
     "livescript-loader": "^0.1.5",
     "mocha": "^2.5.3",
+    "phantomjs": "^2.1.7",
     "request": "^2.74.0",
     "selenium-webdriver": "^2.53.3",
     "style-loader": "^0.13.1",
@@ -37,7 +38,8 @@
     "build": "./node_modules/.bin/lsc -c -o . ./lib/markteller.ls && uglifyjs markteller.js -c \"evaluate=false\" -m --source-map markteller-min.map -o markteller-min.js",
     "start": "./node_modules/.bin/gulp --require livescript dev-server",
     "server": "./node_modules/.bin/gulp --require livescript server",
-    "test": "./node_modules/.bin/gulp --require livescript test"
+    "test": "./node_modules/.bin/gulp --require livescript test",
+    "dev-test": "./node_modules/.bin/gulp --require livescript dev-test"
   },
   "repository": {
     "type": "git",

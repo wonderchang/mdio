@@ -26,10 +26,13 @@ gulp.task \server !->
   router.init express-server
   router.start!
 
-gulp.task \test test-run, !->
+
+gulp.task \dev-test <[test]> !->
   (run, i) <-! test-run.for-each
   target-files = ["lib/#run.ls", "test/#{run}-spec.ls"]
   gulp.watch target-files, [run]
+
+gulp.task \test test-run, !->
 
 gulp.task \markdown-engine !->
   gulp.src \test/markdown-engine-spec.ls, {-read}
