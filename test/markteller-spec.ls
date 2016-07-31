@@ -11,14 +11,15 @@ describe \markteller (_) !->
   driver = new webdriver.Builder!for-browser \phantomjs .build!
   driver.get \http://localhost:3000
   doc-url = driver.find-element wd.By.id \doc-url
-  doc-url.send-keys \https://hackmd.io/s/By_aEVUd
-  doc-url.send-keys wd.Key.ENTER
-  markvideo = driver.find-element wd.By.id \markvideo
-  driver.wait wd.until.element-is-visible markvideo, 5000 .then !->
-    marktitle = driver.find-element wd.By.id \marktitle
-    actual <-! marktitle.get-text!then
-    expected = 'The Three Little Pigs'
-    expect actual .to.equal expected
+  driver.wait wd.until.element-is-visible doc-url, 5000 .then !->
+    doc-url.send-keys \https://hackmd.io/s/By_aEVUd
+    doc-url.send-keys wd.Key.ENTER
+    markvideo = driver.find-element wd.By.id \markvideo
+    driver.wait wd.until.element-is-visible markvideo, 5000 .then !->
+      marktitle = driver.find-element wd.By.id \marktitle
+      actual <-! marktitle.get-text!then
+      expected = 'The Three Little Pigs'
+      expect actual .to.equal expected
   driver.quit!
   done!
 
