@@ -1,6 +1,6 @@
 {
   "name": "markteller",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A text-to-speech robot via markdown",
   "main": "markteller.js",
   "directories": {
