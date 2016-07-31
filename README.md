@@ -19,16 +19,24 @@ After involving it, simple example
 
 	<div id='markteller'></div>
 	<div id='progress'></div>
+	<div id='play-btn'></div>
 	<script>
 		var markdown = '# Markteller Test!\n\n[](http://ww.share001.org/imgs/image/16/1600072.jpg)\nline1\nline2\nline3'
 		var options = {
 			render: '#markteller',
 			speechLang: 'en-US',
 			onEndAction: function(it) {
-				document.getElementById('progress').innerHTML = it.actionUI + '/' + it.totalActionNum
+				// The parameter of callack is an object, including
+				// 	- actionI: Current action position
+				// 	- totalActionI: Number of total action
+				document.getElementById('progress').innerHTML = it.actionI + '/' + it.totalActionNum
 			}
 		}
 		var markteller = new Markteller(markdown, options)
-		markteller.play()
+		var playBtn = document.getElementById('play-btn')
+		
+		playBtn.addEventListener('click', function() {
+			markteller.play()
+		})
 	</script>
 	
