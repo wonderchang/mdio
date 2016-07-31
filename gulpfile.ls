@@ -7,7 +7,7 @@ opt =
 try opt = opt <<< JSON.parse fs.read-file-sync \config.json, \utf8
 catch then console.log "No config.json, config by default"
 
-test-run = <[markdown-engine]>
+test-run = <[markdown-engine markteller]>
 
 gulp.task \dev-server <[server]> !->
   config = require \./webpack.config.ls
@@ -28,11 +28,16 @@ gulp.task \server !->
 
 gulp.task \test test-run, !->
   (run, i) <-! test-run.for-each
-  target-files = ["lib/#run", "test/#run/**/*"]
+  target-files = ["lib/#run.ls", "test/#{run}-spec.ls"]
   gulp.watch target-files, [run]
 
 gulp.task \markdown-engine !->
-  gulp.src \test/markdown-engine/spec.ls, {-read}
+  gulp.src \test/markdown-engine-spec.ls, {-read}
+    .pipe gulp-plumber!
+    .pipe gulp-mocha opt.mocha
+
+gulp.task \markteller !->
+  gulp.src \test/markteller-spec.ls, {-read}
     .pipe gulp-plumber!
     .pipe gulp-mocha opt.mocha
 

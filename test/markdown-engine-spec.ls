@@ -1,15 +1,14 @@
-require! <[fs chai chai-as-promised assert]>
+require! <[fs chai assert]>
 /* markdown-engine-spec.ls */
 /* eslint-env mocha */
 expect = chai.expect
-chai.use chai-as-promised
 
 describe \markdown-engine (_) !->
 
-  Engine = require \../../lib/markdown-engine
+  Engine = require __dirname + \/../lib/markdown-engine
 
   url =
-    hackmd: \https://hackmd.io/s/By_aEVUd
+    hackmd: \https://hackmd.io/s/Bkbe8Ho_
     hackpad: \https://hackpad.com/Hackpad-API-v1.0-k9bpcEeOo2Q
     others: \https://www.google.com.tw
 
@@ -20,7 +19,8 @@ describe \markdown-engine (_) !->
   hackpad = new Engine url.hackpad
   others  = new Engine url.others
 
-  test-story = fs.read-file-sync 'test/markdown-engine/test-story.md', \utf8
+  test-fn = __dirname + \/mockdata.md
+  test-data = (fs.read-file-sync test-fn, \utf8).trim!
 
   describe "HackMD, test #{url.hackmd}" (_) !->
 
@@ -29,13 +29,14 @@ describe \markdown-engine (_) !->
       expect hackmd.provider .to.equal \hackmd
 
     describe "Check token" (_) !->
-      <-! it 'should be identified as By_aEVUd'
-      expect hackmd.token .to.equal \By_aEVUd
+      <-! it 'should be identified as Bkbe8Ho_'
+      expect hackmd.token .to.equal \Bkbe8Ho_
 
-    describe "Check story content" (_) !->
-      done <-! it 'should get the story from hackmd'
-      actual <-! hackmd.request-story
-      expect actual .to.equal test-story
+    describe "Check markdown content" (_) !->
+      @timeout 50000
+      done <-! it 'should get the markdown from hackmd'
+      actual <-! hackmd.request-markdown
+      expect actual .to.equal test-data
       done!
 
   describe "Parse #{url.hackpad}" (_) !->

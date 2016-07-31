@@ -1,4 +1,5 @@
-require! <[https]>
+require! <[https html-entities]>
+html-decode = new html-entities.Xml-entities! .decode
 
 Engine = (url) !->
 
@@ -13,12 +14,12 @@ Engine = (url) !->
     hackmd:  !-> return if it is /<div id="doc" class="container markdown-body">((.|\n)*?)<\/div>/ then that.1 else null
     hackpad: !-> return null
 
-Engine.prototype.request-story = (cb) !->
+Engine.prototype.request-markdown = (cb) !->
   engine = this
   req = https.get engine.url, (res) !->
     data = ''
     res.on \data, !-> data += it.to-string!
-    res.on \end,  !-> cb engine.markdown-parser[engine.provider] data
+    res.on \end,  !-> cb html-decode engine.markdown-parser[engine.provider] data
   req.on \error, !->
 
 module.exports = Engine
