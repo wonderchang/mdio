@@ -7,7 +7,7 @@ wd = webdriver
 
 describe \markteller (_) !->
   <-! it 'should be get text'
-  driver = new webdriver.Builder!for-browser \chrome .build!
+  driver = new webdriver.Builder!for-browser \phantomjs .build!
   driver.get \http://localhost:3000
   doc-url = driver.find-element wd.By.id \doc-url
   doc-url.send-keys \https://hackmd.io/s/By_aEVUd
