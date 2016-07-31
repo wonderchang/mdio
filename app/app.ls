@@ -1,5 +1,4 @@
 Markteller = require \./markteller.ls
-
 module.exports = !->
 
   # Dom elements

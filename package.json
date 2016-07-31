@@ -1,8 +1,8 @@
 {
-  "name": "storyteller",
+  "name": "markteller",
   "version": "0.1.0",
   "description": "A text-to-speech robot via markdown",
-  "main": "storyteller.js",
+  "main": "markteller.js",
   "directories": {
     "test": "test"
   },
@@ -31,7 +31,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "build": "./node_modules/.bin/lsc -c storyteller.ls && uglifyjs storyteller.js -c \"evaluate=false\" -m --source-map storyteller-min.map -o storyteller-min.js",
+    "build": "./node_modules/.bin/lsc -c markteller.ls && uglifyjs markteller.js -c \"evaluate=false\" -m --source-map markteller-min.map -o markteller-min.js",
     "start": "./node_modules/.bin/gulp --require livescript dev-server",
     "dev": "./node_modules/.bin/webpack-dev-server --port 8860",
     "server": "./node_modules/.bin/gulp --require livescript server",
@@ -39,26 +39,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wonderchang/storyteller.git"
+    "url": "git+https://github.com/wonderchang/markteller.git"
   },
   "keywords": [
     "markdown",
     "hackmd",
     "hackpad",
     "text-to-speech",
-    "storyteller",
+    "markteller",
     "video",
     "player"
   ],
   "author": "Wonder Chang <iwonder.tw@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wonderchang/storyteller/issues"
+    "url": "https://github.com/wonderchang/markteller/issues"
   },
-  "homepage": "https://github.com/wonderchang/storyteller#readme",
+  "homepage": "https://github.com/wonderchang/markteller#readme",
   "files": [
-    "storyteller.js",
-    "storyteller-min.js",
-    "storyteller-min.map"
+    "markteller.js",
+    "markteller-min.js",
+    "markteller-min.map"
   ]
 }

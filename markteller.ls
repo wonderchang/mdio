@@ -49,6 +49,7 @@ Markteller = (->
   # Public method
   Markteller.prototype.play  = !-> _play.call  @
   Markteller.prototype.pause = !-> _pause.call @
+  Markteller.prototype.prev  = !-> _prev.call  @
   Markteller.prototype.next  = !-> _next.call  @
   Markteller.prototype.get-title  = -> @title
   Markteller.prototype.get-status = -> @status
