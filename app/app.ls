@@ -2,49 +2,74 @@ Markteller = require \./markteller.ls
 
 module.exports = !->
 
+  # Dom elements
+  pagetitle = $ \title
+  homepage  = $ \#homepage
+  doc-url   = $ \#doc-url
+  res-msg   = $ \#res-msg
+  markvideo = $ \#markvideo
+  marktitle = $ \#marktitle
+  header    = $ \#header
+  footer    = $ \#footer
+  prev-btn  = $ \#prev-btn
+  progress  = $ \#progress
+  next-btn  = $ \#next-btn
+  screen    = null
+
+  # Markdown link have already given in url
   if location.search
-    [url, action-id] = (location.search.substring 1) / \&
-    get-story url
+    [url, action-id] = (location.search.substring 1) / \?
+    get-markdown url
 
-  $ '.md-url input' .focus (input) ->
+  # Markdown link given from user input
+  doc-url.focus (input) ->
     <-! $ window .keydown
-    if 13 is it.key-code
-      url = input.current-target.value
-      get-story url
+    return if 13 isnt it.key-code
+    url = input.current-target.value
+    get-markdown url
 
-  function get-story
+  !function get-markdown
     $.ajax do
-      url: \/get-story, data: url: it
-      before-send: !->
-        $ \.err-msg .text 'Loading ...' .css \display, \block
-      success: !->
-        push-state location.origin+location.pathname+'?'+it.url
-        $ \.homepage  .css \display, \none
-        $ \.story     .css \display, \block
-        opt = do
-          element: \.stage, markdown: it.markdown
-        markteller = new Markteller opt
-        init-stage markteller
+      url: \/get-story, data: url: url
+      before-send: before-send
+      success: success, error: error
+      complete: complete
 
-  !function init-stage markteller
-    title = markteller.get-title!
+  !function before-send
+    res-msg.text 'Loading ...' .css \display, \block
+
+  !function error
+    res-msg.text 'Error' .css \display, \block
+
+  !function success
+    # Create markteller
+    markteller = new Markteller it.markdown, do
+      progress-render: !-> progress.text it
+    # Set Page
+    screen := markteller.screen
+    title  = markteller.get-title!
     length = markteller.get-length!
-    $ \title      .text "Markteller - #title"
-    $ '.header p' .text title
-    $ \.progress  .text "0 / #length"
-
-    $ window .resize !->
-      header-height = $ \.header .outer-height!
-      footer-height = $ \.footer .outer-height!
-      $ \.stage .css \height, window.inner-height - header-height - footer-height
-    .resize!
-
-    $ \.prev-btn .click !-> markteller.prev!
-    $ \.next-btn .click !-> markteller.next!
-    $ \.stage .click !->
+    pagetitle.text "Markteller - #title"
+    marktitle.text title
+    progress.text  "0 / #length"
+    # Controller
+    prev-btn.click !-> markteller.prev!
+    next-btn.click !-> markteller.next!
+    $ screen .click !->
       switch markteller.get-status!
       | \paused, \start => markteller.play!
       | \playing        => markteller.pause!
       | \finished       => markteller.play!
 
-  function push-state then history.push-state {}, null, it
+  !function complete
+    it = JSON.parse it.response-text
+    # Rewrite url without redirect
+    history.push-state {}, null, location.origin+location.pathname+'?'+it.url
+    markvideo.css \display, \block
+    homepage.css  \display, \none
+    # Resize screen
+    $ window .resize !->
+      height = window.inner-height - header.outer-height! - footer.outer-height!
+      $ screen .css \height, height
+    .resize!
+    # Show time

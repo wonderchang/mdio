@@ -1,22 +1,21 @@
 html
   head
     meta(charset='utf-8')
-    title Storyteller
+    title Markteller
   body
     .container
-      .homepage
-        h1 Storyteller
+      #homepage
+        h1 Markteller
         h2 A text-to-speech robot via markdown
-        .md-url
-          input(placeholder="HackMD/Hackpad URL")
-        .err-msg
-
-      .story
-        .header
-          a(href='/') Storyteller
-          p
-        .stage
-        .footer
-          .prev-btn <<
-          .progress  
-          .next-btn >>
+        div
+          input#doc-url(placeholder="HackMD URL")
+        #res-msg
+      #markvideo
+        #header
+          a(href='/') Markteller
+          p#marktitle
+        .markteller
+        #footer
+          #prev-btn <<
+          #progress  
+          #next-btn >>
