@@ -7,7 +7,7 @@ opt =
 try opt = opt <<< JSON.parse fs.read-file-sync \config.json, \utf8
 catch then console.log "No config.json, config by default"
 
-test-run = <[markdown-engine]>
+test-run = <[markdown-engine markteller]>
 
 gulp.task \dev-server <[server]> !->
   config = require \./webpack.config.ls
