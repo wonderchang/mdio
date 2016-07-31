@@ -4,7 +4,7 @@ module.exports =
   entry: <[./app/main.js]>
   output:
     filename: \app.js
-    path: __dirname + \dist
+    path: __dirname + \/dist
   module:
     loaders:
       * test: /\.(jpg|jpeg|png)$/ loader: \file
