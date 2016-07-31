@@ -29,7 +29,7 @@ module.exports = !->
 
   !function get-markdown
     $.ajax do
-      url: \/get-story, data: url: url
+      url: \/get-story, data: url: it
       before-send: before-send
       success: success, error: error
       complete: complete
