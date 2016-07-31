@@ -6,7 +6,7 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
+  "devDependencies": {
     "chai": "^3.5.0",
     "css-loader": "^0.23.1",
     "express": "^4.14.0",
