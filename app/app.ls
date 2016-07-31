@@ -1,4 +1,4 @@
-Markteller = require \../markteller
+Markteller = require \../markteller-min
 module.exports = !->
 
   # Dom elements
