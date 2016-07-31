@@ -33,7 +33,6 @@
   "scripts": {
     "build": "./node_modules/.bin/lsc -c -o . ./lib/markteller.ls && uglifyjs markteller.js -c \"evaluate=false\" -m --source-map markteller-min.map -o markteller-min.js",
     "start": "./node_modules/.bin/gulp --require livescript dev-server",
-    "dev": "./node_modules/.bin/webpack-dev-server --port 8860",
     "server": "./node_modules/.bin/gulp --require livescript server",
     "test": "./node_modules/.bin/gulp --require livescript test"
   },
