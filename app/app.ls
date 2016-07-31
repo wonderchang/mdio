@@ -41,6 +41,8 @@ module.exports = !->
     res-msg.text 'Error' .css \display, \block
 
   !function success
+    # Rewrite url without redirect
+    history.push-state {}, null, location.origin+location.pathname+'?'+it.url
     # Create markteller
     markteller = new Markteller it.markdown, do
       progress-render: !-> progress.text it
@@ -61,9 +63,6 @@ module.exports = !->
       | \finished       => markteller.play!
 
   !function complete
-    it = JSON.parse it.response-text
-    # Rewrite url without redirect
-    history.push-state {}, null, location.origin+location.pathname+'?'+it.url
     markvideo.css \display, \block
     homepage.css  \display, \none
     # Resize screen
