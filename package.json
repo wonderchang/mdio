@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chromedriver": "^2.21.2",
     "css-loader": "^0.23.1",
     "express": "^4.14.0",
     "file-loader": "^0.8.5",
@@ -24,6 +25,7 @@
     "livescript-loader": "^0.1.5",
     "mocha": "^2.5.3",
     "request": "^2.74.0",
+    "selenium-webdriver": "^2.53.3",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.1.0",

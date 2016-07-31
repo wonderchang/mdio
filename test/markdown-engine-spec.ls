@@ -1,4 +1,4 @@
-require! <[fs chai assert]>
+require! <[fs chai]>
 /* markdown-engine-spec.ls */
 /* eslint-env mocha */
 expect = chai.expect
