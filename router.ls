@@ -9,7 +9,7 @@ module.exports =
   start: !->
     @app.get \/get-story (req, res) ->
       engine = new markdown-engine req.query.url
-      md <-! engine.request-story
+      md <-! engine.request-markdown
       res.send do
         url: engine.url
         provider: engine.provider
