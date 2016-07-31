@@ -7,3 +7,4 @@ sudo: false
 
 before_script:
   - "npm start &"
+  - sleep 5
