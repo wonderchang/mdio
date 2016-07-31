@@ -1,9 +1,9 @@
 'use strict'
 
-Storyteller = (->
+Markteller = (->
 
   # Object constructor
-  !function Storyteller opt
+  Markteller = (opt) ->
 
     @opt = {lang: \en-us} <<< opt
     @opt.progress-render = (->) if undefined is @opt.progress-render
@@ -29,7 +29,7 @@ Storyteller = (->
     @action-len = @actions.length
     @cover = @actions.0.scene
 
-    # Init storyteller
+    # Init markteller
     @action-i = 0
     @speech-record = 0
     if /(.+)\?(\d+)$/ is location.href
@@ -44,12 +44,12 @@ Storyteller = (->
       _show-cover.call @
 
   # Public method
-  Storyteller.prototype.play  = !-> _play.call  @
-  Storyteller.prototype.pause = !-> _pause.call @
-  Storyteller.prototype.next  = !-> _next.call  @
-  Storyteller.prototype.get-title  = -> @title
-  Storyteller.prototype.get-status = -> @status
-  Storyteller.prototype.get-length = -> @action-len
+  Markteller.prototype.play  = !-> _play.call  @
+  Markteller.prototype.pause = !-> _pause.call @
+  Markteller.prototype.next  = !-> _next.call  @
+  Markteller.prototype.get-title  = -> @title
+  Markteller.prototype.get-status = -> @status
+  Markteller.prototype.get-length = -> @action-len
 
   # Private method
   !function _set-stage-style
@@ -186,13 +186,13 @@ Storyteller = (->
   !function _rewrite-url
     history.push-state {}, null, it
 
-  if typeof exports isnt 'undefined'
-    if typeof module isnt 'undefined' and module.exports
-      exports = module.exports = Storyteller
-    exports.Storyteller = Storyteller
+  if undefined isnt typeof exports
+    if undefined isnt typeof module and module.exports
+      exports = module.exports = Markteller
+    exports.Markteller = Markteller
   else
-    @Storyteller = Storyteller
+    @Markteller = Markteller
 
-  Storyteller
+  Markteller
 
 ).call @

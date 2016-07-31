@@ -1,4 +1,4 @@
-Storyteller = require \./storyteller.ls
+Markteller = require \./markteller.ls
 
 module.exports = !->
 
@@ -23,13 +23,13 @@ module.exports = !->
         $ \.story     .css \display, \block
         opt = do
           element: \.stage, markdown: it.markdown
-        storyteller = new Storyteller opt
-        init-stage storyteller
+        markteller = new Markteller opt
+        init-stage markteller
 
-  !function init-stage storyteller
-    title = storyteller.get-title!
-    length = storyteller.get-length!
-    $ \title      .text "Storyteller - #title"
+  !function init-stage markteller
+    title = markteller.get-title!
+    length = markteller.get-length!
+    $ \title      .text "Markteller - #title"
     $ '.header p' .text title
     $ \.progress  .text "0 / #length"
 
@@ -39,12 +39,12 @@ module.exports = !->
       $ \.stage .css \height, window.inner-height - header-height - footer-height
     .resize!
 
-    $ \.prev-btn .click !-> storyteller.prev!
-    $ \.next-btn .click !-> storyteller.next!
+    $ \.prev-btn .click !-> markteller.prev!
+    $ \.next-btn .click !-> markteller.next!
     $ \.stage .click !->
-      switch storyteller.get-status!
-      | \paused, \start => storyteller.play!
-      | \playing        => storyteller.pause!
-      | \finished       => storyteller.play!
+      switch markteller.get-status!
+      | \paused, \start => markteller.play!
+      | \playing        => markteller.pause!
+      | \finished       => markteller.play!
 
   function push-state then history.push-state {}, null, it
