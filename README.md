@@ -22,33 +22,28 @@ After involving it, simple example
 	<div id='markteller'></div>
 	<div id='progress'></div>
 	<div id='play-btn'></div>
-	<script>
-		var progress = document.getElementById('progress')
-		var playBtn = document.getElementById('play-btn')
-		
-		var markdown = '# Markteller Test!\n\n\
-						[](http://ww.share001.org/imgs/image/16/1600072.jpg)\n\
-						line1\n\
-				  		line2\n\
-						line3'
+	
+the script
+
+	var markdown = '# Markteller Test!\n\n\
+					[](http://goo.gl/lvHnk4)\n\
+					line1\n\
+				  	line2\n\
+					line3'
 						
-		var options = {
-			render: '#markteller',
-			speechLang: 'en-US',
-			onEndAction: function(it) {
-				// The parameter of callack is an object, including
-				// 	- actionI: Current action position
-				// 	- totalActionI: Number of total action
-				progress.innerHTML = it.actionI + '/' + it.totalActionNum
-			}
+	var options = {
+		render: '#markteller',
+		speechLang: 'en-US',
+		onEndAction: function(it) {
+			$('#progress).html(it.actionI + '/' + it.totalAction)
 		}
+	}
 		
-		var markteller = new Markteller(markdown, options)
+	var markteller = new Markteller(markdown, options)
 		
-		playBtn.addEventListener('click', function() {
-			markteller.play()
-		})
-	</script>
+	$('#play-btn').click(function() {
+		markteller.play()
+	})
 	
 ## License
 
