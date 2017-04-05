@@ -1,13 +1,11 @@
-# markteller
+# markdown-player
 
 [![Build Status](https://travis-ci.org/wonderchang/markteller.svg?branch=master)](https://travis-ci.org/wonderchang/markteller)
 
-A text-to-speech robot via markdown. We build an [web application](http://markteller.iwonder.tw) applying this module for whom could easily create a simple HTML-based animation video by editing markdown document from [HackMD](https://hackmd.io/). 
+A markdown text-to-speech robot.
 
-For Example, [The Three Little Pigs](http://markteller.iwonder.tw/?https://hackmd.io/s/By_aEVUd), which the story are written at [here](https://hackmd.io/EbAmwRgFgiFoDMAGBB2OUCsBjUcCcSATPnAIb4BsRAZlFKpQBwRFA===)
+## Installation
 
-## How to use it
-	
 For browser
 	
 	<script src='markteller-min.js'></script>
@@ -16,6 +14,8 @@ For webpack
 
 	$ npm install markteller
 	var Markteller = require('markteller')
+
+## Usage
 	
 After involving it, simple example
 
@@ -44,8 +44,3 @@ the script
 	$('#play-btn').click(function() {
 		markteller.play()
 	})
-	
-## License
-
-MIT
-	
