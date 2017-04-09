@@ -1,3 +1,5 @@
-require('./app.styl')
-App = require('./app.ls')
-app = new App();
+import MarkdownPlayer from 'markdown-player'
+
+const mdPlayer = new MarkdownPlayer({
+  selector: '#showtime',
+})
