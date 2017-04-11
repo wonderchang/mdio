@@ -1376,7 +1376,7 @@ if (true) {
 const marked = __webpack_require__(0)
 
 const MarkdownPlayer = class {
-  constructor(options) {
+  constructor (options) {
     this.options = options
     this.wrapper = document.querySelector(this.options.selector)
     this.content = this.wrapper.innerHTML.split('\n').map(l => l.trim()).join('\n\n').trim()
@@ -1394,8 +1394,7 @@ const MarkdownPlayer = class {
       this.actionI = -1 + parseInt(result[2])
       this.status = 'paused'
       this._updateScreen(this.actions[this.actionI])
-    }
-    else {
+    } else {
       this.baseUrl = location.href
       this.actionI = 0
       this.status = 'start'
@@ -1415,7 +1414,7 @@ const MarkdownPlayer = class {
     }
   }
 
-  _buildPlayer() {
+  _buildPlayer () {
     // wrapper
     this.wrapper.style.position = 'relative'
     this.wrapper.style.overflow = 'hidden'
@@ -1493,17 +1492,17 @@ const MarkdownPlayer = class {
     this.playbar.appendChild(this.progressDisplay)
   }
 
-  _tokenizeContent() {
+  _tokenizeContent () {
     this.token = marked.lexer(this.content)
     this._tokenizeImageToken()
     this.title = (this.token[0].type === 'heading' && this.token[0].depth === 1) ? this.token.shift().text : null
     this.actions = []
-    let frame = null, i = 0
+    let frame = null
+    let i = 0
     for (let t of this.token) {
       if (t.type === 'image') {
         frame = t
-      }
-      else {
+      } else {
         this.actions.push({
           id: ++i,
           frame: frame,
@@ -1513,8 +1512,8 @@ const MarkdownPlayer = class {
     }
   }
 
-  _tokenizeImageToken() {
-    const pattern = /.*\!\[(.*)\]\((.*)\)/
+  _tokenizeImageToken () {
+    const pattern = /.*!\[(.*)\]\((.*)\)/
     this.token = this.token.map(t => {
       const result = pattern.exec(t.text)
       if (t.type === 'paragraph' && result) {
@@ -1526,13 +1525,13 @@ const MarkdownPlayer = class {
     })
   }
 
-  _updateScreen(action) {
+  _updateScreen (action) {
     this.scene.style.backgroundImage = `url('${action.frame.src}')`
     this.subtitle.innerHTML = action.text
     this.progressDisplay.innerHTML = `${this.actionI} / ${this.actionLen}`
   }
 
-  _play() {
+  _play () {
     this.status = 'playing'
     if (window.speechSynthesis.paused) {
       window.speechSynthesis.resume()
@@ -1541,29 +1540,28 @@ const MarkdownPlayer = class {
        * so the trigger will not happen to continue.
        * To workaround, record the actionI
        */
-      lastSpeechRecord = this.speechRecord
+      const lastSpeechRecord = this.speechRecord
       setTimeout(() => {
         if (lastSpeechRecord === this.speechRecord) {
           this._next()
         }
       }, 1000)
-    }
-    else {
+    } else {
       this._action()
     }
   }
 
-  _pause() {
+  _pause () {
     this.status = 'paused'
     window.speechSynthesis.pause()
   }
 
-  _prev() {
+  _prev () {
     switch (this.actionI) {
       case 0:
         return this._setToStart()
       case -1:
-        this.actionI = self.actionLen - 1
+        this.actionI = this.actionLen - 1
         if (this.status === 'start') {
           this.status = 'paused'
         }
@@ -1574,20 +1572,19 @@ const MarkdownPlayer = class {
     this._transition()
   }
 
-  _next() {
+  _next () {
     if (this.actionI === this.actionLen - 1) {
       return this._setToStart()
     }
     if (this.status === 'start') {
       this.status = 'paused'
-    }
-    else {
+    } else {
       this.actionI += 1
     }
     this._transition()
   }
 
-  _transition() {
+  _transition () {
     window.speechSynthesis.resume()
     window.speechSynthesis.cancel()
     switch (this.status) {
@@ -1599,7 +1596,7 @@ const MarkdownPlayer = class {
     }
   }
 
-  _setToStart() {
+  _setToStart () {
     window.speechSynthesis.resume()
     this.actionI = -1
     this.status = 'start'
@@ -1608,14 +1605,14 @@ const MarkdownPlayer = class {
     this._rewriteUrl()
   }
 
-  _action() {
+  _action () {
     const act = this.actions[this.actionI]
     this._updateScreen(Object.assign({}, act, {text: null}))
     this._speech(act.text)
   }
 
-  _speech(text) {
-    text = text.replace(/&quot;/g, '\"').replace(/&apos;/g, '\'')
+  _speech (text) {
+    text = text.replace(/&quot;/g, '"').replace(/&apos;/g, '\'')
     window.speechSynthesis.cancel()
     window.utterance = new SpeechSynthesisUtterance(text)
     window.utterance.lang = 'en-us'
@@ -1642,10 +1639,9 @@ const MarkdownPlayer = class {
     }
   }
 
-  _rewriteUrl(url) {
+  _rewriteUrl (url) {
     history.pushState({}, null, url)
   }
-
 }
 
 module.exports = MarkdownPlayer

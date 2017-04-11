@@ -4,7 +4,7 @@
   "description": "A markdown text-to-speech player",
   "main": "dist/markdown-player.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.prod.babel.js --progress",
+    "build": "./node_modules/.bin/standard lib/*.js && ./node_modules/.bin/webpack --config webpack.config.prod.babel.js --progress",
     "dev": "./node_modules/.bin/webpack-dev-server --open"
   },
   "repository": {
@@ -28,10 +28,18 @@
     "babel-loader": "^6.4.1",
     "babel-preset-es2015": "^6.24.1",
     "html-webpack-plugin": "^2.28.0",
+    "standard": "^10.0.1",
     "webpack": "^2.3.3",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
     "marked": "^0.3.6"
+  },
+  "standard": {
+    "globals": [
+      "history",
+      "location",
+      "SpeechSynthesisUtterance"
+    ]
   }
 }
