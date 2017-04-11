@@ -4,7 +4,7 @@
   "description": "A markdown text-to-speech player",
   "main": "dist/markdown-player.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.prod.babel.js -p --progress",
+    "build": "./node_modules/.bin/webpack --config webpack.config.prod.babel.js --progress",
     "dev": "./node_modules/.bin/webpack-dev-server --open"
   },
   "repository": {
