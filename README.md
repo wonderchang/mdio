@@ -1,6 +1,6 @@
 # markdown-player
 
-[![Build Status](https://travis-ci.org/wonderchang/markteller.svg?branch=master)](https://travis-ci.org/wonderchang/markteller)
+[![Build Status](https://travis-ci.org/wonderchang/markdown-player.svg?branch=master)](https://travis-ci.org/wonderchang/markdown-player)
 
 A markdown text-to-speech robot.
 
