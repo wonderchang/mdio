@@ -1,10 +1,7 @@
+sudo: required
 language: node_js
-
 node_js:
   - "6"
 
-sudo: false
-
-before_script:
-  - "npm start &"
-  - sleep 5
+script:
+  - npm run build
