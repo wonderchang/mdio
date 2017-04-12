@@ -1,10 +1,11 @@
 import path from 'path'
+import webpack from 'webpack'
 
 module.exports = {
   entry: './lib/markdown-player.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'markdown-player.js',
+    filename: (process.env.WEBPACK_ENV === 'build') ? 'markdown-player.min.js' : 'markdown-player.js',
     library: 'MarkdownPlayer',
     libraryTarget: 'umd',
     umdNamedDefine: true
@@ -17,5 +18,8 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
-  }
+  },
+  plugins: (process.env.WEBPACK_ENV === 'build') ? [
+    new webpack.optimize.UglifyJsPlugin({ minimize: true })
+  ] : [],
 }
