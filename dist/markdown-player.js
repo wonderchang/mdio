@@ -1423,8 +1423,10 @@ var MarkdownPlayer = function () {
     };
     this.playButton.onclick = function () {
       if (_this.status === 'paused') {
+        _this.playButton.innerHTML = 'Pause';
         return _this._play();
       }
+      _this.playButton.innerHTML = 'Play';
       _this._pause();
     };
   }
