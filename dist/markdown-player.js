@@ -1411,7 +1411,11 @@ var MarkdownPlayer = function () {
       this.actionI = 0;
       this.status = 'start';
       this._showCover();
+      this.progressDisplay.innerHTML = this.actionI + ' / ' + this.show.length;
     }
+    this.stopButton.onclick = function () {
+      return _this._setToStart();
+    };
     this.prevButton.onclick = function () {
       return _this._prev();
     };
@@ -1475,7 +1479,7 @@ var MarkdownPlayer = function () {
       this.title = document.createElement('div');
       this.title.style.width = '100%';
       this.title.style.position = 'absolute';
-      this.title.style.top = '48%';
+      this.title.style.top = '45%';
       this.title.style.color = '#fff';
       this.title.style.textShadow = '0 0 8px #000';
       this.title.style.textAlign = 'center';
@@ -1499,6 +1503,11 @@ var MarkdownPlayer = function () {
       this.playbar.style.height = this.playbarHeight;
       this.playbar.style.backgroundColor = '#000';
       this.container.appendChild(this.playbar);
+      // playbar - stop button
+      this.stopButton = document.createElement('button');
+      this.stopButton.innerHTML = 'Stop';
+      this.stopButton.style.backgroundColor = '#aaa';
+      this.playbar.appendChild(this.stopButton);
       // playbar - backward screen button
       this.prevButton = document.createElement('button');
       this.prevButton.innerHTML = 'Prev';
@@ -1523,15 +1532,24 @@ var MarkdownPlayer = function () {
   }, {
     key: '_showCover',
     value: function _showCover() {
-      this.scene.style.backgroundImage = 'url(\'' + this.show.cover + '\')';
-      this.scene.style.opacity = 0.5;
+      if (this.show.cover) {
+        this.scene.style.backgroundImage = 'url(\'' + this.show.cover + '\')';
+        this.scene.style.opacity = 0.5;
+      } else {
+        this.scene.style.backgroundImage = null;
+      }
       this.title.innerHTML = this.show.title;
+      this.title.style.display = 'block';
+      this.subtitle.style.display = 'none';
     }
   }, {
     key: '_hideCover',
     value: function _hideCover() {
-      this.scene.style.opacity = 1;
+      if (this.show.cover) {
+        this.scene.style.opacity = 1;
+      }
       this.title.style.display = 'none';
+      this.subtitle.style.display = 'block';
     }
   }, {
     key: '_updateScreen',
@@ -1618,11 +1636,13 @@ var MarkdownPlayer = function () {
     key: '_setToStart',
     value: function _setToStart() {
       window.speechSynthesis.resume();
-      this.actionI = -1;
-      this.status = 'start';
       window.speechSynthesis.cancel();
-      this._updateScreen();
+      this.actionI = 0;
+      this.status = 'start';
       this._rewriteUrl(this.baseUrl);
+      this._showCover();
+      this.playButton.innerHTML = 'Play';
+      this.progressDisplay.innerHTML = this.actionI + ' / ' + this.show.length;
     }
   }, {
     key: '_action',
