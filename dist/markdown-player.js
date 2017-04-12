@@ -1378,9 +1378,13 @@ if (true) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _director = __webpack_require__(4);
 
-var marked = __webpack_require__(0);
+var _director2 = _interopRequireDefault(_director);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MarkdownPlayer = function () {
   function MarkdownPlayer(options) {
@@ -1390,39 +1394,38 @@ var MarkdownPlayer = function () {
 
     this.options = options;
     this.wrapper = document.querySelector(this.options.selector);
-    this.content = this.wrapper.innerHTML.split('\n').map(function (l) {
-      return l.trim();
-    }).join('\n\n').trim();
-    this._buildPlayer();
-    this._tokenizeContent();
-    this.actionLen = this.actions.length;
-    this.cover = this.actions[0].frame;
+    this.script = this.wrapper.innerHTML;
+    this.show = _director2.default.read(this.script);
     this.actionI = 0;
     this.speechRecord = 0;
+    this._buildPlayer();
 
     var result = /(.+)\?(\d+)$/.exec(location.href);
     if (result) {
       this.baseUrl = result[1];
       this.actionI = -1 + parseInt(result[2]);
       this.status = 'paused';
-      this._updateScreen(this.actions[this.actionI]);
+      this._updateScreen(this.show.actions[this.actionI]);
     } else {
       this.baseUrl = location.href;
       this.actionI = 0;
       this.status = 'start';
       this._updateScreen({
-        frame: this.cover,
-        text: this.title
+        img: this.show.cover,
+        text: this.show.title
       });
     }
     this.prevButton.onclick = function () {
       return _this._prev();
     };
-    this.playButton.onclick = function () {
-      return _this._play();
-    };
     this.nextButton.onclick = function () {
       return _this._next();
+    };
+    this.playButton.onclick = function () {
+      if (_this.status === 'paused') {
+        return _this._play();
+      }
+      _this._pause();
     };
   }
 
@@ -1506,67 +1509,12 @@ var MarkdownPlayer = function () {
       this.playbar.appendChild(this.progressDisplay);
     }
   }, {
-    key: '_tokenizeContent',
-    value: function _tokenizeContent() {
-      this.token = marked.lexer(this.content);
-      this._tokenizeImageToken();
-      this.title = this.token[0].type === 'heading' && this.token[0].depth === 1 ? this.token.shift().text : null;
-      this.actions = [];
-      var frame = null;
-      var i = 0;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = this.token[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var t = _step.value;
-
-          if (t.type === 'image') {
-            frame = t;
-          } else {
-            this.actions.push({
-              id: ++i,
-              frame: frame,
-              text: t.text
-            });
-          }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }
-  }, {
-    key: '_tokenizeImageToken',
-    value: function _tokenizeImageToken() {
-      var pattern = /.*!\[(.*)\]\((.*)\)/;
-      this.token = this.token.map(function (t) {
-        var result = pattern.exec(t.text);
-        if (t.type === 'paragraph' && result) {
-          t.alt = result[1];
-          t.src = result[2];
-          t.type = 'image';
-        }
-        return t;
-      });
-    }
-  }, {
     key: '_updateScreen',
     value: function _updateScreen(action) {
-      this.scene.style.backgroundImage = 'url(\'' + action.frame.src + '\')';
+      this.scene.style.backgroundImage = 'url(\'' + action.img.src + '\')';
       this.subtitle.innerHTML = action.text;
-      this.progressDisplay.innerHTML = this.actionI + ' / ' + this.actionLen;
+      this.progressDisplay.innerHTML = action.id + ' / ' + this.show.length;
+      this._rewriteUrl(this.baseUrl + '?' + this.show.actions[this.actionI].id.toString());
     }
   }, {
     key: '_play',
@@ -1604,7 +1552,7 @@ var MarkdownPlayer = function () {
         case 0:
           return this._setToStart();
         case -1:
-          this.actionI = this.actionLen - 1;
+          this.actionI = this.show.length - 1;
           if (this.status === 'start') {
             this.status = 'paused';
           }
@@ -1617,7 +1565,7 @@ var MarkdownPlayer = function () {
   }, {
     key: '_next',
     value: function _next() {
-      if (this.actionI === this.actionLen - 1) {
+      if (this.actionI === this.show.length - 1) {
         return this._setToStart();
       }
       if (this.status === 'start') {
@@ -1637,7 +1585,7 @@ var MarkdownPlayer = function () {
           return this._action();
         case 'start':
         case 'paused':
-          return this._updateScreen(this.actions[this.actionI]);
+          return this._updateScreen(this.show.actions[this.actionI]);
       }
     }
   }, {
@@ -1648,12 +1596,12 @@ var MarkdownPlayer = function () {
       this.status = 'start';
       window.speechSynthesis.cancel();
       this._updateScreen();
-      this._rewriteUrl();
+      this._rewriteUrl(this.baseUrl);
     }
   }, {
     key: '_action',
     value: function _action() {
-      var act = this.actions[this.actionI];
+      var act = this.show.actions[this.actionI];
       this._updateScreen(Object.assign({}, act, { text: null }));
       this._speech(act.text);
     }
@@ -1678,7 +1626,7 @@ var MarkdownPlayer = function () {
           return;
         }
         _this3.actionI += 1;
-        if (_this3.actionI < _this3.actionLen) {
+        if (_this3.actionI < _this3.show.length) {
           return _this3._action();
         }
         _this3._setToStart();
@@ -1726,6 +1674,97 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 3 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var marked = __webpack_require__(0);
+
+var read = function read(text) {
+  var i = void 0;
+  var content = text.split('\n').map(function (l) {
+    return l.trim();
+  }).join('\n\n').trim();
+  var pattern = /.*!\[(.*)\]\((.*)\)/;
+  var tokens = marked.lexer(content).map(function (t) {
+    var result = pattern.exec(t.text);
+    if (t.type === 'paragraph' && result) {
+      t.alt = result[1];
+      t.src = result[2];
+      t.type = 'image';
+    }
+    return t;
+  });
+
+  // title
+  var title = tokens[0].type === 'heading' && tokens[0].depth === 1 ? tokens.shift().text : null;
+
+  // cover
+  var cover = null;
+  for (var _i = 0, len = tokens.length; _i < len; _i++) {
+    if (tokens[_i].type === 'image' && tokens[_i].alt === 'cover') {
+      cover = tokens[_i].src;
+      break;
+    }
+  }
+
+  // actions
+  var actions = [];
+  var img = void 0;
+  i = 0;
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = tokens[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var t = _step.value;
+
+      if (t.type === 'image') {
+        img = t;
+      } else {
+        i += 1;
+        actions.push({
+          id: i,
+          img: img,
+          text: t.text
+        });
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return {
+    title: title,
+    cover: cover,
+    actions: actions,
+    length: actions.length
+  };
+};
+
+exports.default = {
+  read: read
+};
 
 /***/ })
 /******/ ]);
