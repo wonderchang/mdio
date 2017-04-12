@@ -1410,10 +1410,7 @@ var MarkdownPlayer = function () {
       this.baseUrl = location.href;
       this.actionI = 0;
       this.status = 'start';
-      this._updateScreen({
-        img: this.show.cover,
-        text: this.show.title
-      });
+      this._showCover();
     }
     this.prevButton.onclick = function () {
       return _this._prev();
@@ -1422,12 +1419,15 @@ var MarkdownPlayer = function () {
       return _this._next();
     };
     this.playButton.onclick = function () {
-      if (_this.status === 'paused') {
-        _this.playButton.innerHTML = 'Pause';
-        return _this._play();
+      switch (_this.status) {
+        case 'start':
+        case 'paused':
+          _this.playButton.innerHTML = 'Pause';
+          return _this._play();
+        case 'playing':
+          _this.playButton.innerHTML = 'Play';
+          return _this._pause();
       }
-      _this.playButton.innerHTML = 'Play';
-      _this._pause();
     };
   }
 
@@ -1471,6 +1471,16 @@ var MarkdownPlayer = function () {
       this.scene.style.backgroundSize = 'contain';
       this.scene.style.backgroundPosition = '50% 50%';
       this.screen.appendChild(this.scene);
+      // screen - title
+      this.title = document.createElement('div');
+      this.title.style.width = '100%';
+      this.title.style.position = 'absolute';
+      this.title.style.top = '48%';
+      this.title.style.color = '#fff';
+      this.title.style.textShadow = '0 0 8px #000';
+      this.title.style.textAlign = 'center';
+      this.title.style.fontSize = '6vh';
+      this.screen.appendChild(this.title);
       // screen - subtitle
       this.subtitle = document.createElement('div');
       this.subtitle.style.width = '100%';
@@ -1511,8 +1521,22 @@ var MarkdownPlayer = function () {
       this.playbar.appendChild(this.progressDisplay);
     }
   }, {
+    key: '_showCover',
+    value: function _showCover() {
+      this.scene.style.backgroundImage = 'url(\'' + this.show.cover + '\')';
+      this.scene.style.opacity = 0.5;
+      this.title.innerHTML = this.show.title;
+    }
+  }, {
+    key: '_hideCover',
+    value: function _hideCover() {
+      this.scene.style.opacity = 1;
+      this.title.style.display = 'none';
+    }
+  }, {
     key: '_updateScreen',
     value: function _updateScreen(action) {
+      this._hideCover();
       this.scene.style.backgroundImage = 'url(\'' + action.img.src + '\')';
       this.subtitle.innerHTML = action.text;
       this.progressDisplay.innerHTML = action.id + ' / ' + this.show.length;
