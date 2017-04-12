@@ -1,28 +1,21 @@
 import path from 'path'
-import webpack from 'webpack'
-import htmlWebpackPlugin from 'html-webpack-plugin'
 
 module.exports = {
-  entry: './app/main.js',
-  resolve: {
-    modules: [
-      'node_modules',
-      'lib'
-    ],
-  },
+  entry: './lib/markdown-player.js',
   output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'markdown-player.js',
+    library: 'MarkdownPlayer',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    inline: true
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new htmlWebpackPlugin({
-      template: 'app/index.html',
-      inject: 'body'
-    })
-  ]
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }
+    ]
+  }
 }
