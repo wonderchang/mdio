@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const path = require('path')
+const ghpages = require('gh-pages')
+
+ghpages.publish(path.join(__dirname, 'dist'), (err) => {
+  if (err) {
+    throw err
+  }
+  console.log('Publish gh-pages successfull')
+})
