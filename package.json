@@ -5,7 +5,8 @@
   "main": "dist/markdown-player.js",
   "scripts": {
     "build": "./node_modules/.bin/standard lib/*.js && WEBPACK_ENV=build ./node_modules/.bin/webpack -p --progress",
-    "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --progress --colors --watch"
+    "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --progress --colors --watch",
+    "lint": "./node_modules/.bin/standard lib/*.js"
   },
   "repository": {
     "type": "git",
