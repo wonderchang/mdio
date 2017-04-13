@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/wonderchang/markdown-player.svg?branch=master)](https://travis-ci.org/wonderchang/markdown-player)
 
-A markdown text-to-speech robot.
+A markdown document player. See example:
+
+* [The Three Little Pigs](https://wonderchang.github.io/markdown-player/) [[source](https://github.com/wonderchang/markdown-player/blob/master/dist/index.html)]
 
 ## Installation
 
