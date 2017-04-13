@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset='utf8' />
+    <title>markdown-player Demo</title>
+    <style>
+      #showtime {
+        width: 80%;
+        height: 80%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='showtime'>
+      # 卡迪諾狂新聞
+
+      ![cover](http://homepages.uni-paderborn.de/odenbach/wwwmath/pics/pigs/pig2.jpg)
+      你知道你是一隻豬嗎
+      你媽知道你在這裡發廢文嗎
+    </div>
+    <script src='markdown-player.js'></script>
+    <script>
+      const mdPlayer = new MarkdownPlayer({
+        selector: '#showtime',
+        utteranceLang: 'zh-TW'
+      })
+    </script>
+  </body>
+</html>

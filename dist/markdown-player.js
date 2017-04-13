@@ -976,6 +976,7 @@ var read = function read(text) {
   // actions
   var actions = [];
   var img = void 0;
+  var currentOptions = void 0;
   i = 0;
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -985,16 +986,35 @@ var read = function read(text) {
     for (var _iterator = tokens[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var t = _step.value;
 
+      var blockParseResult = /<!--\s*block\s*({.*})\s*-->/.exec(t.text);
+      var endblockParseResult = /<!--\s*endblock\s*-->/.exec(t.text);
+      if (t.type === 'html' && blockParseResult) {
+        currentOptions = JSON.parse(blockParseResult[1]);
+        continue;
+      }
+      if (t.type === 'html' && endblockParseResult) {
+        currentOptions = null;
+        continue;
+      }
       if (t.type === 'image') {
         img = t;
-      } else {
-        i += 1;
-        actions.push({
-          id: i,
-          img: img,
-          text: t.text
-        });
+        continue;
       }
+      if (t.type === 'space') {
+        continue;
+      }
+      i += 1;
+      var singleActionParseResult = /.*<!--\s*({.*})\s*-->/.exec(t.text);
+      var singleActionOptions = singleActionParseResult ? JSON.parse(singleActionParseResult[1]) : null;
+      if (singleActionParseResult) {
+        t.text = t.text.split(/\s*<!--/)[0];
+      }
+      actions.push({
+        id: i,
+        img: img,
+        text: t.text,
+        options: singleActionOptions || currentOptions || {}
+      });
     }
   } catch (err) {
     _didIteratorError = true;
@@ -1011,6 +1031,7 @@ var read = function read(text) {
     }
   }
 
+  console.log(actions);
   return {
     title: title,
     cover: cover,
@@ -1100,7 +1121,9 @@ var MarkdownPlayer = function () {
     var defaultOptions = {
       selector: DEFAULT_SELECTOR,
       utteranceLang: 'en-US',
-      utteranceRate: 1
+      utteranceRate: 1,
+      utterancePitch: 1,
+      utteranceVolume: 1
     };
     this.options = (0, _merge2.default)(defaultOptions, options);
     this.wrapper = document.querySelector(this.options.selector);
@@ -1359,18 +1382,20 @@ var MarkdownPlayer = function () {
     value: function _action() {
       var act = this.show.actions[this.actionI];
       this._updateScreen(Object.assign({}, act, { text: null }));
-      this._speech(act.text);
+      this._speech(act);
     }
   }, {
     key: '_speech',
-    value: function _speech(text) {
+    value: function _speech(action) {
       var _this3 = this;
 
-      text = text.replace(/&quot;/g, '"').replace(/&apos;/g, '\'');
+      var text = action.text.replace(/&quot;/g, '"').replace(/&apos;/g, '\'');
       window.speechSynthesis.cancel();
       window.utterance = new SpeechSynthesisUtterance(text);
-      window.utterance.lang = this.options.utteranceLang;
-      window.utterance.rate = this.options.utteranceRate;
+      window.utterance.lang = action.options.utteranceLang || this.options.utteranceLang;
+      window.utterance.rate = action.options.utteranceRate || this.options.utteranceRate;
+      window.utterance.pitch = action.options.utterancePitch || this.options.utterancePitch;
+      window.utterance.volume = action.options.utteranceVolume || this.options.utteranceVolume;
       window.utterance.onstart = function () {
         _this3.subtitle.innerHTML = text;
       };
