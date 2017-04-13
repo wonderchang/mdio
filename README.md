@@ -4,7 +4,7 @@
 
 A markdown document player. See example:
 
-* [The Three Little Pigs](https://wonderchang.github.io/markdown-player/the-three-little-pigs) [[source](https://github.com/wonderchang/markdown-player/blob/master/dist/the-three-little-pigs.html)]
+* [The Three Little Pigs](https://wonderchang.github.io/markdown-player/the-three-little-pigs.html) [[source](https://github.com/wonderchang/markdown-player/blob/master/dist/the-three-little-pigs.html)]
 
 ## Installation
 
