@@ -1031,7 +1031,6 @@ var read = function read(text) {
     }
   }
 
-  console.log(actions);
   return {
     title: title,
     cover: cover,
@@ -1164,6 +1163,21 @@ var MarkdownPlayer = function () {
         case 'playing':
           _this.playButton.innerHTML = 'Play';
           return _this._pause();
+      }
+    };
+    window.onkeydown = function (evt) {
+      switch (evt.key) {
+        case 'ArrowRight':
+        case 'l':
+          _this._next();
+          break;
+        case 'ArrowLeft':
+        case 'h':
+          _this._prev();
+          break;
+        case ' ':
+          _this.playButton.onclick();
+          break;
       }
     };
   }
