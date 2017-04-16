@@ -1,4 +1,4 @@
-# markdown-player
+# mdio
 
 [![Build Status](https://travis-ci.org/wonderchang/markdown-player.svg?branch=master)](https://travis-ci.org/wonderchang/markdown-player)
 
@@ -10,7 +10,7 @@ A markdown document player. See example:
 
 For webpack
 
-	$ npm install markdown-player
+	$ npm install mdio
 
 
 ## Getting Started
@@ -18,7 +18,7 @@ For webpack
 Markup the content
 
 ```html
-<div id='markdown-player'>
+<div id='mdio'>
   # The Three Little Pigs
 
   ![cover](http://homepages.uni-paderborn.de/odenbach/wwwmath/pics/pigs/pig2.jpg)
@@ -31,8 +31,8 @@ Markup the content
 Setup the player
 
 ```js
-const markdownPlayer = MarkdownPlayer({
-  selector: '#markdown-player',
+const mdio = Mdio({
+  selector: '#mdio',
   utteranceLang: 'en-US'
 })
 ```
@@ -90,7 +90,7 @@ sentence 3
 
 ## Avaliable Options
 
-* `selector`: the CSS selector for refering the element which the player will be set to. (default: `#markdown-player`)
+* `selector`: the CSS selector for refering the element which the player will be set to. (default: `#mdio`)
 
 ---
 
