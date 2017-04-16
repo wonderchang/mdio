@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("MarkdownPlayer", [], factory);
+		define("Mdio", [], factory);
 	else if(typeof exports === 'object')
-		exports["MarkdownPlayer"] = factory();
+		exports["Mdio"] = factory();
 	else
-		root["MarkdownPlayer"] = factory();
+		root["Mdio"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -1246,16 +1246,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var DEFAULT_SELECTOR = '#markdown-player';
-
-var MarkdownPlayer = function () {
-  function MarkdownPlayer(options) {
+var Mido = function () {
+  function Mido(options) {
     var _this = this;
 
-    _classCallCheck(this, MarkdownPlayer);
+    _classCallCheck(this, Mido);
 
     var defaultOptions = {
-      selector: DEFAULT_SELECTOR,
+      selector: '#markdown-player',
       utteranceLang: 'en-US',
       utteranceRate: 1,
       utterancePitch: 1,
@@ -1299,6 +1297,25 @@ var MarkdownPlayer = function () {
           return _this._pause();
       }
     };
+    this.isFullScreen = false;
+    this.fullScreenButton.onclick = function () {
+      if (!_this.isFullScreen) {
+        _this.wrapperWidth = _this.wrapper.clientWidth;
+        _this.wrapperHeight = _this.wrapper.clientHeight;
+        _this.wrapper.style.width = '100%';
+        _this.wrapper.style.height = '100%';
+        _this.wrapper.style.position = 'absolute';
+        _this.wrapper.style.top = 0;
+        _this.wrapper.style.left = 0;
+        _this.screen.style.height = window.innerHeight - 44;
+        _this.fullScreenButtonIcon.setAttribute('class', 'compress icon');
+        _this.isFullScreen = true;
+      } else {
+        _this.wrapper.setAttribute('style', 'position: relative; overflow: hidden');
+        _this.fullScreenButtonIcon.setAttribute('class', 'expand icon');
+        _this.isFullScreen = false;
+      }
+    };
     window.onkeydown = function (evt) {
       switch (evt.key) {
         case 'ArrowRight':
@@ -1316,7 +1333,7 @@ var MarkdownPlayer = function () {
     };
   }
 
-  _createClass(MarkdownPlayer, [{
+  _createClass(Mido, [{
     key: '_buildPlayer',
     value: function _buildPlayer() {
       // wrapper
@@ -1343,7 +1360,7 @@ var MarkdownPlayer = function () {
       // screen - scene
       this.scene = document.createElement('div');
       this.scene.style.width = '100%';
-      this.scene.style.height = this.screenHeight;
+      this.scene.style.height = '100%';
       this.scene.style.backgroundColor = '#222';
       this.scene.style.backgroundRepeat = 'no-repeat';
       this.scene.style.backgroundSize = 'contain';
@@ -1400,7 +1417,7 @@ var MarkdownPlayer = function () {
       this.fullScreenButton.style.cursor = 'pointer';
       this.fullScreenButton.style.marginRight = 12;
       this.fullScreenButtonIcon = document.createElement('i');
-      this.fullScreenButtonIcon.setAttribute('class', 'maximize icon');
+      this.fullScreenButtonIcon.setAttribute('class', 'expand icon');
       this.fullScreenButtonIcon.style.fontSize = 24;
       this.fullScreenButtonIcon.style.color = '#fff';
       this.fullScreenButton.appendChild(this.fullScreenButtonIcon);
@@ -1605,7 +1622,7 @@ var MarkdownPlayer = function () {
     }
   }]);
 
-  return MarkdownPlayer;
+  return Mido;
 }();
 
 module.exports = MarkdownPlayer;

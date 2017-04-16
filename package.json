@@ -1,8 +1,8 @@
 {
-  "name": "markdown-player",
-  "version": "0.1.0",
-  "description": "A markdown text-to-speech player",
-  "main": "dist/markdown-player.js",
+  "name": "mdio",
+  "version": "0.0.1",
+  "description": "A markdown document player",
+  "main": "dist/mdio.js",
   "scripts": {
     "build": "./node_modules/.bin/standard lib/*.js && WEBPACK_ENV=build ./node_modules/.bin/webpack -p --progress",
     "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --progress --colors --watch",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wonderchang/markdown-player.git"
+    "url": "git+https://github.com/wonderchang/mdio.git"
   },
   "keywords": [
     "markdown",
@@ -21,9 +21,9 @@
   "author": "Wonder Chang <iwonder.tw@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wonderchang/markdown-player/issues"
+    "url": "https://github.com/wonderchang/mdio/issues"
   },
-  "homepage": "https://github.com/wonderchang/markdown-player#readme",
+  "homepage": "https://github.com/wonderchang/mdio#readme",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",

@@ -2,11 +2,11 @@ import path from 'path'
 import webpack from 'webpack'
 
 module.exports = {
-  entry: './lib/markdown-player.js',
+  entry: './lib/mdio.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: (process.env.WEBPACK_ENV === 'build') ? 'markdown-player.min.js' : 'markdown-player.js',
-    library: 'MarkdownPlayer',
+    filename: (process.env.WEBPACK_ENV === 'build') ? 'mdio.min.js' : 'mdio.js',
+    library: 'Mdio',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
