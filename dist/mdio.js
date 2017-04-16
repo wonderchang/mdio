@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,8 +81,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(9),
-    getRawTag = __webpack_require__(50),
-    objectToString = __webpack_require__(56);
+    getRawTag = __webpack_require__(51),
+    objectToString = __webpack_require__(57);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -268,11 +268,11 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 var assignValue = __webpack_require__(10),
-    copyObject = __webpack_require__(46),
-    createAssigner = __webpack_require__(48),
+    copyObject = __webpack_require__(47),
+    createAssigner = __webpack_require__(49),
     isArrayLike = __webpack_require__(2),
     isPrototype = __webpack_require__(15),
-    keys = __webpack_require__(67);
+    keys = __webpack_require__(68);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -407,7 +407,7 @@ function toComment(sourceMap) {
   return '/*# ' + data + ' */';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28).Buffer))
 
 /***/ }),
 /* 8 */
@@ -496,7 +496,7 @@ module.exports = baseAssignValue;
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(49);
+var getNative = __webpack_require__(50);
 
 var defineProperty = (function() {
   try {
@@ -764,7 +764,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(70);
+	fixUrls = __webpack_require__(71);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -1061,7 +1061,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _marked = __webpack_require__(69);
+var _marked = __webpack_require__(70);
 
 var _marked2 = _interopRequireDefault(_marked);
 
@@ -1173,10 +1173,237 @@ exports.default = {
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Player = function () {
+  function Player(selector) {
+    var _this = this;
+
+    _classCallCheck(this, Player);
+
+    // Wrapper
+    this.wrapper = document.querySelector(selector);
+    this.wrapper.style.position = 'relative';
+    this.wrapper.style.overflow = 'hidden';
+    this.wrapperHeight = this.wrapper.clientHeight;
+    this.playbarHeight = 44;
+    this.screenHeight = this.wrapperHeight - this.playbarHeight;
+
+    // container
+    this.container = document.createElement('div');
+    this.container.style.width = '100%';
+    this.container.style.height = '100%';
+    this.container.style.backgroundColor = '#eee';
+    this.container.style.position = 'absolute';
+    this.container.style.left = 0;
+    this.container.style.top = 0;
+    this.wrapper.appendChild(this.container);
+
+    // screen
+    this.screen = document.createElement('div');
+    this.screen.style.width = '100%';
+    this.screen.style.height = this.screenHeight;
+    this.screen.style.position = 'relative';
+    this.container.appendChild(this.screen);
+
+    // screen - scene
+    this.scene = document.createElement('div');
+    this.scene.style.width = '100%';
+    this.scene.style.height = '100%';
+    this.scene.style.backgroundColor = '#222';
+    this.scene.style.backgroundRepeat = 'no-repeat';
+    this.scene.style.backgroundSize = 'contain';
+    this.scene.style.backgroundPosition = '50% 50%';
+    this.screen.appendChild(this.scene);
+
+    // screen - title
+    this.title = document.createElement('div');
+    this.title.style.width = '100%';
+    this.title.style.position = 'absolute';
+    this.title.style.top = '45%';
+    this.title.style.color = '#fff';
+    this.title.style.textShadow = '0 0 8px #000';
+    this.title.style.textAlign = 'center';
+    this.title.style.fontSize = '6vh';
+    this.screen.appendChild(this.title);
+
+    // screen - subtitle
+    this.subtitle = document.createElement('div');
+    this.subtitle.style.width = '100%';
+    this.subtitle.style.position = 'absolute';
+    this.subtitle.style.bottom = '2vh';
+    this.subtitle.style.backgroundColor = 'transparent';
+    this.subtitle.style.textAlign = 'center';
+    this.subtitle.style.color = '#fff';
+    this.subtitle.style.fontWeight = 'bold';
+    this.subtitle.style.textShadow = '0 0 8px #000';
+    this.subtitle.style.fontSize = '3vh';
+    this.screen.appendChild(this.subtitle);
+
+    // controller
+    this.controller = document.createElement('div');
+    this.controller.style.width = '100%';
+    this.controller.style.backgroundColor = '#333';
+    this.controller.style.position = 'absolute';
+    this.controller.style.textAlign = 'center';
+    this.controller.style.paddingTop = 9;
+    this.controller.style.paddingBottom = 7;
+    this.controller.style.bottom = 0;
+    this.controller.style['animation-duration'] = '0.1s';
+    this.controller.style['animation-delay'] = '0s';
+    this.container.appendChild(this.controller);
+
+    // controller - play button
+    this.playButton = document.createElement('a');
+    this.playButton.style.float = 'left';
+    this.playButton.style.cursor = 'pointer';
+    this.playButton.style.marginLeft = 12;
+    this.playButtonIcon = document.createElement('i');
+    this.playButtonIcon.setAttribute('class', 'play icon');
+    this.playButtonIcon.style.fontSize = 24;
+    this.playButtonIcon.style.color = '#fff';
+    this.playButton.appendChild(this.playButtonIcon);
+    this.controller.appendChild(this.playButton);
+
+    // playbar - full screen button
+    this.isFullScreen = false;
+    this.fullScreenButton = document.createElement('a');
+    this.fullScreenButton.style.float = 'right';
+    this.fullScreenButton.style.cursor = 'pointer';
+    this.fullScreenButton.style.marginRight = 12;
+    this.fullScreenButtonIcon = document.createElement('i');
+    this.fullScreenButtonIcon.setAttribute('class', 'expand icon');
+    this.fullScreenButtonIcon.style.fontSize = 24;
+    this.fullScreenButtonIcon.style.color = '#fff';
+    this.fullScreenButton.appendChild(this.fullScreenButtonIcon);
+    this.controller.appendChild(this.fullScreenButton);
+    this.fullScreenButton.onclick = function () {
+      if (!_this.isFullScreen) {
+        _this.wrapperWidth = _this.wrapper.clientWidth;
+        _this.wrapperHeight = _this.wrapper.clientHeight;
+        _this.wrapper.style.width = '100%';
+        _this.wrapper.style.height = '100%';
+        _this.wrapper.style.position = 'absolute';
+        _this.wrapper.style.top = 0;
+        _this.wrapper.style.left = 0;
+        _this.screen.style.height = window.innerHeight - 44;
+        _this.fullScreenButtonIcon.setAttribute('class', 'compress icon');
+        _this.isFullScreen = true;
+      } else {
+        _this.wrapper.setAttribute('style', 'position: relative; overflow: hidden');
+        _this.screen.style.height = _this.screenHeight;
+        _this.fullScreenButtonIcon.setAttribute('class', 'expand icon');
+        _this.isFullScreen = false;
+      }
+    };
+
+    // playbar - prev button
+    this.prevButton = document.createElement('a');
+    this.prevButton.style.cursor = 'pointer';
+    this.prevButton.style.display = 'block-inline';
+    this.prevButton.style.marginTop = 9;
+    this.prevButtonIcon = document.createElement('i');
+    this.prevButtonIcon.setAttribute('class', 'step backward icon');
+    this.prevButtonIcon.style.fontSize = 24;
+    this.prevButtonIcon.style.color = '#fff';
+    this.prevButton.appendChild(this.prevButtonIcon);
+    this.controller.appendChild(this.prevButton);
+
+    // playbar - progress number
+    this.progressNumber = document.createElement('span');
+    this.progressNumber.style.color = '#fff';
+    this.progressNumber.style.fontSize = 20;
+    this.controller.appendChild(this.progressNumber);
+
+    // playbar - next button
+    this.nextButton = document.createElement('a');
+    this.nextButton.style.cursor = 'pointer';
+    this.nextButton.style.marginTop = 9;
+    this.nextButtonIcon = document.createElement('i');
+    this.nextButtonIcon.setAttribute('class', 'step forward icon');
+    this.nextButtonIcon.style.fontSize = 24;
+    this.nextButtonIcon.style.color = '#fff';
+    this.nextButton.appendChild(this.nextButtonIcon);
+    this.controller.appendChild(this.nextButton);
+
+    /*
+    this.screen.onmouseover = (evt) => {
+      clearTimeout(this.playbarTimer)
+      this.playbar.setAttribute('class', 'animated fadeIn')
+      this.playbarTimer = setTimeout(() => {
+        this.playbar.setAttribute('class', 'animated fadeOut')
+      }, 1000)
+    }
+    */
+  }
+
+  _createClass(Player, [{
+    key: 'setProgressNumber',
+    value: function setProgressNumber(text) {
+      this.progressNumber.innerHTML = text;
+    }
+  }, {
+    key: 'setSceneImage',
+    value: function setSceneImage(imageUrl) {
+      if (!imageUrl) {
+        return this.scene.style.backgroundImage = 'url("")';
+      }
+      this.scene.style.backgroundImage = 'url(\'' + imageUrl + '\')';
+    }
+  }, {
+    key: 'setSubtitle',
+    value: function setSubtitle(text) {
+      this.subtitle.innerHTML = text;
+    }
+  }, {
+    key: 'showPlayButton',
+    value: function showPlayButton() {
+      this.playButtonIcon.setAttribute('class', 'play icon');
+    }
+  }, {
+    key: 'showPauseButton',
+    value: function showPauseButton() {
+      this.playButtonIcon.setAttribute('class', 'pause icon');
+    }
+  }, {
+    key: 'showReplayButton',
+    value: function showReplayButton() {
+      this.playButtonIcon.setAttribute('class', 'undo icon');
+    }
+  }, {
+    key: 'showCover',
+    value: function showCover(title, imageUrl) {
+      this.setSceneImage(imageUrl);
+      this.title.innerHTML = title;
+      this.title.style.display = 'block';
+      this.subtitle.style.display = 'none';
+    }
+  }, {
+    key: 'hideCover',
+    value: function hideCover() {
+      this.title.style.display = 'none';
+      this.subtitle.style.display = 'block';
+    }
+  }]);
+
+  return Player;
+}();
+
+module.exports = Player;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(28);
+var content = __webpack_require__(29);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(20)(content, {});
@@ -1196,13 +1423,13 @@ if(false) {
 }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(29);
+var content = __webpack_require__(30);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(20)(content, {});
@@ -1222,7 +1449,7 @@ if(false) {
 }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1234,23 +1461,27 @@ var _director = __webpack_require__(22);
 
 var _director2 = _interopRequireDefault(_director);
 
+var _player = __webpack_require__(23);
+
+var _player2 = _interopRequireDefault(_player);
+
 var _assign = __webpack_require__(6);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-__webpack_require__(23);
-
 __webpack_require__(24);
+
+__webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Mido = function () {
-  function Mido(options) {
+var Mdio = function () {
+  function Mdio(options) {
     var _this = this;
 
-    _classCallCheck(this, Mido);
+    _classCallCheck(this, Mdio);
 
     var defaultOptions = {
       selector: '#markdown-player',
@@ -1265,7 +1496,7 @@ var Mido = function () {
     this.show = _director2.default.read(this.script);
     this.actionI = 0;
     this.speechRecord = 0;
-    this._buildPlayer();
+    this.player = new _player2.default(this.options.selector);
 
     var result = /(.+)\?(\d+)$/.exec(location.href);
     if (result) {
@@ -1277,43 +1508,25 @@ var Mido = function () {
       this.baseUrl = location.href;
       this.actionI = 0;
       this.status = 'start';
-      this._showCover();
-      this.progressNumber.innerHTML = this.actionI + ' / ' + this.show.length;
+      this.player.showCover(this.show.title, this.show.cover);
+      this.player.setProgressNumber(this.actionI + ' / ' + this.show.length);
     }
-    this.prevButton.onclick = function () {
+    this.player.prevButton.onclick = function () {
       return _this._prev();
     };
-    this.nextButton.onclick = function () {
+    this.player.nextButton.onclick = function () {
       return _this._next();
     };
-    this.playButton.onclick = function () {
+    this.player.playButton.onclick = function () {
       switch (_this.status) {
         case 'start':
         case 'paused':
-          _this.playButtonIcon.setAttribute('class', 'pause icon');
           return _this._play();
         case 'playing':
-          _this.playButtonIcon.setAttribute('class', 'play icon');
           return _this._pause();
-      }
-    };
-    this.isFullScreen = false;
-    this.fullScreenButton.onclick = function () {
-      if (!_this.isFullScreen) {
-        _this.wrapperWidth = _this.wrapper.clientWidth;
-        _this.wrapperHeight = _this.wrapper.clientHeight;
-        _this.wrapper.style.width = '100%';
-        _this.wrapper.style.height = '100%';
-        _this.wrapper.style.position = 'absolute';
-        _this.wrapper.style.top = 0;
-        _this.wrapper.style.left = 0;
-        _this.screen.style.height = window.innerHeight - 44;
-        _this.fullScreenButtonIcon.setAttribute('class', 'compress icon');
-        _this.isFullScreen = true;
-      } else {
-        _this.wrapper.setAttribute('style', 'position: relative; overflow: hidden');
-        _this.fullScreenButtonIcon.setAttribute('class', 'expand icon');
-        _this.isFullScreen = false;
+        case 'end':
+          _this.actionI = 0;
+          return _this._play();
       }
     };
     window.onkeydown = function (evt) {
@@ -1327,168 +1540,19 @@ var Mido = function () {
           _this._prev();
           break;
         case ' ':
-          _this.playButton.onclick();
+          _this.player.playButton.onclick();
           break;
       }
     };
   }
 
-  _createClass(Mido, [{
-    key: '_buildPlayer',
-    value: function _buildPlayer() {
-      // wrapper
-      this.wrapper.style.position = 'relative';
-      this.wrapper.style.overflow = 'hidden';
-      this.wrapperHeight = this.wrapper.clientHeight;
-      this.playbarHeight = 44;
-      this.screenHeight = this.wrapperHeight - this.playbarHeight;
-      // container
-      this.container = document.createElement('div');
-      this.container.style.width = '100%';
-      this.container.style.height = '100%';
-      this.container.style.backgroundColor = '#eee';
-      this.container.style.position = 'absolute';
-      this.container.style.left = 0;
-      this.container.style.top = 0;
-      this.wrapper.appendChild(this.container);
-      // screen
-      this.screen = document.createElement('div');
-      this.screen.style.width = '100%';
-      this.screen.style.height = this.screenHeight;
-      this.screen.style.position = 'relative';
-      this.container.appendChild(this.screen);
-      // screen - scene
-      this.scene = document.createElement('div');
-      this.scene.style.width = '100%';
-      this.scene.style.height = '100%';
-      this.scene.style.backgroundColor = '#222';
-      this.scene.style.backgroundRepeat = 'no-repeat';
-      this.scene.style.backgroundSize = 'contain';
-      this.scene.style.backgroundPosition = '50% 50%';
-      this.screen.appendChild(this.scene);
-      // screen - title
-      this.title = document.createElement('div');
-      this.title.style.width = '100%';
-      this.title.style.position = 'absolute';
-      this.title.style.top = '45%';
-      this.title.style.color = '#fff';
-      this.title.style.textShadow = '0 0 8px #000';
-      this.title.style.textAlign = 'center';
-      this.title.style.fontSize = '6vh';
-      this.screen.appendChild(this.title);
-      // screen - subtitle
-      this.subtitle = document.createElement('div');
-      this.subtitle.style.width = '100%';
-      this.subtitle.style.position = 'absolute';
-      this.subtitle.style.bottom = '2vh';
-      this.subtitle.style.backgroundColor = 'transparent';
-      this.subtitle.style.textAlign = 'center';
-      this.subtitle.style.color = '#fff';
-      this.subtitle.style.fontWeight = 'bold';
-      this.subtitle.style.textShadow = '0 0 8px #000';
-      this.subtitle.style.fontSize = '3vh';
-      this.screen.appendChild(this.subtitle);
-      // playbar
-      this.playbar = document.createElement('div');
-      this.playbar.style.width = '100%';
-      this.playbar.style.backgroundColor = '#333';
-      this.playbar.style.position = 'absolute';
-      this.playbar.style.textAlign = 'center';
-      this.playbar.style.paddingTop = 9;
-      this.playbar.style.paddingBottom = 7;
-      this.playbar.style.bottom = 0;
-      this.playbar.style['animation-duration'] = '0.1s';
-      this.playbar.style['animation-delay'] = '0s';
-      this.container.appendChild(this.playbar);
-      // playbar - play button
-      this.playButton = document.createElement('a');
-      this.playButton.style.float = 'left';
-      this.playButton.style.cursor = 'pointer';
-      this.playButton.style.marginLeft = 12;
-      this.playButtonIcon = document.createElement('i');
-      this.playButtonIcon.setAttribute('class', 'play icon');
-      this.playButtonIcon.style.fontSize = 24;
-      this.playButtonIcon.style.color = '#fff';
-      this.playButton.appendChild(this.playButtonIcon);
-      this.playbar.appendChild(this.playButton);
-      // playbar - full screen button
-      this.fullScreenButton = document.createElement('a');
-      this.fullScreenButton.style.float = 'right';
-      this.fullScreenButton.style.cursor = 'pointer';
-      this.fullScreenButton.style.marginRight = 12;
-      this.fullScreenButtonIcon = document.createElement('i');
-      this.fullScreenButtonIcon.setAttribute('class', 'expand icon');
-      this.fullScreenButtonIcon.style.fontSize = 24;
-      this.fullScreenButtonIcon.style.color = '#fff';
-      this.fullScreenButton.appendChild(this.fullScreenButtonIcon);
-      this.playbar.appendChild(this.fullScreenButton);
-      // playbar - prev button
-      this.prevButton = document.createElement('a');
-      this.prevButton.style.cursor = 'pointer';
-      this.prevButton.style.display = 'block-inline';
-      this.prevButton.style.marginTop = 9;
-      this.prevButtonIcon = document.createElement('i');
-      this.prevButtonIcon.setAttribute('class', 'step backward icon');
-      this.prevButtonIcon.style.fontSize = 24;
-      this.prevButtonIcon.style.color = '#fff';
-      this.prevButton.appendChild(this.prevButtonIcon);
-      this.playbar.appendChild(this.prevButton);
-      // playbar - progress number
-      this.progressNumber = document.createElement('span');
-      this.progressNumber.style.color = '#fff';
-      this.progressNumber.style.fontSize = 20;
-      this.playbar.appendChild(this.progressNumber);
-      // playbar - next button
-      this.nextButton = document.createElement('a');
-      this.nextButton.style.cursor = 'pointer';
-      this.nextButton.style.marginTop = 9;
-      this.nextButtonIcon = document.createElement('i');
-      this.nextButtonIcon.setAttribute('class', 'step forward icon');
-      this.nextButtonIcon.style.fontSize = 24;
-      this.nextButtonIcon.style.color = '#fff';
-      this.nextButton.appendChild(this.nextButtonIcon);
-      this.playbar.appendChild(this.nextButton);
-
-      // Event
-      /*
-      this.screen.onmouseover = (evt) => {
-        clearTimeout(this.playbarTimer)
-        this.playbar.setAttribute('class', 'animated fadeIn')
-        this.playbarTimer = setTimeout(() => {
-          this.playbar.setAttribute('class', 'animated fadeOut')
-        }, 1000)
-      }
-      */
-    }
-  }, {
-    key: '_showCover',
-    value: function _showCover() {
-      if (this.show.cover) {
-        this.scene.style.backgroundImage = 'url(\'' + this.show.cover + '\')';
-        this.scene.style.opacity = 0.5;
-      } else {
-        this.scene.style.backgroundImage = null;
-      }
-      this.title.innerHTML = this.show.title;
-      this.title.style.display = 'block';
-      this.subtitle.style.display = 'none';
-    }
-  }, {
-    key: '_hideCover',
-    value: function _hideCover() {
-      if (this.show.cover) {
-        this.scene.style.opacity = 1;
-      }
-      this.title.style.display = 'none';
-      this.subtitle.style.display = 'block';
-    }
-  }, {
+  _createClass(Mdio, [{
     key: '_updateScreen',
     value: function _updateScreen(action) {
-      this._hideCover();
-      this.scene.style.backgroundImage = 'url(\'' + action.img.src + '\')';
-      this.subtitle.innerHTML = action.text;
-      this.progressNumber.innerHTML = action.id + ' / ' + this.show.length;
+      this.player.hideCover();
+      this.player.setSceneImage(action.img.src);
+      this.player.setSubtitle(action.text);
+      this.player.setProgressNumber(action.id + ' / ' + this.show.length);
       this._rewriteUrl(this.baseUrl + '?' + this.show.actions[this.actionI].id.toString());
     }
   }, {
@@ -1497,6 +1561,7 @@ var Mido = function () {
       var _this2 = this;
 
       this.status = 'playing';
+      this.player.showPauseButton();
       if (window.speechSynthesis.paused) {
         window.speechSynthesis.resume();
         /* TODO
@@ -1518,30 +1583,34 @@ var Mido = function () {
     key: '_pause',
     value: function _pause() {
       this.status = 'paused';
+      this.player.showPlayButton();
       window.speechSynthesis.pause();
     }
   }, {
     key: '_prev',
     value: function _prev() {
-      switch (this.actionI) {
-        case 0:
-          return this._setToStart();
-        case -1:
-          this.actionI = this.show.length - 1;
-          if (this.status === 'start') {
-            this.status = 'paused';
-          }
-          break;
-        default:
-          this.actionI -= 1;
+      if (this.status === 'start') {
+        return;
+      }
+      if (!this.actionI) {
+        return this._setToStart();
+      }
+      if (this.status === 'end') {
+        this.status = 'paused';
+        this.player.showPlayButton();
+      } else {
+        this.actionI -= 1;
       }
       this._transition();
     }
   }, {
     key: '_next',
     value: function _next() {
+      if (this.status === 'end') {
+        return;
+      }
       if (this.actionI === this.show.length - 1) {
-        return this._setToStart();
+        return this._setToEnd();
       }
       if (this.status === 'start') {
         this.status = 'paused';
@@ -1571,16 +1640,28 @@ var Mido = function () {
       this.actionI = 0;
       this.status = 'start';
       this._rewriteUrl(this.baseUrl);
-      this._showCover();
-      this.playButton.innerHTML = 'Play';
-      this.progressNumber.innerHTML = this.actionI + ' / ' + this.show.length;
+      this.player.showCover(this.show.title, this.show.cover);
+      this.player.showPlayButton();
+      this.player.setProgressNumber(this.actionI + ' / ' + this.show.length);
+    }
+  }, {
+    key: '_setToEnd',
+    value: function _setToEnd() {
+      window.speechSynthesis.cancel();
+      this.player.showCover('The End', null);
+      this.player.showReplayButton();
+      this.status = 'end';
     }
   }, {
     key: '_action',
     value: function _action() {
-      var act = this.show.actions[this.actionI];
-      this._updateScreen(Object.assign({}, act, { text: null }));
-      this._speech(act);
+      if (this.actionI < this.show.length) {
+        var act = this.show.actions[this.actionI];
+        this._updateScreen(Object.assign({}, act, { text: null }));
+        this._speech(act);
+        return;
+      }
+      this._setToEnd();
     }
   }, {
     key: '_speech',
@@ -1595,7 +1676,7 @@ var Mido = function () {
       window.utterance.pitch = action.options.utterancePitch || this.options.utterancePitch;
       window.utterance.volume = action.options.utteranceVolume || this.options.utteranceVolume;
       window.utterance.onstart = function () {
-        _this3.subtitle.innerHTML = text;
+        _this3.player.setSubtitle(text);
       };
       window.utterance.onboundary = function () {
         _this3.speechRecord += 1;
@@ -1605,10 +1686,13 @@ var Mido = function () {
           return;
         }
         _this3.actionI += 1;
-        if (_this3.actionI < _this3.show.length) {
-          return _this3._action();
+        _this3._action();
+        /*
+        if (this.actionI < this.show.length) {
+          return this._action()
         }
-        _this3._setToStart();
+        this._setToStart()
+        */
       };
       window.speechSynthesis.speak(window.utterance);
       window.onbeforeunload = function () {
@@ -1622,13 +1706,13 @@ var Mido = function () {
     }
   }]);
 
-  return Mido;
+  return Mdio;
 }();
 
-module.exports = MarkdownPlayer;
+module.exports = Mdio;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1749,7 +1833,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1763,9 +1847,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(26)
-var ieee754 = __webpack_require__(34)
-var isArray = __webpack_require__(35)
+var base64 = __webpack_require__(27)
+var ieee754 = __webpack_require__(35)
+var isArray = __webpack_require__(36)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -3546,7 +3630,7 @@ function isnan (val) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(undefined);
@@ -3560,7 +3644,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n\n/*!\n * animate.css -http://dane
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)(undefined);
@@ -3568,37 +3652,37 @@ exports = module.exports = __webpack_require__(7)(undefined);
 
 
 // module
-exports.push([module.i, "/*!\n * # Semantic UI 2.2.10 - Icon\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n             Icon\n*******************************/\n\n@font-face {\n  font-family: 'Icons';\n  src: url(" + __webpack_require__(8) + ");\n  src: url(" + __webpack_require__(8) + "?#iefix) format('embedded-opentype'), url(" + __webpack_require__(33) + ") format('woff2'), url(" + __webpack_require__(32) + ") format('woff'), url(" + __webpack_require__(31) + ") format('truetype'), url(" + __webpack_require__(30) + "#icons) format('svg');\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-decoration: inherit;\n  text-transform: none;\n}\ni.icon {\n  display: inline-block;\n  opacity: 1;\n  margin: 0em 0.25rem 0em 0em;\n  width: 1.18em;\n  height: 1em;\n  font-family: 'Icons';\n  font-style: normal;\n  font-weight: normal;\n  text-decoration: inherit;\n  text-align: center;\n  speak: none;\n  font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\ni.icon:before {\n  background: none !important;\n}\n\n\n/*******************************\n             Types\n*******************************/\n\n\n/*--------------\n    Loading\n---------------*/\n\ni.icon.loading {\n  height: 1em;\n  line-height: 1;\n  -webkit-animation: icon-loading 2s linear infinite;\n          animation: icon-loading 2s linear infinite;\n}\n@-webkit-keyframes icon-loading {\n  from {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes icon-loading {\n  from {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n\n\n/*******************************\n             States\n*******************************/\n\ni.icon.hover {\n  opacity: 1 !important;\n}\ni.icon.active {\n  opacity: 1 !important;\n}\ni.emphasized.icon {\n  opacity: 1 !important;\n}\ni.disabled.icon {\n  opacity: 0.45 !important;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*-------------------\n        Fitted\n--------------------*/\n\ni.fitted.icon {\n  width: auto;\n  margin: 0em;\n}\n\n/*-------------------\n         Link\n--------------------*/\n\ni.link.icon,\ni.link.icons {\n  cursor: pointer;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\ni.link.icon:hover,\ni.link.icons:hover {\n  opacity: 1 !important;\n}\n\n/*-------------------\n      Circular\n--------------------*/\n\ni.circular.icon {\n  border-radius: 500em !important;\n  line-height: 1 !important;\n  padding: 0.5em 0.5em !important;\n  box-shadow: 0em 0em 0em 0.1em rgba(0, 0, 0, 0.1) inset;\n  width: 2em !important;\n  height: 2em !important;\n}\ni.circular.inverted.icon {\n  border: none;\n  box-shadow: none;\n}\n\n/*-------------------\n      Flipped\n--------------------*/\n\ni.flipped.icon,\ni.horizontally.flipped.icon {\n  -webkit-transform: scale(-1, 1);\n          transform: scale(-1, 1);\n}\ni.vertically.flipped.icon {\n  -webkit-transform: scale(1, -1);\n          transform: scale(1, -1);\n}\n\n/*-------------------\n      Rotated\n--------------------*/\n\ni.rotated.icon,\ni.right.rotated.icon,\ni.clockwise.rotated.icon {\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n}\ni.left.rotated.icon,\ni.counterclockwise.rotated.icon {\n  -webkit-transform: rotate(-90deg);\n          transform: rotate(-90deg);\n}\n\n/*-------------------\n      Bordered\n--------------------*/\n\ni.bordered.icon {\n  line-height: 1;\n  vertical-align: baseline;\n  width: 2em;\n  height: 2em;\n  padding: 0.5em 0.41em !important;\n  box-shadow: 0em 0em 0em 0.1em rgba(0, 0, 0, 0.1) inset;\n}\ni.bordered.inverted.icon {\n  border: none;\n  box-shadow: none;\n}\n\n/*-------------------\n      Inverted\n--------------------*/\n\n\n/* Inverted Shapes */\ni.inverted.bordered.icon,\ni.inverted.circular.icon {\n  background-color: #1B1C1D !important;\n  color: #FFFFFF !important;\n}\ni.inverted.icon {\n  color: #FFFFFF;\n}\n\n/*-------------------\n       Colors\n--------------------*/\n\n\n/* Red */\ni.red.icon {\n  color: #DB2828 !important;\n}\ni.inverted.red.icon {\n  color: #FF695E !important;\n}\ni.inverted.bordered.red.icon,\ni.inverted.circular.red.icon {\n  background-color: #DB2828 !important;\n  color: #FFFFFF !important;\n}\n\n/* Orange */\ni.orange.icon {\n  color: #F2711C !important;\n}\ni.inverted.orange.icon {\n  color: #FF851B !important;\n}\ni.inverted.bordered.orange.icon,\ni.inverted.circular.orange.icon {\n  background-color: #F2711C !important;\n  color: #FFFFFF !important;\n}\n\n/* Yellow */\ni.yellow.icon {\n  color: #FBBD08 !important;\n}\ni.inverted.yellow.icon {\n  color: #FFE21F !important;\n}\ni.inverted.bordered.yellow.icon,\ni.inverted.circular.yellow.icon {\n  background-color: #FBBD08 !important;\n  color: #FFFFFF !important;\n}\n\n/* Olive */\ni.olive.icon {\n  color: #B5CC18 !important;\n}\ni.inverted.olive.icon {\n  color: #D9E778 !important;\n}\ni.inverted.bordered.olive.icon,\ni.inverted.circular.olive.icon {\n  background-color: #B5CC18 !important;\n  color: #FFFFFF !important;\n}\n\n/* Green */\ni.green.icon {\n  color: #21BA45 !important;\n}\ni.inverted.green.icon {\n  color: #2ECC40 !important;\n}\ni.inverted.bordered.green.icon,\ni.inverted.circular.green.icon {\n  background-color: #21BA45 !important;\n  color: #FFFFFF !important;\n}\n\n/* Teal */\ni.teal.icon {\n  color: #00B5AD !important;\n}\ni.inverted.teal.icon {\n  color: #6DFFFF !important;\n}\ni.inverted.bordered.teal.icon,\ni.inverted.circular.teal.icon {\n  background-color: #00B5AD !important;\n  color: #FFFFFF !important;\n}\n\n/* Blue */\ni.blue.icon {\n  color: #2185D0 !important;\n}\ni.inverted.blue.icon {\n  color: #54C8FF !important;\n}\ni.inverted.bordered.blue.icon,\ni.inverted.circular.blue.icon {\n  background-color: #2185D0 !important;\n  color: #FFFFFF !important;\n}\n\n/* Violet */\ni.violet.icon {\n  color: #6435C9 !important;\n}\ni.inverted.violet.icon {\n  color: #A291FB !important;\n}\ni.inverted.bordered.violet.icon,\ni.inverted.circular.violet.icon {\n  background-color: #6435C9 !important;\n  color: #FFFFFF !important;\n}\n\n/* Purple */\ni.purple.icon {\n  color: #A333C8 !important;\n}\ni.inverted.purple.icon {\n  color: #DC73FF !important;\n}\ni.inverted.bordered.purple.icon,\ni.inverted.circular.purple.icon {\n  background-color: #A333C8 !important;\n  color: #FFFFFF !important;\n}\n\n/* Pink */\ni.pink.icon {\n  color: #E03997 !important;\n}\ni.inverted.pink.icon {\n  color: #FF8EDF !important;\n}\ni.inverted.bordered.pink.icon,\ni.inverted.circular.pink.icon {\n  background-color: #E03997 !important;\n  color: #FFFFFF !important;\n}\n\n/* Brown */\ni.brown.icon {\n  color: #A5673F !important;\n}\ni.inverted.brown.icon {\n  color: #D67C1C !important;\n}\ni.inverted.bordered.brown.icon,\ni.inverted.circular.brown.icon {\n  background-color: #A5673F !important;\n  color: #FFFFFF !important;\n}\n\n/* Grey */\ni.grey.icon {\n  color: #767676 !important;\n}\ni.inverted.grey.icon {\n  color: #DCDDDE !important;\n}\ni.inverted.bordered.grey.icon,\ni.inverted.circular.grey.icon {\n  background-color: #767676 !important;\n  color: #FFFFFF !important;\n}\n\n/* Black */\ni.black.icon {\n  color: #1B1C1D !important;\n}\ni.inverted.black.icon {\n  color: #545454 !important;\n}\ni.inverted.bordered.black.icon,\ni.inverted.circular.black.icon {\n  background-color: #1B1C1D !important;\n  color: #FFFFFF !important;\n}\n\n/*-------------------\n        Sizes\n--------------------*/\n\ni.mini.icon,\ni.mini.icons {\n  line-height: 1;\n  font-size: 0.4em;\n}\ni.tiny.icon,\ni.tiny.icons {\n  line-height: 1;\n  font-size: 0.5em;\n}\ni.small.icon,\ni.small.icons {\n  line-height: 1;\n  font-size: 0.75em;\n}\ni.icon,\ni.icons {\n  font-size: 1em;\n}\ni.large.icon,\ni.large.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 1.5em;\n}\ni.big.icon,\ni.big.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 2em;\n}\ni.huge.icon,\ni.huge.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 4em;\n}\ni.massive.icon,\ni.massive.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 8em;\n}\n\n\n/*******************************\n            Groups\n*******************************/\n\ni.icons {\n  display: inline-block;\n  position: relative;\n  line-height: 1;\n}\ni.icons .icon {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  margin: 0em;\n  margin: 0;\n}\ni.icons .icon:first-child {\n  position: static;\n  width: auto;\n  height: auto;\n  vertical-align: top;\n  -webkit-transform: none;\n          transform: none;\n  margin-right: 0.25rem;\n}\n\n/* Corner Icon */\ni.icons .corner.icon {\n  top: auto;\n  left: auto;\n  right: 0;\n  bottom: 0;\n  -webkit-transform: none;\n          transform: none;\n  font-size: 0.45em;\n  text-shadow: -1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF;\n}\ni.icons .inverted.corner.icon {\n  text-shadow: -1px -1px 0 #1B1C1D, 1px -1px 0 #1B1C1D, -1px 1px 0 #1B1C1D, 1px 1px 0 #1B1C1D;\n}\n/*\n * Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome\n * License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n\n\n/*******************************\n\nSemantic-UI integration of font-awesome :\n\n///class names are separated\ni.icon.circle => i.icon.circle\ni.icon.circle-o => i.icon.circle.outline\n\n//abbreviation are replaced by full letters:\ni.icon.ellipsis-h => i.icon.ellipsis.horizontal\ni.icon.ellipsis-v => i.icon.ellipsis.vertical\n.alpha => .i.icon.alphabet\n.asc => .i.icon.ascending\n.desc => .i.icon.descending\n.alt =>.alternate\n\nASCII order is conserved for easier maintenance.\n\nIcons that only have one style 'outline', 'square' etc do not require this class\nfor instance `lemon icon` not `lemon outline icon` since there is only one lemon\n\n*******************************/\n\n\n\n/*******************************\n            Icons\n*******************************/\n\n\n/* Web Content */\ni.icon.search:before {\n  content: \"\\F002\";\n}\ni.icon.mail.outline:before {\n  content: \"\\F003\";\n}\ni.icon.signal:before {\n  content: \"\\F012\";\n}\ni.icon.setting:before {\n  content: \"\\F013\";\n}\ni.icon.home:before {\n  content: \"\\F015\";\n}\ni.icon.inbox:before {\n  content: \"\\F01C\";\n}\ni.icon.browser:before {\n  content: \"\\F022\";\n}\ni.icon.tag:before {\n  content: \"\\F02B\";\n}\ni.icon.tags:before {\n  content: \"\\F02C\";\n}\ni.icon.image:before {\n  content: \"\\F03E\";\n}\ni.icon.calendar:before {\n  content: \"\\F073\";\n}\ni.icon.comment:before {\n  content: \"\\F075\";\n}\ni.icon.shop:before {\n  content: \"\\F07A\";\n}\ni.icon.comments:before {\n  content: \"\\F086\";\n}\ni.icon.external:before {\n  content: \"\\F08E\";\n}\ni.icon.privacy:before {\n  content: \"\\F084\";\n}\ni.icon.settings:before {\n  content: \"\\F085\";\n}\ni.icon.comments:before {\n  content: \"\\F086\";\n}\ni.icon.external:before {\n  content: \"\\F08E\";\n}\ni.icon.trophy:before {\n  content: \"\\F091\";\n}\ni.icon.payment:before {\n  content: \"\\F09D\";\n}\ni.icon.feed:before {\n  content: \"\\F09E\";\n}\ni.icon.alarm.outline:before {\n  content: \"\\F0A2\";\n}\ni.icon.tasks:before {\n  content: \"\\F0AE\";\n}\ni.icon.cloud:before {\n  content: \"\\F0C2\";\n}\ni.icon.lab:before {\n  content: \"\\F0C3\";\n}\ni.icon.mail:before {\n  content: \"\\F0E0\";\n}\ni.icon.dashboard:before {\n  content: \"\\F0E4\";\n}\ni.icon.comment.outline:before {\n  content: \"\\F0E5\";\n}\ni.icon.comments.outline:before {\n  content: \"\\F0E6\";\n}\ni.icon.sitemap:before {\n  content: \"\\F0E8\";\n}\ni.icon.idea:before {\n  content: \"\\F0EB\";\n}\ni.icon.alarm:before {\n  content: \"\\F0F3\";\n}\ni.icon.terminal:before {\n  content: \"\\F120\";\n}\ni.icon.code:before {\n  content: \"\\F121\";\n}\ni.icon.protect:before {\n  content: \"\\F132\";\n}\ni.icon.calendar.outline:before {\n  content: \"\\F133\";\n}\ni.icon.ticket:before {\n  content: \"\\F145\";\n}\ni.icon.external.square:before {\n  content: \"\\F14C\";\n}\ni.icon.bug:before {\n  content: \"\\F188\";\n}\ni.icon.mail.square:before {\n  content: \"\\F199\";\n}\ni.icon.history:before {\n  content: \"\\F1DA\";\n}\ni.icon.options:before {\n  content: \"\\F1DE\";\n}\ni.icon.text.telephone:before {\n  content: \"\\F1E4\";\n}\ni.icon.find:before {\n  content: \"\\F1E5\";\n}\ni.icon.alarm.mute:before {\n  content: \"\\F1F6\";\n}\ni.icon.alarm.mute.outline:before {\n  content: \"\\F1F7\";\n}\ni.icon.copyright:before {\n  content: \"\\F1F9\";\n}\ni.icon.at:before {\n  content: \"\\F1FA\";\n}\ni.icon.eyedropper:before {\n  content: \"\\F1FB\";\n}\ni.icon.paint.brush:before {\n  content: \"\\F1FC\";\n}\ni.icon.heartbeat:before {\n  content: \"\\F21E\";\n}\ni.icon.mouse.pointer:before {\n  content: \"\\F245\";\n}\ni.icon.hourglass.empty:before {\n  content: \"\\F250\";\n}\ni.icon.hourglass.start:before {\n  content: \"\\F251\";\n}\ni.icon.hourglass.half:before {\n  content: \"\\F252\";\n}\ni.icon.hourglass.end:before {\n  content: \"\\F253\";\n}\ni.icon.hourglass.full:before {\n  content: \"\\F254\";\n}\ni.icon.hand.pointer:before {\n  content: \"\\F25A\";\n}\ni.icon.trademark:before {\n  content: \"\\F25C\";\n}\ni.icon.registered:before {\n  content: \"\\F25D\";\n}\ni.icon.creative.commons:before {\n  content: \"\\F25E\";\n}\ni.icon.add.to.calendar:before {\n  content: \"\\F271\";\n}\ni.icon.remove.from.calendar:before {\n  content: \"\\F272\";\n}\ni.icon.delete.calendar:before {\n  content: \"\\F273\";\n}\ni.icon.checked.calendar:before {\n  content: \"\\F274\";\n}\ni.icon.industry:before {\n  content: \"\\F275\";\n}\ni.icon.shopping.bag:before {\n  content: \"\\F290\";\n}\ni.icon.shopping.basket:before {\n  content: \"\\F291\";\n}\ni.icon.hashtag:before {\n  content: \"\\F292\";\n}\ni.icon.percent:before {\n  content: \"\\F295\";\n}\ni.icon.handshake:before {\n  content: \"\\F2B5\";\n}\ni.icon.open.envelope:before {\n  content: \"\\F2B6\";\n}\ni.icon.open.envelope.outline:before {\n  content: \"\\F2B7\";\n}\ni.icon.address.book:before {\n  content: \"\\F2B9\";\n}\ni.icon.address.book.outline:before {\n  content: \"\\F2BA\";\n}\ni.icon.address.card:before {\n  content: \"\\F2BB\";\n}\ni.icon.address.card.outline:before {\n  content: \"\\F2BC\";\n}\ni.icon.id.badge:before {\n  content: \"\\F2C1\";\n}\ni.icon.id.card:before {\n  content: \"\\F2C2\";\n}\ni.icon.id.card.outline:before {\n  content: \"\\F2C3\";\n}\ni.icon.podcast:before {\n  content: \"\\F2CE\";\n}\ni.icon.window.maximize:before {\n  content: \"\\F2D0\";\n}\ni.icon.window.minimize:before {\n  content: \"\\F2D1\";\n}\ni.icon.window.restore:before {\n  content: \"\\F2D2\";\n}\ni.icon.window.close:before {\n  content: \"\\F2D3\";\n}\ni.icon.window.close.outline:before {\n  content: \"\\F2D4\";\n}\n\n/* User Actions */\ni.icon.wait:before {\n  content: \"\\F017\";\n}\ni.icon.download:before {\n  content: \"\\F019\";\n}\ni.icon.repeat:before {\n  content: \"\\F01E\";\n}\ni.icon.refresh:before {\n  content: \"\\F021\";\n}\ni.icon.lock:before {\n  content: \"\\F023\";\n}\ni.icon.bookmark:before {\n  content: \"\\F02E\";\n}\ni.icon.print:before {\n  content: \"\\F02F\";\n}\ni.icon.write:before {\n  content: \"\\F040\";\n}\ni.icon.adjust:before {\n  content: \"\\F042\";\n}\ni.icon.theme:before {\n  content: \"\\F043\";\n}\ni.icon.edit:before {\n  content: \"\\F044\";\n}\ni.icon.external.share:before {\n  content: \"\\F045\";\n}\ni.icon.ban:before {\n  content: \"\\F05E\";\n}\ni.icon.mail.forward:before {\n  content: \"\\F064\";\n}\ni.icon.share:before {\n  content: \"\\F064\";\n}\ni.icon.expand:before {\n  content: \"\\F065\";\n}\ni.icon.compress:before {\n  content: \"\\F066\";\n}\ni.icon.unhide:before {\n  content: \"\\F06E\";\n}\ni.icon.hide:before {\n  content: \"\\F070\";\n}\ni.icon.random:before {\n  content: \"\\F074\";\n}\ni.icon.retweet:before {\n  content: \"\\F079\";\n}\ni.icon.sign.out:before {\n  content: \"\\F08B\";\n}\ni.icon.pin:before {\n  content: \"\\F08D\";\n}\ni.icon.sign.in:before {\n  content: \"\\F090\";\n}\ni.icon.upload:before {\n  content: \"\\F093\";\n}\ni.icon.call:before {\n  content: \"\\F095\";\n}\ni.icon.remove.bookmark:before {\n  content: \"\\F097\";\n}\ni.icon.call.square:before {\n  content: \"\\F098\";\n}\ni.icon.unlock:before {\n  content: \"\\F09C\";\n}\ni.icon.configure:before {\n  content: \"\\F0AD\";\n}\ni.icon.filter:before {\n  content: \"\\F0B0\";\n}\ni.icon.wizard:before {\n  content: \"\\F0D0\";\n}\ni.icon.undo:before {\n  content: \"\\F0E2\";\n}\ni.icon.exchange:before {\n  content: \"\\F0EC\";\n}\ni.icon.cloud.download:before {\n  content: \"\\F0ED\";\n}\ni.icon.cloud.upload:before {\n  content: \"\\F0EE\";\n}\ni.icon.reply:before {\n  content: \"\\F112\";\n}\ni.icon.reply.all:before {\n  content: \"\\F122\";\n}\ni.icon.erase:before {\n  content: \"\\F12D\";\n}\ni.icon.unlock.alternate:before {\n  content: \"\\F13E\";\n}\ni.icon.write.square:before {\n  content: \"\\F14B\";\n}\ni.icon.share.square:before {\n  content: \"\\F14D\";\n}\ni.icon.archive:before {\n  content: \"\\F187\";\n}\ni.icon.translate:before {\n  content: \"\\F1AB\";\n}\ni.icon.recycle:before {\n  content: \"\\F1B8\";\n}\ni.icon.send:before {\n  content: \"\\F1D8\";\n}\ni.icon.send.outline:before {\n  content: \"\\F1D9\";\n}\ni.icon.share.alternate:before {\n  content: \"\\F1E0\";\n}\ni.icon.share.alternate.square:before {\n  content: \"\\F1E1\";\n}\ni.icon.add.to.cart:before {\n  content: \"\\F217\";\n}\ni.icon.in.cart:before {\n  content: \"\\F218\";\n}\ni.icon.add.user:before {\n  content: \"\\F234\";\n}\ni.icon.remove.user:before {\n  content: \"\\F235\";\n}\ni.icon.object.group:before {\n  content: \"\\F247\";\n}\ni.icon.object.ungroup:before {\n  content: \"\\F248\";\n}\ni.icon.clone:before {\n  content: \"\\F24D\";\n}\ni.icon.talk:before {\n  content: \"\\F27A\";\n}\ni.icon.talk.outline:before {\n  content: \"\\F27B\";\n}\n\n/* Messages */\ni.icon.help.circle:before {\n  content: \"\\F059\";\n}\ni.icon.info.circle:before {\n  content: \"\\F05A\";\n}\ni.icon.warning.circle:before {\n  content: \"\\F06A\";\n}\ni.icon.warning.sign:before {\n  content: \"\\F071\";\n}\ni.icon.announcement:before {\n  content: \"\\F0A1\";\n}\ni.icon.help:before {\n  content: \"\\F128\";\n}\ni.icon.info:before {\n  content: \"\\F129\";\n}\ni.icon.warning:before {\n  content: \"\\F12A\";\n}\ni.icon.birthday:before {\n  content: \"\\F1FD\";\n}\ni.icon.help.circle.outline:before {\n  content: \"\\F29C\";\n}\n\n/* Users */\ni.icon.user:before {\n  content: \"\\F007\";\n}\ni.icon.users:before {\n  content: \"\\F0C0\";\n}\ni.icon.doctor:before {\n  content: \"\\F0F0\";\n}\ni.icon.handicap:before {\n  content: \"\\F193\";\n}\ni.icon.student:before {\n  content: \"\\F19D\";\n}\ni.icon.child:before {\n  content: \"\\F1AE\";\n}\ni.icon.spy:before {\n  content: \"\\F21B\";\n}\ni.icon.user.circle:before {\n  content: \"\\F2BD\";\n}\ni.icon.user.circle.outline:before {\n  content: \"\\F2BE\";\n}\ni.icon.user.outline:before {\n  content: \"\\F2C0\";\n}\n\n/* Gender & Sexuality */\ni.icon.female:before {\n  content: \"\\F182\";\n}\ni.icon.male:before {\n  content: \"\\F183\";\n}\ni.icon.woman:before {\n  content: \"\\F221\";\n}\ni.icon.man:before {\n  content: \"\\F222\";\n}\ni.icon.non.binary.transgender:before {\n  content: \"\\F223\";\n}\ni.icon.intergender:before {\n  content: \"\\F224\";\n}\ni.icon.transgender:before {\n  content: \"\\F225\";\n}\ni.icon.lesbian:before {\n  content: \"\\F226\";\n}\ni.icon.gay:before {\n  content: \"\\F227\";\n}\ni.icon.heterosexual:before {\n  content: \"\\F228\";\n}\ni.icon.other.gender:before {\n  content: \"\\F229\";\n}\ni.icon.other.gender.vertical:before {\n  content: \"\\F22A\";\n}\ni.icon.other.gender.horizontal:before {\n  content: \"\\F22B\";\n}\ni.icon.neuter:before {\n  content: \"\\F22C\";\n}\ni.icon.genderless:before {\n  content: \"\\F22D\";\n}\n\n/* Accessibility */\ni.icon.universal.access:before {\n  content: \"\\F29A\";\n}\ni.icon.wheelchair:before {\n  content: \"\\F29B\";\n}\ni.icon.blind:before {\n  content: \"\\F29D\";\n}\ni.icon.audio.description:before {\n  content: \"\\F29E\";\n}\ni.icon.volume.control.phone:before {\n  content: \"\\F2A0\";\n}\ni.icon.braille:before {\n  content: \"\\F2A1\";\n}\ni.icon.asl:before {\n  content: \"\\F2A3\";\n}\ni.icon.assistive.listening.systems:before {\n  content: \"\\F2A2\";\n}\ni.icon.deafness:before {\n  content: \"\\F2A4\";\n}\ni.icon.sign.language:before {\n  content: \"\\F2A7\";\n}\ni.icon.low.vision:before {\n  content: \"\\F2A8\";\n}\n\n/* View Adjustment */\ni.icon.block.layout:before {\n  content: \"\\F009\";\n}\ni.icon.grid.layout:before {\n  content: \"\\F00A\";\n}\ni.icon.list.layout:before {\n  content: \"\\F00B\";\n}\ni.icon.zoom:before {\n  content: \"\\F00E\";\n}\ni.icon.zoom.out:before {\n  content: \"\\F010\";\n}\ni.icon.resize.vertical:before {\n  content: \"\\F07D\";\n}\ni.icon.resize.horizontal:before {\n  content: \"\\F07E\";\n}\ni.icon.maximize:before {\n  content: \"\\F0B2\";\n}\ni.icon.crop:before {\n  content: \"\\F125\";\n}\n\n/* Literal Objects */\ni.icon.cocktail:before {\n  content: \"\\F000\";\n}\ni.icon.road:before {\n  content: \"\\F018\";\n}\ni.icon.flag:before {\n  content: \"\\F024\";\n}\ni.icon.book:before {\n  content: \"\\F02D\";\n}\ni.icon.gift:before {\n  content: \"\\F06B\";\n}\ni.icon.leaf:before {\n  content: \"\\F06C\";\n}\ni.icon.fire:before {\n  content: \"\\F06D\";\n}\ni.icon.plane:before {\n  content: \"\\F072\";\n}\ni.icon.magnet:before {\n  content: \"\\F076\";\n}\ni.icon.lemon:before {\n  content: \"\\F094\";\n}\ni.icon.world:before {\n  content: \"\\F0AC\";\n}\ni.icon.travel:before {\n  content: \"\\F0B1\";\n}\ni.icon.shipping:before {\n  content: \"\\F0D1\";\n}\ni.icon.money:before {\n  content: \"\\F0D6\";\n}\ni.icon.legal:before {\n  content: \"\\F0E3\";\n}\ni.icon.lightning:before {\n  content: \"\\F0E7\";\n}\ni.icon.umbrella:before {\n  content: \"\\F0E9\";\n}\ni.icon.treatment:before {\n  content: \"\\F0F1\";\n}\ni.icon.suitcase:before {\n  content: \"\\F0F2\";\n}\ni.icon.bar:before {\n  content: \"\\F0FC\";\n}\ni.icon.flag.outline:before {\n  content: \"\\F11D\";\n}\ni.icon.flag.checkered:before {\n  content: \"\\F11E\";\n}\ni.icon.puzzle:before {\n  content: \"\\F12E\";\n}\ni.icon.fire.extinguisher:before {\n  content: \"\\F134\";\n}\ni.icon.rocket:before {\n  content: \"\\F135\";\n}\ni.icon.anchor:before {\n  content: \"\\F13D\";\n}\ni.icon.bullseye:before {\n  content: \"\\F140\";\n}\ni.icon.sun:before {\n  content: \"\\F185\";\n}\ni.icon.moon:before {\n  content: \"\\F186\";\n}\ni.icon.fax:before {\n  content: \"\\F1AC\";\n}\ni.icon.life.ring:before {\n  content: \"\\F1CD\";\n}\ni.icon.bomb:before {\n  content: \"\\F1E2\";\n}\ni.icon.soccer:before {\n  content: \"\\F1E3\";\n}\ni.icon.calculator:before {\n  content: \"\\F1EC\";\n}\ni.icon.diamond:before {\n  content: \"\\F219\";\n}\ni.icon.sticky.note:before {\n  content: \"\\F249\";\n}\ni.icon.sticky.note.outline:before {\n  content: \"\\F24A\";\n}\ni.icon.law:before {\n  content: \"\\F24E\";\n}\ni.icon.hand.peace:before {\n  content: \"\\F25B\";\n}\ni.icon.hand.rock:before {\n  content: \"\\F255\";\n}\ni.icon.hand.paper:before {\n  content: \"\\F256\";\n}\ni.icon.hand.scissors:before {\n  content: \"\\F257\";\n}\ni.icon.hand.lizard:before {\n  content: \"\\F258\";\n}\ni.icon.hand.spock:before {\n  content: \"\\F259\";\n}\ni.icon.tv:before {\n  content: \"\\F26C\";\n}\ni.icon.thermometer.full:before {\n  content: \"\\F2C7\";\n}\ni.icon.thermometer.three.quarters:before {\n  content: \"\\F2C8\";\n}\ni.icon.thermometer.half:before {\n  content: \"\\F2C9\";\n}\ni.icon.thermometer.quarter:before {\n  content: \"\\F2CA\";\n}\ni.icon.thermometer.empty:before {\n  content: \"\\F2CB\";\n}\ni.icon.shower:before {\n  content: \"\\F2CC\";\n}\ni.icon.bathtub:before {\n  content: \"\\F2CD\";\n}\ni.icon.snowflake:before {\n  content: \"\\F2DC\";\n}\n\n/* Shapes */\ni.icon.crosshairs:before {\n  content: \"\\F05B\";\n}\ni.icon.asterisk:before {\n  content: \"\\F069\";\n}\ni.icon.square.outline:before {\n  content: \"\\F096\";\n}\ni.icon.certificate:before {\n  content: \"\\F0A3\";\n}\ni.icon.square:before {\n  content: \"\\F0C8\";\n}\ni.icon.quote.left:before {\n  content: \"\\F10D\";\n}\ni.icon.quote.right:before {\n  content: \"\\F10E\";\n}\ni.icon.spinner:before {\n  content: \"\\F110\";\n}\ni.icon.circle:before {\n  content: \"\\F111\";\n}\ni.icon.ellipsis.horizontal:before {\n  content: \"\\F141\";\n}\ni.icon.ellipsis.vertical:before {\n  content: \"\\F142\";\n}\ni.icon.cube:before {\n  content: \"\\F1B2\";\n}\ni.icon.cubes:before {\n  content: \"\\F1B3\";\n}\ni.icon.circle.notched:before {\n  content: \"\\F1CE\";\n}\ni.icon.circle.thin:before {\n  content: \"\\F1DB\";\n}\n\n/* Item Selection */\ni.icon.checkmark:before {\n  content: \"\\F00C\";\n}\ni.icon.remove:before {\n  content: \"\\F00D\";\n}\ni.icon.checkmark.box:before {\n  content: \"\\F046\";\n}\ni.icon.move:before {\n  content: \"\\F047\";\n}\ni.icon.add.circle:before {\n  content: \"\\F055\";\n}\ni.icon.minus.circle:before {\n  content: \"\\F056\";\n}\ni.icon.remove.circle:before {\n  content: \"\\F057\";\n}\ni.icon.check.circle:before {\n  content: \"\\F058\";\n}\ni.icon.remove.circle.outline:before {\n  content: \"\\F05C\";\n}\ni.icon.check.circle.outline:before {\n  content: \"\\F05D\";\n}\ni.icon.plus:before {\n  content: \"\\F067\";\n}\ni.icon.minus:before {\n  content: \"\\F068\";\n}\ni.icon.add.square:before {\n  content: \"\\F0FE\";\n}\ni.icon.radio:before {\n  content: \"\\F10C\";\n}\ni.icon.minus.square:before {\n  content: \"\\F146\";\n}\ni.icon.minus.square.outline:before {\n  content: \"\\F147\";\n}\ni.icon.check.square:before {\n  content: \"\\F14A\";\n}\ni.icon.selected.radio:before {\n  content: \"\\F192\";\n}\ni.icon.plus.square.outline:before {\n  content: \"\\F196\";\n}\ni.icon.toggle.off:before {\n  content: \"\\F204\";\n}\ni.icon.toggle.on:before {\n  content: \"\\F205\";\n}\n\n/* Media */\ni.icon.film:before {\n  content: \"\\F008\";\n}\ni.icon.sound:before {\n  content: \"\\F025\";\n}\ni.icon.photo:before {\n  content: \"\\F030\";\n}\ni.icon.bar.chart:before {\n  content: \"\\F080\";\n}\ni.icon.camera.retro:before {\n  content: \"\\F083\";\n}\ni.icon.newspaper:before {\n  content: \"\\F1EA\";\n}\ni.icon.area.chart:before {\n  content: \"\\F1FE\";\n}\ni.icon.pie.chart:before {\n  content: \"\\F200\";\n}\ni.icon.line.chart:before {\n  content: \"\\F201\";\n}\n\n/* Pointers */\ni.icon.arrow.circle.outline.down:before {\n  content: \"\\F01A\";\n}\ni.icon.arrow.circle.outline.up:before {\n  content: \"\\F01B\";\n}\ni.icon.chevron.left:before {\n  content: \"\\F053\";\n}\ni.icon.chevron.right:before {\n  content: \"\\F054\";\n}\ni.icon.arrow.left:before {\n  content: \"\\F060\";\n}\ni.icon.arrow.right:before {\n  content: \"\\F061\";\n}\ni.icon.arrow.up:before {\n  content: \"\\F062\";\n}\ni.icon.arrow.down:before {\n  content: \"\\F063\";\n}\ni.icon.chevron.up:before {\n  content: \"\\F077\";\n}\ni.icon.chevron.down:before {\n  content: \"\\F078\";\n}\ni.icon.pointing.right:before {\n  content: \"\\F0A4\";\n}\ni.icon.pointing.left:before {\n  content: \"\\F0A5\";\n}\ni.icon.pointing.up:before {\n  content: \"\\F0A6\";\n}\ni.icon.pointing.down:before {\n  content: \"\\F0A7\";\n}\ni.icon.arrow.circle.left:before {\n  content: \"\\F0A8\";\n}\ni.icon.arrow.circle.right:before {\n  content: \"\\F0A9\";\n}\ni.icon.arrow.circle.up:before {\n  content: \"\\F0AA\";\n}\ni.icon.arrow.circle.down:before {\n  content: \"\\F0AB\";\n}\ni.icon.caret.down:before {\n  content: \"\\F0D7\";\n}\ni.icon.caret.up:before {\n  content: \"\\F0D8\";\n}\ni.icon.caret.left:before {\n  content: \"\\F0D9\";\n}\ni.icon.caret.right:before {\n  content: \"\\F0DA\";\n}\ni.icon.angle.double.left:before {\n  content: \"\\F100\";\n}\ni.icon.angle.double.right:before {\n  content: \"\\F101\";\n}\ni.icon.angle.double.up:before {\n  content: \"\\F102\";\n}\ni.icon.angle.double.down:before {\n  content: \"\\F103\";\n}\ni.icon.angle.left:before {\n  content: \"\\F104\";\n}\ni.icon.angle.right:before {\n  content: \"\\F105\";\n}\ni.icon.angle.up:before {\n  content: \"\\F106\";\n}\ni.icon.angle.down:before {\n  content: \"\\F107\";\n}\ni.icon.chevron.circle.left:before {\n  content: \"\\F137\";\n}\ni.icon.chevron.circle.right:before {\n  content: \"\\F138\";\n}\ni.icon.chevron.circle.up:before {\n  content: \"\\F139\";\n}\ni.icon.chevron.circle.down:before {\n  content: \"\\F13A\";\n}\ni.icon.toggle.down:before {\n  content: \"\\F150\";\n}\ni.icon.toggle.up:before {\n  content: \"\\F151\";\n}\ni.icon.toggle.right:before {\n  content: \"\\F152\";\n}\ni.icon.long.arrow.down:before {\n  content: \"\\F175\";\n}\ni.icon.long.arrow.up:before {\n  content: \"\\F176\";\n}\ni.icon.long.arrow.left:before {\n  content: \"\\F177\";\n}\ni.icon.long.arrow.right:before {\n  content: \"\\F178\";\n}\ni.icon.arrow.circle.outline.right:before {\n  content: \"\\F18E\";\n}\ni.icon.arrow.circle.outline.left:before {\n  content: \"\\F190\";\n}\ni.icon.toggle.left:before {\n  content: \"\\F191\";\n}\n\n/* Mobile */\ni.icon.tablet:before {\n  content: \"\\F10A\";\n}\ni.icon.mobile:before {\n  content: \"\\F10B\";\n}\ni.icon.battery.full:before {\n  content: \"\\F240\";\n}\ni.icon.battery.high:before {\n  content: \"\\F241\";\n}\ni.icon.battery.medium:before {\n  content: \"\\F242\";\n}\ni.icon.battery.low:before {\n  content: \"\\F243\";\n}\ni.icon.battery.empty:before {\n  content: \"\\F244\";\n}\n\n/* Computer */\ni.icon.power:before {\n  content: \"\\F011\";\n}\ni.icon.trash.outline:before {\n  content: \"\\F014\";\n}\ni.icon.disk.outline:before {\n  content: \"\\F0A0\";\n}\ni.icon.desktop:before {\n  content: \"\\F108\";\n}\ni.icon.laptop:before {\n  content: \"\\F109\";\n}\ni.icon.game:before {\n  content: \"\\F11B\";\n}\ni.icon.keyboard:before {\n  content: \"\\F11C\";\n}\ni.icon.plug:before {\n  content: \"\\F1E6\";\n}\n\n/* File System */\ni.icon.trash:before {\n  content: \"\\F1F8\";\n}\ni.icon.file.outline:before {\n  content: \"\\F016\";\n}\ni.icon.folder:before {\n  content: \"\\F07B\";\n}\ni.icon.folder.open:before {\n  content: \"\\F07C\";\n}\ni.icon.file.text.outline:before {\n  content: \"\\F0F6\";\n}\ni.icon.folder.outline:before {\n  content: \"\\F114\";\n}\ni.icon.folder.open.outline:before {\n  content: \"\\F115\";\n}\ni.icon.level.up:before {\n  content: \"\\F148\";\n}\ni.icon.level.down:before {\n  content: \"\\F149\";\n}\ni.icon.file:before {\n  content: \"\\F15B\";\n}\ni.icon.file.text:before {\n  content: \"\\F15C\";\n}\ni.icon.file.pdf.outline:before {\n  content: \"\\F1C1\";\n}\ni.icon.file.word.outline:before {\n  content: \"\\F1C2\";\n}\ni.icon.file.excel.outline:before {\n  content: \"\\F1C3\";\n}\ni.icon.file.powerpoint.outline:before {\n  content: \"\\F1C4\";\n}\ni.icon.file.image.outline:before {\n  content: \"\\F1C5\";\n}\ni.icon.file.archive.outline:before {\n  content: \"\\F1C6\";\n}\ni.icon.file.audio.outline:before {\n  content: \"\\F1C7\";\n}\ni.icon.file.video.outline:before {\n  content: \"\\F1C8\";\n}\ni.icon.file.code.outline:before {\n  content: \"\\F1C9\";\n}\n\n/* Technologies */\ni.icon.qrcode:before {\n  content: \"\\F029\";\n}\ni.icon.barcode:before {\n  content: \"\\F02A\";\n}\ni.icon.rss:before {\n  content: \"\\F09E\";\n}\ni.icon.fork:before {\n  content: \"\\F126\";\n}\ni.icon.html5:before {\n  content: \"\\F13B\";\n}\ni.icon.css3:before {\n  content: \"\\F13C\";\n}\ni.icon.rss.square:before {\n  content: \"\\F143\";\n}\ni.icon.openid:before {\n  content: \"\\F19B\";\n}\ni.icon.database:before {\n  content: \"\\F1C0\";\n}\ni.icon.wifi:before {\n  content: \"\\F1EB\";\n}\ni.icon.server:before {\n  content: \"\\F233\";\n}\ni.icon.usb:before {\n  content: \"\\F287\";\n}\ni.icon.bluetooth:before {\n  content: \"\\F293\";\n}\ni.icon.bluetooth.alternative:before {\n  content: \"\\F294\";\n}\ni.icon.microchip:before {\n  content: \"\\F2DB\";\n}\n\n/* Rating */\ni.icon.heart:before {\n  content: \"\\F004\";\n}\ni.icon.star:before {\n  content: \"\\F005\";\n}\ni.icon.empty.star:before {\n  content: \"\\F006\";\n}\ni.icon.thumbs.outline.up:before {\n  content: \"\\F087\";\n}\ni.icon.thumbs.outline.down:before {\n  content: \"\\F088\";\n}\ni.icon.star.half:before {\n  content: \"\\F089\";\n}\ni.icon.empty.heart:before {\n  content: \"\\F08A\";\n}\ni.icon.smile:before {\n  content: \"\\F118\";\n}\ni.icon.frown:before {\n  content: \"\\F119\";\n}\ni.icon.meh:before {\n  content: \"\\F11A\";\n}\ni.icon.star.half.empty:before {\n  content: \"\\F123\";\n}\ni.icon.thumbs.up:before {\n  content: \"\\F164\";\n}\ni.icon.thumbs.down:before {\n  content: \"\\F165\";\n}\n\n/* Audio */\ni.icon.music:before {\n  content: \"\\F001\";\n}\ni.icon.video.play.outline:before {\n  content: \"\\F01D\";\n}\ni.icon.volume.off:before {\n  content: \"\\F026\";\n}\ni.icon.volume.down:before {\n  content: \"\\F027\";\n}\ni.icon.volume.up:before {\n  content: \"\\F028\";\n}\ni.icon.record:before {\n  content: \"\\F03D\";\n}\ni.icon.step.backward:before {\n  content: \"\\F048\";\n}\ni.icon.fast.backward:before {\n  content: \"\\F049\";\n}\ni.icon.backward:before {\n  content: \"\\F04A\";\n}\ni.icon.play:before {\n  content: \"\\F04B\";\n}\ni.icon.pause:before {\n  content: \"\\F04C\";\n}\ni.icon.stop:before {\n  content: \"\\F04D\";\n}\ni.icon.forward:before {\n  content: \"\\F04E\";\n}\ni.icon.fast.forward:before {\n  content: \"\\F050\";\n}\ni.icon.step.forward:before {\n  content: \"\\F051\";\n}\ni.icon.eject:before {\n  content: \"\\F052\";\n}\ni.icon.unmute:before {\n  content: \"\\F130\";\n}\ni.icon.mute:before {\n  content: \"\\F131\";\n}\ni.icon.video.play:before {\n  content: \"\\F144\";\n}\ni.icon.closed.captioning:before {\n  content: \"\\F20A\";\n}\ni.icon.pause.circle:before {\n  content: \"\\F28B\";\n}\ni.icon.pause.circle.outline:before {\n  content: \"\\F28C\";\n}\ni.icon.stop.circle:before {\n  content: \"\\F28D\";\n}\ni.icon.stop.circle.outline:before {\n  content: \"\\F28E\";\n}\n\n/* Map, Locations, & Transportation */\ni.icon.marker:before {\n  content: \"\\F041\";\n}\ni.icon.coffee:before {\n  content: \"\\F0F4\";\n}\ni.icon.food:before {\n  content: \"\\F0F5\";\n}\ni.icon.building.outline:before {\n  content: \"\\F0F7\";\n}\ni.icon.hospital:before {\n  content: \"\\F0F8\";\n}\ni.icon.emergency:before {\n  content: \"\\F0F9\";\n}\ni.icon.first.aid:before {\n  content: \"\\F0FA\";\n}\ni.icon.military:before {\n  content: \"\\F0FB\";\n}\ni.icon.h:before {\n  content: \"\\F0FD\";\n}\ni.icon.location.arrow:before {\n  content: \"\\F124\";\n}\ni.icon.compass:before {\n  content: \"\\F14E\";\n}\ni.icon.space.shuttle:before {\n  content: \"\\F197\";\n}\ni.icon.university:before {\n  content: \"\\F19C\";\n}\ni.icon.building:before {\n  content: \"\\F1AD\";\n}\ni.icon.paw:before {\n  content: \"\\F1B0\";\n}\ni.icon.spoon:before {\n  content: \"\\F1B1\";\n}\ni.icon.car:before {\n  content: \"\\F1B9\";\n}\ni.icon.taxi:before {\n  content: \"\\F1BA\";\n}\ni.icon.tree:before {\n  content: \"\\F1BB\";\n}\ni.icon.bicycle:before {\n  content: \"\\F206\";\n}\ni.icon.bus:before {\n  content: \"\\F207\";\n}\ni.icon.ship:before {\n  content: \"\\F21A\";\n}\ni.icon.motorcycle:before {\n  content: \"\\F21C\";\n}\ni.icon.street.view:before {\n  content: \"\\F21D\";\n}\ni.icon.hotel:before {\n  content: \"\\F236\";\n}\ni.icon.train:before {\n  content: \"\\F238\";\n}\ni.icon.subway:before {\n  content: \"\\F239\";\n}\ni.icon.map.pin:before {\n  content: \"\\F276\";\n}\ni.icon.map.signs:before {\n  content: \"\\F277\";\n}\ni.icon.map.outline:before {\n  content: \"\\F278\";\n}\ni.icon.map:before {\n  content: \"\\F279\";\n}\n\n/* Tables */\ni.icon.table:before {\n  content: \"\\F0CE\";\n}\ni.icon.columns:before {\n  content: \"\\F0DB\";\n}\ni.icon.sort:before {\n  content: \"\\F0DC\";\n}\ni.icon.sort.descending:before {\n  content: \"\\F0DD\";\n}\ni.icon.sort.ascending:before {\n  content: \"\\F0DE\";\n}\ni.icon.sort.alphabet.ascending:before {\n  content: \"\\F15D\";\n}\ni.icon.sort.alphabet.descending:before {\n  content: \"\\F15E\";\n}\ni.icon.sort.content.ascending:before {\n  content: \"\\F160\";\n}\ni.icon.sort.content.descending:before {\n  content: \"\\F161\";\n}\ni.icon.sort.numeric.ascending:before {\n  content: \"\\F162\";\n}\ni.icon.sort.numeric.descending:before {\n  content: \"\\F163\";\n}\n\n/* Text Editor */\ni.icon.font:before {\n  content: \"\\F031\";\n}\ni.icon.bold:before {\n  content: \"\\F032\";\n}\ni.icon.italic:before {\n  content: \"\\F033\";\n}\ni.icon.text.height:before {\n  content: \"\\F034\";\n}\ni.icon.text.width:before {\n  content: \"\\F035\";\n}\ni.icon.align.left:before {\n  content: \"\\F036\";\n}\ni.icon.align.center:before {\n  content: \"\\F037\";\n}\ni.icon.align.right:before {\n  content: \"\\F038\";\n}\ni.icon.align.justify:before {\n  content: \"\\F039\";\n}\ni.icon.list:before {\n  content: \"\\F03A\";\n}\ni.icon.outdent:before {\n  content: \"\\F03B\";\n}\ni.icon.indent:before {\n  content: \"\\F03C\";\n}\ni.icon.linkify:before {\n  content: \"\\F0C1\";\n}\ni.icon.cut:before {\n  content: \"\\F0C4\";\n}\ni.icon.copy:before {\n  content: \"\\F0C5\";\n}\ni.icon.attach:before {\n  content: \"\\F0C6\";\n}\ni.icon.save:before {\n  content: \"\\F0C7\";\n}\ni.icon.content:before {\n  content: \"\\F0C9\";\n}\ni.icon.unordered.list:before {\n  content: \"\\F0CA\";\n}\ni.icon.ordered.list:before {\n  content: \"\\F0CB\";\n}\ni.icon.strikethrough:before {\n  content: \"\\F0CC\";\n}\ni.icon.underline:before {\n  content: \"\\F0CD\";\n}\ni.icon.paste:before {\n  content: \"\\F0EA\";\n}\ni.icon.unlinkify:before {\n  content: \"\\F127\";\n}\ni.icon.superscript:before {\n  content: \"\\F12B\";\n}\ni.icon.subscript:before {\n  content: \"\\F12C\";\n}\ni.icon.header:before {\n  content: \"\\F1DC\";\n}\ni.icon.paragraph:before {\n  content: \"\\F1DD\";\n}\ni.icon.text.cursor:before {\n  content: \"\\F246\";\n}\n\n/* Currency */\ni.icon.euro:before {\n  content: \"\\F153\";\n}\ni.icon.pound:before {\n  content: \"\\F154\";\n}\ni.icon.dollar:before {\n  content: \"\\F155\";\n}\ni.icon.rupee:before {\n  content: \"\\F156\";\n}\ni.icon.yen:before {\n  content: \"\\F157\";\n}\ni.icon.ruble:before {\n  content: \"\\F158\";\n}\ni.icon.won:before {\n  content: \"\\F159\";\n}\ni.icon.bitcoin:before {\n  content: \"\\F15A\";\n}\ni.icon.lira:before {\n  content: \"\\F195\";\n}\ni.icon.shekel:before {\n  content: \"\\F20B\";\n}\n\n/* Payment Options */\ni.icon.paypal:before {\n  content: \"\\F1ED\";\n}\ni.icon.google.wallet:before {\n  content: \"\\F1EE\";\n}\ni.icon.visa:before {\n  content: \"\\F1F0\";\n}\ni.icon.mastercard:before {\n  content: \"\\F1F1\";\n}\ni.icon.discover:before {\n  content: \"\\F1F2\";\n}\ni.icon.american.express:before {\n  content: \"\\F1F3\";\n}\ni.icon.paypal.card:before {\n  content: \"\\F1F4\";\n}\ni.icon.stripe:before {\n  content: \"\\F1F5\";\n}\ni.icon.japan.credit.bureau:before {\n  content: \"\\F24B\";\n}\ni.icon.diners.club:before {\n  content: \"\\F24C\";\n}\ni.icon.credit.card.alternative:before {\n  content: \"\\F283\";\n}\n/* Networks and Websites*/\ni.icon.twitter.square:before {\n  content: \"\\F081\";\n}\ni.icon.facebook.square:before {\n  content: \"\\F082\";\n}\ni.icon.linkedin.square:before {\n  content: \"\\F08C\";\n}\ni.icon.github.square:before {\n  content: \"\\F092\";\n}\ni.icon.twitter:before {\n  content: \"\\F099\";\n}\ni.icon.facebook.f:before {\n  content: \"\\F09A\";\n}\ni.icon.github:before {\n  content: \"\\F09B\";\n}\ni.icon.pinterest:before {\n  content: \"\\F0D2\";\n}\ni.icon.pinterest.square:before {\n  content: \"\\F0D3\";\n}\ni.icon.google.plus.square:before {\n  content: \"\\F0D4\";\n}\ni.icon.google.plus:before {\n  content: \"\\F0D5\";\n}\ni.icon.linkedin:before {\n  content: \"\\F0E1\";\n}\ni.icon.github.alternate:before {\n  content: \"\\F113\";\n}\ni.icon.maxcdn:before {\n  content: \"\\F136\";\n}\ni.icon.youtube.square:before {\n  content: \"\\F166\";\n}\ni.icon.youtube:before {\n  content: \"\\F167\";\n}\ni.icon.xing:before {\n  content: \"\\F168\";\n}\ni.icon.xing.square:before {\n  content: \"\\F169\";\n}\ni.icon.youtube.play:before {\n  content: \"\\F16A\";\n}\ni.icon.dropbox:before {\n  content: \"\\F16B\";\n}\ni.icon.stack.overflow:before {\n  content: \"\\F16C\";\n}\ni.icon.instagram:before {\n  content: \"\\F16D\";\n}\ni.icon.flickr:before {\n  content: \"\\F16E\";\n}\ni.icon.adn:before {\n  content: \"\\F170\";\n}\ni.icon.bitbucket:before {\n  content: \"\\F171\";\n}\ni.icon.bitbucket.square:before {\n  content: \"\\F172\";\n}\ni.icon.tumblr:before {\n  content: \"\\F173\";\n}\ni.icon.tumblr.square:before {\n  content: \"\\F174\";\n}\ni.icon.apple:before {\n  content: \"\\F179\";\n}\ni.icon.windows:before {\n  content: \"\\F17A\";\n}\ni.icon.android:before {\n  content: \"\\F17B\";\n}\ni.icon.linux:before {\n  content: \"\\F17C\";\n}\ni.icon.dribble:before {\n  content: \"\\F17D\";\n}\ni.icon.skype:before {\n  content: \"\\F17E\";\n}\ni.icon.foursquare:before {\n  content: \"\\F180\";\n}\ni.icon.trello:before {\n  content: \"\\F181\";\n}\ni.icon.gittip:before {\n  content: \"\\F184\";\n}\ni.icon.vk:before {\n  content: \"\\F189\";\n}\ni.icon.weibo:before {\n  content: \"\\F18A\";\n}\ni.icon.renren:before {\n  content: \"\\F18B\";\n}\ni.icon.pagelines:before {\n  content: \"\\F18C\";\n}\ni.icon.stack.exchange:before {\n  content: \"\\F18D\";\n}\ni.icon.vimeo.square:before {\n  content: \"\\F194\";\n}\ni.icon.slack:before {\n  content: \"\\F198\";\n}\ni.icon.wordpress:before {\n  content: \"\\F19A\";\n}\ni.icon.yahoo:before {\n  content: \"\\F19E\";\n}\ni.icon.google:before {\n  content: \"\\F1A0\";\n}\ni.icon.reddit:before {\n  content: \"\\F1A1\";\n}\ni.icon.reddit.square:before {\n  content: \"\\F1A2\";\n}\ni.icon.stumbleupon.circle:before {\n  content: \"\\F1A3\";\n}\ni.icon.stumbleupon:before {\n  content: \"\\F1A4\";\n}\ni.icon.delicious:before {\n  content: \"\\F1A5\";\n}\ni.icon.digg:before {\n  content: \"\\F1A6\";\n}\ni.icon.pied.piper:before {\n  content: \"\\F1A7\";\n}\ni.icon.pied.piper.alternate:before {\n  content: \"\\F1A8\";\n}\ni.icon.drupal:before {\n  content: \"\\F1A9\";\n}\ni.icon.joomla:before {\n  content: \"\\F1AA\";\n}\ni.icon.behance:before {\n  content: \"\\F1B4\";\n}\ni.icon.behance.square:before {\n  content: \"\\F1B5\";\n}\ni.icon.steam:before {\n  content: \"\\F1B6\";\n}\ni.icon.steam.square:before {\n  content: \"\\F1B7\";\n}\ni.icon.spotify:before {\n  content: \"\\F1BC\";\n}\ni.icon.deviantart:before {\n  content: \"\\F1BD\";\n}\ni.icon.soundcloud:before {\n  content: \"\\F1BE\";\n}\ni.icon.vine:before {\n  content: \"\\F1CA\";\n}\ni.icon.codepen:before {\n  content: \"\\F1CB\";\n}\ni.icon.jsfiddle:before {\n  content: \"\\F1CC\";\n}\ni.icon.rebel:before {\n  content: \"\\F1D0\";\n}\ni.icon.empire:before {\n  content: \"\\F1D1\";\n}\ni.icon.git.square:before {\n  content: \"\\F1D2\";\n}\ni.icon.git:before {\n  content: \"\\F1D3\";\n}\ni.icon.hacker.news:before {\n  content: \"\\F1D4\";\n}\ni.icon.tencent.weibo:before {\n  content: \"\\F1D5\";\n}\ni.icon.qq:before {\n  content: \"\\F1D6\";\n}\ni.icon.wechat:before {\n  content: \"\\F1D7\";\n}\ni.icon.slideshare:before {\n  content: \"\\F1E7\";\n}\ni.icon.twitch:before {\n  content: \"\\F1E8\";\n}\ni.icon.yelp:before {\n  content: \"\\F1E9\";\n}\ni.icon.lastfm:before {\n  content: \"\\F202\";\n}\ni.icon.lastfm.square:before {\n  content: \"\\F203\";\n}\ni.icon.ioxhost:before {\n  content: \"\\F208\";\n}\ni.icon.angellist:before {\n  content: \"\\F209\";\n}\ni.icon.meanpath:before {\n  content: \"\\F20C\";\n}\ni.icon.buysellads:before {\n  content: \"\\F20D\";\n}\ni.icon.connectdevelop:before {\n  content: \"\\F20E\";\n}\ni.icon.dashcube:before {\n  content: \"\\F210\";\n}\ni.icon.forumbee:before {\n  content: \"\\F211\";\n}\ni.icon.leanpub:before {\n  content: \"\\F212\";\n}\ni.icon.sellsy:before {\n  content: \"\\F213\";\n}\ni.icon.shirtsinbulk:before {\n  content: \"\\F214\";\n}\ni.icon.simplybuilt:before {\n  content: \"\\F215\";\n}\ni.icon.skyatlas:before {\n  content: \"\\F216\";\n}\ni.icon.facebook:before {\n  content: \"\\F230\";\n}\ni.icon.pinterest:before {\n  content: \"\\F231\";\n}\ni.icon.whatsapp:before {\n  content: \"\\F232\";\n}\ni.icon.viacoin:before {\n  content: \"\\F237\";\n}\ni.icon.medium:before {\n  content: \"\\F23A\";\n}\ni.icon.y.combinator:before {\n  content: \"\\F23B\";\n}\ni.icon.optinmonster:before {\n  content: \"\\F23C\";\n}\ni.icon.opencart:before {\n  content: \"\\F23D\";\n}\ni.icon.expeditedssl:before {\n  content: \"\\F23E\";\n}\ni.icon.gg:before {\n  content: \"\\F260\";\n}\ni.icon.gg.circle:before {\n  content: \"\\F261\";\n}\ni.icon.tripadvisor:before {\n  content: \"\\F262\";\n}\ni.icon.odnoklassniki:before {\n  content: \"\\F263\";\n}\ni.icon.odnoklassniki.square:before {\n  content: \"\\F264\";\n}\ni.icon.pocket:before {\n  content: \"\\F265\";\n}\ni.icon.wikipedia:before {\n  content: \"\\F266\";\n}\ni.icon.safari:before {\n  content: \"\\F267\";\n}\ni.icon.chrome:before {\n  content: \"\\F268\";\n}\ni.icon.firefox:before {\n  content: \"\\F269\";\n}\ni.icon.opera:before {\n  content: \"\\F26A\";\n}\ni.icon.internet.explorer:before {\n  content: \"\\F26B\";\n}\ni.icon.contao:before {\n  content: \"\\F26D\";\n}\ni.icon.\\35 00px:before {\n  content: \"\\F26E\";\n}\ni.icon.amazon:before {\n  content: \"\\F270\";\n}\ni.icon.houzz:before {\n  content: \"\\F27C\";\n}\ni.icon.vimeo:before {\n  content: \"\\F27D\";\n}\ni.icon.black.tie:before {\n  content: \"\\F27E\";\n}\ni.icon.fonticons:before {\n  content: \"\\F280\";\n}\ni.icon.reddit.alien:before {\n  content: \"\\F281\";\n}\ni.icon.microsoft.edge:before {\n  content: \"\\F282\";\n}\ni.icon.codiepie:before {\n  content: \"\\F284\";\n}\ni.icon.modx:before {\n  content: \"\\F285\";\n}\ni.icon.fort.awesome:before {\n  content: \"\\F286\";\n}\ni.icon.product.hunt:before {\n  content: \"\\F288\";\n}\ni.icon.mixcloud:before {\n  content: \"\\F289\";\n}\ni.icon.scribd:before {\n  content: \"\\F28A\";\n}\ni.icon.gitlab:before {\n  content: \"\\F296\";\n}\ni.icon.wpbeginner:before {\n  content: \"\\F297\";\n}\ni.icon.wpforms:before {\n  content: \"\\F298\";\n}\ni.icon.envira.gallery:before {\n  content: \"\\F299\";\n}\ni.icon.glide:before {\n  content: \"\\F2A5\";\n}\ni.icon.glide.g:before {\n  content: \"\\F2A6\";\n}\ni.icon.viadeo:before {\n  content: \"\\F2A9\";\n}\ni.icon.viadeo.square:before {\n  content: \"\\F2AA\";\n}\ni.icon.snapchat:before {\n  content: \"\\F2AB\";\n}\ni.icon.snapchat.ghost:before {\n  content: \"\\F2AC\";\n}\ni.icon.snapchat.square:before {\n  content: \"\\F2AD\";\n}\ni.icon.pied.piper.hat:before {\n  content: \"\\F2AE\";\n}\ni.icon.first.order:before {\n  content: \"\\F2B0\";\n}\ni.icon.yoast:before {\n  content: \"\\F2B1\";\n}\ni.icon.themeisle:before {\n  content: \"\\F2B2\";\n}\ni.icon.google.plus.circle:before {\n  content: \"\\F2B3\";\n}\ni.icon.font.awesome:before {\n  content: \"\\F2B4\";\n}\ni.icon.linode:before {\n  content: \"\\F2B8\";\n}\ni.icon.quora:before {\n  content: \"\\F2C4\";\n}\ni.icon.free.code.camp:before {\n  content: \"\\F2C5\";\n}\ni.icon.telegram:before {\n  content: \"\\F2C6\";\n}\ni.icon.bandcamp:before {\n  content: \"\\F2D5\";\n}\ni.icon.grav:before {\n  content: \"\\F2D6\";\n}\ni.icon.etsy:before {\n  content: \"\\F2D7\";\n}\ni.icon.imdb:before {\n  content: \"\\F2D8\";\n}\ni.icon.ravelry:before {\n  content: \"\\F2D9\";\n}\ni.icon.eercast:before {\n  content: \"\\F2DA\";\n}\ni.icon.superpowers:before {\n  content: \"\\F2DD\";\n}\ni.icon.wpexplorer:before {\n  content: \"\\F2DE\";\n}\ni.icon.meetup:before {\n  content: \"\\F2E0\";\n}\n\n\n/*******************************\n            Aliases\n*******************************/\n\ni.icon.like:before {\n  content: \"\\F004\";\n}\ni.icon.favorite:before {\n  content: \"\\F005\";\n}\ni.icon.video:before {\n  content: \"\\F008\";\n}\ni.icon.check:before {\n  content: \"\\F00C\";\n}\ni.icon.close:before {\n  content: \"\\F00D\";\n}\ni.icon.cancel:before {\n  content: \"\\F00D\";\n}\ni.icon.delete:before {\n  content: \"\\F00D\";\n}\ni.icon.x:before {\n  content: \"\\F00D\";\n}\ni.icon.zoom.in:before {\n  content: \"\\F00E\";\n}\ni.icon.magnify:before {\n  content: \"\\F00E\";\n}\ni.icon.shutdown:before {\n  content: \"\\F011\";\n}\ni.icon.clock:before {\n  content: \"\\F017\";\n}\ni.icon.time:before {\n  content: \"\\F017\";\n}\ni.icon.play.circle.outline:before {\n  content: \"\\F01D\";\n}\ni.icon.headphone:before {\n  content: \"\\F025\";\n}\ni.icon.camera:before {\n  content: \"\\F030\";\n}\ni.icon.video.camera:before {\n  content: \"\\F03D\";\n}\ni.icon.picture:before {\n  content: \"\\F03E\";\n}\ni.icon.pencil:before {\n  content: \"\\F040\";\n}\ni.icon.compose:before {\n  content: \"\\F040\";\n}\ni.icon.point:before {\n  content: \"\\F041\";\n}\ni.icon.tint:before {\n  content: \"\\F043\";\n}\ni.icon.signup:before {\n  content: \"\\F044\";\n}\ni.icon.plus.circle:before {\n  content: \"\\F055\";\n}\ni.icon.question.circle:before {\n  content: \"\\F059\";\n}\ni.icon.dont:before {\n  content: \"\\F05E\";\n}\ni.icon.minimize:before {\n  content: \"\\F066\";\n}\ni.icon.add:before {\n  content: \"\\F067\";\n}\ni.icon.exclamation.circle:before {\n  content: \"\\F06A\";\n}\ni.icon.attention:before {\n  content: \"\\F06A\";\n}\ni.icon.eye:before {\n  content: \"\\F06E\";\n}\ni.icon.exclamation.triangle:before {\n  content: \"\\F071\";\n}\ni.icon.shuffle:before {\n  content: \"\\F074\";\n}\ni.icon.chat:before {\n  content: \"\\F075\";\n}\ni.icon.cart:before {\n  content: \"\\F07A\";\n}\ni.icon.shopping.cart:before {\n  content: \"\\F07A\";\n}\ni.icon.bar.graph:before {\n  content: \"\\F080\";\n}\ni.icon.key:before {\n  content: \"\\F084\";\n}\ni.icon.cogs:before {\n  content: \"\\F085\";\n}\ni.icon.discussions:before {\n  content: \"\\F086\";\n}\ni.icon.like.outline:before {\n  content: \"\\F087\";\n}\ni.icon.dislike.outline:before {\n  content: \"\\F088\";\n}\ni.icon.heart.outline:before {\n  content: \"\\F08A\";\n}\ni.icon.log.out:before {\n  content: \"\\F08B\";\n}\ni.icon.thumb.tack:before {\n  content: \"\\F08D\";\n}\ni.icon.winner:before {\n  content: \"\\F091\";\n}\ni.icon.phone:before {\n  content: \"\\F095\";\n}\ni.icon.bookmark.outline:before {\n  content: \"\\F097\";\n}\ni.icon.phone.square:before {\n  content: \"\\F098\";\n}\ni.icon.credit.card:before {\n  content: \"\\F09D\";\n}\ni.icon.hdd.outline:before {\n  content: \"\\F0A0\";\n}\ni.icon.bullhorn:before {\n  content: \"\\F0A1\";\n}\ni.icon.bell.outline:before {\n  content: \"\\F0A2\";\n}\ni.icon.hand.outline.right:before {\n  content: \"\\F0A4\";\n}\ni.icon.hand.outline.left:before {\n  content: \"\\F0A5\";\n}\ni.icon.hand.outline.up:before {\n  content: \"\\F0A6\";\n}\ni.icon.hand.outline.down:before {\n  content: \"\\F0A7\";\n}\ni.icon.globe:before {\n  content: \"\\F0AC\";\n}\ni.icon.wrench:before {\n  content: \"\\F0AD\";\n}\ni.icon.briefcase:before {\n  content: \"\\F0B1\";\n}\ni.icon.group:before {\n  content: \"\\F0C0\";\n}\ni.icon.linkify:before {\n  content: \"\\F0C1\";\n}\ni.icon.chain:before {\n  content: \"\\F0C1\";\n}\ni.icon.flask:before {\n  content: \"\\F0C3\";\n}\ni.icon.sidebar:before {\n  content: \"\\F0C9\";\n}\ni.icon.bars:before {\n  content: \"\\F0C9\";\n}\ni.icon.list.ul:before {\n  content: \"\\F0CA\";\n}\ni.icon.list.ol:before {\n  content: \"\\F0CB\";\n}\ni.icon.numbered.list:before {\n  content: \"\\F0CB\";\n}\ni.icon.magic:before {\n  content: \"\\F0D0\";\n}\ni.icon.truck:before {\n  content: \"\\F0D1\";\n}\ni.icon.currency:before {\n  content: \"\\F0D6\";\n}\ni.icon.triangle.down:before {\n  content: \"\\F0D7\";\n}\ni.icon.dropdown:before {\n  content: \"\\F0D7\";\n}\ni.icon.triangle.up:before {\n  content: \"\\F0D8\";\n}\ni.icon.triangle.left:before {\n  content: \"\\F0D9\";\n}\ni.icon.triangle.right:before {\n  content: \"\\F0DA\";\n}\ni.icon.envelope:before {\n  content: \"\\F0E0\";\n}\ni.icon.conversation:before {\n  content: \"\\F0E6\";\n}\ni.icon.rain:before {\n  content: \"\\F0E9\";\n}\ni.icon.clipboard:before {\n  content: \"\\F0EA\";\n}\ni.icon.lightbulb:before {\n  content: \"\\F0EB\";\n}\ni.icon.bell:before {\n  content: \"\\F0F3\";\n}\ni.icon.ambulance:before {\n  content: \"\\F0F9\";\n}\ni.icon.medkit:before {\n  content: \"\\F0FA\";\n}\ni.icon.fighter.jet:before {\n  content: \"\\F0FB\";\n}\ni.icon.beer:before {\n  content: \"\\F0FC\";\n}\ni.icon.plus.square:before {\n  content: \"\\F0FE\";\n}\ni.icon.computer:before {\n  content: \"\\F108\";\n}\ni.icon.circle.outline:before {\n  content: \"\\F10C\";\n}\ni.icon.gamepad:before {\n  content: \"\\F11B\";\n}\ni.icon.star.half.full:before {\n  content: \"\\F123\";\n}\ni.icon.broken.chain:before {\n  content: \"\\F127\";\n}\ni.icon.question:before {\n  content: \"\\F128\";\n}\ni.icon.exclamation:before {\n  content: \"\\F12A\";\n}\ni.icon.eraser:before {\n  content: \"\\F12D\";\n}\ni.icon.microphone:before {\n  content: \"\\F130\";\n}\ni.icon.microphone.slash:before {\n  content: \"\\F131\";\n}\ni.icon.shield:before {\n  content: \"\\F132\";\n}\ni.icon.target:before {\n  content: \"\\F140\";\n}\ni.icon.play.circle:before {\n  content: \"\\F144\";\n}\ni.icon.pencil.square:before {\n  content: \"\\F14B\";\n}\ni.icon.eur:before {\n  content: \"\\F153\";\n}\ni.icon.gbp:before {\n  content: \"\\F154\";\n}\ni.icon.usd:before {\n  content: \"\\F155\";\n}\ni.icon.inr:before {\n  content: \"\\F156\";\n}\ni.icon.cny:before {\n  content: \"\\F157\";\n}\ni.icon.rmb:before {\n  content: \"\\F157\";\n}\ni.icon.jpy:before {\n  content: \"\\F157\";\n}\ni.icon.rouble:before {\n  content: \"\\F158\";\n}\ni.icon.rub:before {\n  content: \"\\F158\";\n}\ni.icon.krw:before {\n  content: \"\\F159\";\n}\ni.icon.btc:before {\n  content: \"\\F15A\";\n}\ni.icon.gratipay:before {\n  content: \"\\F184\";\n}\ni.icon.zip:before {\n  content: \"\\F187\";\n}\ni.icon.dot.circle.outline:before {\n  content: \"\\F192\";\n}\ni.icon.try:before {\n  content: \"\\F195\";\n}\ni.icon.graduation:before {\n  content: \"\\F19D\";\n}\ni.icon.circle.outline:before {\n  content: \"\\F1DB\";\n}\ni.icon.sliders:before {\n  content: \"\\F1DE\";\n}\ni.icon.weixin:before {\n  content: \"\\F1D7\";\n}\ni.icon.tty:before {\n  content: \"\\F1E4\";\n}\ni.icon.teletype:before {\n  content: \"\\F1E4\";\n}\ni.icon.binoculars:before {\n  content: \"\\F1E5\";\n}\ni.icon.power.cord:before {\n  content: \"\\F1E6\";\n}\ni.icon.wi-fi:before {\n  content: \"\\F1EB\";\n}\ni.icon.visa.card:before {\n  content: \"\\F1F0\";\n}\ni.icon.mastercard.card:before {\n  content: \"\\F1F1\";\n}\ni.icon.discover.card:before {\n  content: \"\\F1F2\";\n}\ni.icon.amex:before {\n  content: \"\\F1F3\";\n}\ni.icon.american.express.card:before {\n  content: \"\\F1F3\";\n}\ni.icon.stripe.card:before {\n  content: \"\\F1F5\";\n}\ni.icon.bell.slash:before {\n  content: \"\\F1F6\";\n}\ni.icon.bell.slash.outline:before {\n  content: \"\\F1F7\";\n}\ni.icon.area.graph:before {\n  content: \"\\F1FE\";\n}\ni.icon.pie.graph:before {\n  content: \"\\F200\";\n}\ni.icon.line.graph:before {\n  content: \"\\F201\";\n}\ni.icon.cc:before {\n  content: \"\\F20A\";\n}\ni.icon.sheqel:before {\n  content: \"\\F20B\";\n}\ni.icon.ils:before {\n  content: \"\\F20B\";\n}\ni.icon.plus.cart:before {\n  content: \"\\F217\";\n}\ni.icon.arrow.down.cart:before {\n  content: \"\\F218\";\n}\ni.icon.detective:before {\n  content: \"\\F21B\";\n}\ni.icon.venus:before {\n  content: \"\\F221\";\n}\ni.icon.mars:before {\n  content: \"\\F222\";\n}\ni.icon.mercury:before {\n  content: \"\\F223\";\n}\ni.icon.intersex:before {\n  content: \"\\F224\";\n}\ni.icon.venus.double:before {\n  content: \"\\F226\";\n}\ni.icon.female.homosexual:before {\n  content: \"\\F226\";\n}\ni.icon.mars.double:before {\n  content: \"\\F227\";\n}\ni.icon.male.homosexual:before {\n  content: \"\\F227\";\n}\ni.icon.venus.mars:before {\n  content: \"\\F228\";\n}\ni.icon.mars.stroke:before {\n  content: \"\\F229\";\n}\ni.icon.mars.alternate:before {\n  content: \"\\F229\";\n}\ni.icon.mars.vertical:before {\n  content: \"\\F22A\";\n}\ni.icon.mars.stroke.vertical:before {\n  content: \"\\F22A\";\n}\ni.icon.mars.horizontal:before {\n  content: \"\\F22B\";\n}\ni.icon.mars.stroke.horizontal:before {\n  content: \"\\F22B\";\n}\ni.icon.asexual:before {\n  content: \"\\F22D\";\n}\ni.icon.facebook.official:before {\n  content: \"\\F230\";\n}\ni.icon.user.plus:before {\n  content: \"\\F234\";\n}\ni.icon.user.times:before {\n  content: \"\\F235\";\n}\ni.icon.user.close:before {\n  content: \"\\F235\";\n}\ni.icon.user.cancel:before {\n  content: \"\\F235\";\n}\ni.icon.user.delete:before {\n  content: \"\\F235\";\n}\ni.icon.user.x:before {\n  content: \"\\F235\";\n}\ni.icon.bed:before {\n  content: \"\\F236\";\n}\ni.icon.yc:before {\n  content: \"\\F23B\";\n}\ni.icon.ycombinator:before {\n  content: \"\\F23B\";\n}\ni.icon.battery.four:before {\n  content: \"\\F240\";\n}\ni.icon.battery.three:before {\n  content: \"\\F241\";\n}\ni.icon.battery.three.quarters:before {\n  content: \"\\F241\";\n}\ni.icon.battery.two:before {\n  content: \"\\F242\";\n}\ni.icon.battery.half:before {\n  content: \"\\F242\";\n}\ni.icon.battery.one:before {\n  content: \"\\F243\";\n}\ni.icon.battery.quarter:before {\n  content: \"\\F243\";\n}\ni.icon.battery.zero:before {\n  content: \"\\F244\";\n}\ni.icon.i.cursor:before {\n  content: \"\\F246\";\n}\ni.icon.jcb:before {\n  content: \"\\F24B\";\n}\ni.icon.japan.credit.bureau.card:before {\n  content: \"\\F24B\";\n}\ni.icon.diners.club.card:before {\n  content: \"\\F24C\";\n}\ni.icon.balance:before {\n  content: \"\\F24E\";\n}\ni.icon.hourglass.outline:before {\n  content: \"\\F250\";\n}\ni.icon.hourglass.zero:before {\n  content: \"\\F250\";\n}\ni.icon.hourglass.one:before {\n  content: \"\\F251\";\n}\ni.icon.hourglass.two:before {\n  content: \"\\F252\";\n}\ni.icon.hourglass.three:before {\n  content: \"\\F253\";\n}\ni.icon.hourglass.four:before {\n  content: \"\\F254\";\n}\ni.icon.grab:before {\n  content: \"\\F255\";\n}\ni.icon.hand.victory:before {\n  content: \"\\F25B\";\n}\ni.icon.tm:before {\n  content: \"\\F25C\";\n}\ni.icon.r.circle:before {\n  content: \"\\F25D\";\n}\ni.icon.television:before {\n  content: \"\\F26C\";\n}\ni.icon.five.hundred.pixels:before {\n  content: \"\\F26E\";\n}\ni.icon.calendar.plus:before {\n  content: \"\\F271\";\n}\ni.icon.calendar.minus:before {\n  content: \"\\F272\";\n}\ni.icon.calendar.times:before {\n  content: \"\\F273\";\n}\ni.icon.calendar.check:before {\n  content: \"\\F274\";\n}\ni.icon.factory:before {\n  content: \"\\F275\";\n}\ni.icon.commenting:before {\n  content: \"\\F27A\";\n}\ni.icon.commenting.outline:before {\n  content: \"\\F27B\";\n}\ni.icon.edge:before {\n  content: \"\\F282\";\n}\ni.icon.ms.edge:before {\n  content: \"\\F282\";\n}\ni.icon.wordpress.beginner:before {\n  content: \"\\F297\";\n}\ni.icon.wordpress.forms:before {\n  content: \"\\F298\";\n}\ni.icon.envira:before {\n  content: \"\\F299\";\n}\ni.icon.question.circle.outline:before {\n  content: \"\\F29C\";\n}\ni.icon.assistive.listening.devices:before {\n  content: \"\\F2A2\";\n}\ni.icon.als:before {\n  content: \"\\F2A2\";\n}\ni.icon.ald:before {\n  content: \"\\F2A2\";\n}\ni.icon.asl.interpreting:before {\n  content: \"\\F2A3\";\n}\ni.icon.deaf:before {\n  content: \"\\F2A4\";\n}\ni.icon.american.sign.language.interpreting:before {\n  content: \"\\F2A3\";\n}\ni.icon.hard.of.hearing:before {\n  content: \"\\F2A4\";\n}\ni.icon.signing:before {\n  content: \"\\F2A7\";\n}\ni.icon.new.pied.piper:before {\n  content: \"\\F2AE\";\n}\ni.icon.theme.isle:before {\n  content: \"\\F2B2\";\n}\ni.icon.google.plus.official:before {\n  content: \"\\F2B3\";\n}\ni.icon.fa:before {\n  content: \"\\F2B4\";\n}\ni.icon.vcard:before {\n  content: \"\\F2BB\";\n}\ni.icon.vcard.outline:before {\n  content: \"\\F2BC\";\n}\ni.icon.drivers.license:before {\n  content: \"\\F2C2\";\n}\ni.icon.drivers.license.outline:before {\n  content: \"\\F2C3\";\n}\ni.icon.thermometer:before {\n  content: \"\\F2C7\";\n}\ni.icon.s15:before {\n  content: \"\\F2CD\";\n}\ni.icon.bath:before {\n  content: \"\\F2CD\";\n}\ni.icon.times.rectangle:before {\n  content: \"\\F2D3\";\n}\ni.icon.times.rectangle.outline:before {\n  content: \"\\F2D4\";\n}\n\n\n/*******************************\n         Site Overrides\n*******************************/\n\n", ""]);
+exports.push([module.i, "/*!\n * # Semantic UI 2.2.10 - Icon\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n             Icon\n*******************************/\n\n@font-face {\n  font-family: 'Icons';\n  src: url(" + __webpack_require__(8) + ");\n  src: url(" + __webpack_require__(8) + "?#iefix) format('embedded-opentype'), url(" + __webpack_require__(34) + ") format('woff2'), url(" + __webpack_require__(33) + ") format('woff'), url(" + __webpack_require__(32) + ") format('truetype'), url(" + __webpack_require__(31) + "#icons) format('svg');\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-decoration: inherit;\n  text-transform: none;\n}\ni.icon {\n  display: inline-block;\n  opacity: 1;\n  margin: 0em 0.25rem 0em 0em;\n  width: 1.18em;\n  height: 1em;\n  font-family: 'Icons';\n  font-style: normal;\n  font-weight: normal;\n  text-decoration: inherit;\n  text-align: center;\n  speak: none;\n  font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  -webkit-font-smoothing: antialiased;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n}\ni.icon:before {\n  background: none !important;\n}\n\n\n/*******************************\n             Types\n*******************************/\n\n\n/*--------------\n    Loading\n---------------*/\n\ni.icon.loading {\n  height: 1em;\n  line-height: 1;\n  -webkit-animation: icon-loading 2s linear infinite;\n          animation: icon-loading 2s linear infinite;\n}\n@-webkit-keyframes icon-loading {\n  from {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes icon-loading {\n  from {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n\n\n/*******************************\n             States\n*******************************/\n\ni.icon.hover {\n  opacity: 1 !important;\n}\ni.icon.active {\n  opacity: 1 !important;\n}\ni.emphasized.icon {\n  opacity: 1 !important;\n}\ni.disabled.icon {\n  opacity: 0.45 !important;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*-------------------\n        Fitted\n--------------------*/\n\ni.fitted.icon {\n  width: auto;\n  margin: 0em;\n}\n\n/*-------------------\n         Link\n--------------------*/\n\ni.link.icon,\ni.link.icons {\n  cursor: pointer;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\ni.link.icon:hover,\ni.link.icons:hover {\n  opacity: 1 !important;\n}\n\n/*-------------------\n      Circular\n--------------------*/\n\ni.circular.icon {\n  border-radius: 500em !important;\n  line-height: 1 !important;\n  padding: 0.5em 0.5em !important;\n  box-shadow: 0em 0em 0em 0.1em rgba(0, 0, 0, 0.1) inset;\n  width: 2em !important;\n  height: 2em !important;\n}\ni.circular.inverted.icon {\n  border: none;\n  box-shadow: none;\n}\n\n/*-------------------\n      Flipped\n--------------------*/\n\ni.flipped.icon,\ni.horizontally.flipped.icon {\n  -webkit-transform: scale(-1, 1);\n          transform: scale(-1, 1);\n}\ni.vertically.flipped.icon {\n  -webkit-transform: scale(1, -1);\n          transform: scale(1, -1);\n}\n\n/*-------------------\n      Rotated\n--------------------*/\n\ni.rotated.icon,\ni.right.rotated.icon,\ni.clockwise.rotated.icon {\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n}\ni.left.rotated.icon,\ni.counterclockwise.rotated.icon {\n  -webkit-transform: rotate(-90deg);\n          transform: rotate(-90deg);\n}\n\n/*-------------------\n      Bordered\n--------------------*/\n\ni.bordered.icon {\n  line-height: 1;\n  vertical-align: baseline;\n  width: 2em;\n  height: 2em;\n  padding: 0.5em 0.41em !important;\n  box-shadow: 0em 0em 0em 0.1em rgba(0, 0, 0, 0.1) inset;\n}\ni.bordered.inverted.icon {\n  border: none;\n  box-shadow: none;\n}\n\n/*-------------------\n      Inverted\n--------------------*/\n\n\n/* Inverted Shapes */\ni.inverted.bordered.icon,\ni.inverted.circular.icon {\n  background-color: #1B1C1D !important;\n  color: #FFFFFF !important;\n}\ni.inverted.icon {\n  color: #FFFFFF;\n}\n\n/*-------------------\n       Colors\n--------------------*/\n\n\n/* Red */\ni.red.icon {\n  color: #DB2828 !important;\n}\ni.inverted.red.icon {\n  color: #FF695E !important;\n}\ni.inverted.bordered.red.icon,\ni.inverted.circular.red.icon {\n  background-color: #DB2828 !important;\n  color: #FFFFFF !important;\n}\n\n/* Orange */\ni.orange.icon {\n  color: #F2711C !important;\n}\ni.inverted.orange.icon {\n  color: #FF851B !important;\n}\ni.inverted.bordered.orange.icon,\ni.inverted.circular.orange.icon {\n  background-color: #F2711C !important;\n  color: #FFFFFF !important;\n}\n\n/* Yellow */\ni.yellow.icon {\n  color: #FBBD08 !important;\n}\ni.inverted.yellow.icon {\n  color: #FFE21F !important;\n}\ni.inverted.bordered.yellow.icon,\ni.inverted.circular.yellow.icon {\n  background-color: #FBBD08 !important;\n  color: #FFFFFF !important;\n}\n\n/* Olive */\ni.olive.icon {\n  color: #B5CC18 !important;\n}\ni.inverted.olive.icon {\n  color: #D9E778 !important;\n}\ni.inverted.bordered.olive.icon,\ni.inverted.circular.olive.icon {\n  background-color: #B5CC18 !important;\n  color: #FFFFFF !important;\n}\n\n/* Green */\ni.green.icon {\n  color: #21BA45 !important;\n}\ni.inverted.green.icon {\n  color: #2ECC40 !important;\n}\ni.inverted.bordered.green.icon,\ni.inverted.circular.green.icon {\n  background-color: #21BA45 !important;\n  color: #FFFFFF !important;\n}\n\n/* Teal */\ni.teal.icon {\n  color: #00B5AD !important;\n}\ni.inverted.teal.icon {\n  color: #6DFFFF !important;\n}\ni.inverted.bordered.teal.icon,\ni.inverted.circular.teal.icon {\n  background-color: #00B5AD !important;\n  color: #FFFFFF !important;\n}\n\n/* Blue */\ni.blue.icon {\n  color: #2185D0 !important;\n}\ni.inverted.blue.icon {\n  color: #54C8FF !important;\n}\ni.inverted.bordered.blue.icon,\ni.inverted.circular.blue.icon {\n  background-color: #2185D0 !important;\n  color: #FFFFFF !important;\n}\n\n/* Violet */\ni.violet.icon {\n  color: #6435C9 !important;\n}\ni.inverted.violet.icon {\n  color: #A291FB !important;\n}\ni.inverted.bordered.violet.icon,\ni.inverted.circular.violet.icon {\n  background-color: #6435C9 !important;\n  color: #FFFFFF !important;\n}\n\n/* Purple */\ni.purple.icon {\n  color: #A333C8 !important;\n}\ni.inverted.purple.icon {\n  color: #DC73FF !important;\n}\ni.inverted.bordered.purple.icon,\ni.inverted.circular.purple.icon {\n  background-color: #A333C8 !important;\n  color: #FFFFFF !important;\n}\n\n/* Pink */\ni.pink.icon {\n  color: #E03997 !important;\n}\ni.inverted.pink.icon {\n  color: #FF8EDF !important;\n}\ni.inverted.bordered.pink.icon,\ni.inverted.circular.pink.icon {\n  background-color: #E03997 !important;\n  color: #FFFFFF !important;\n}\n\n/* Brown */\ni.brown.icon {\n  color: #A5673F !important;\n}\ni.inverted.brown.icon {\n  color: #D67C1C !important;\n}\ni.inverted.bordered.brown.icon,\ni.inverted.circular.brown.icon {\n  background-color: #A5673F !important;\n  color: #FFFFFF !important;\n}\n\n/* Grey */\ni.grey.icon {\n  color: #767676 !important;\n}\ni.inverted.grey.icon {\n  color: #DCDDDE !important;\n}\ni.inverted.bordered.grey.icon,\ni.inverted.circular.grey.icon {\n  background-color: #767676 !important;\n  color: #FFFFFF !important;\n}\n\n/* Black */\ni.black.icon {\n  color: #1B1C1D !important;\n}\ni.inverted.black.icon {\n  color: #545454 !important;\n}\ni.inverted.bordered.black.icon,\ni.inverted.circular.black.icon {\n  background-color: #1B1C1D !important;\n  color: #FFFFFF !important;\n}\n\n/*-------------------\n        Sizes\n--------------------*/\n\ni.mini.icon,\ni.mini.icons {\n  line-height: 1;\n  font-size: 0.4em;\n}\ni.tiny.icon,\ni.tiny.icons {\n  line-height: 1;\n  font-size: 0.5em;\n}\ni.small.icon,\ni.small.icons {\n  line-height: 1;\n  font-size: 0.75em;\n}\ni.icon,\ni.icons {\n  font-size: 1em;\n}\ni.large.icon,\ni.large.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 1.5em;\n}\ni.big.icon,\ni.big.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 2em;\n}\ni.huge.icon,\ni.huge.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 4em;\n}\ni.massive.icon,\ni.massive.icons {\n  line-height: 1;\n  vertical-align: middle;\n  font-size: 8em;\n}\n\n\n/*******************************\n            Groups\n*******************************/\n\ni.icons {\n  display: inline-block;\n  position: relative;\n  line-height: 1;\n}\ni.icons .icon {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  margin: 0em;\n  margin: 0;\n}\ni.icons .icon:first-child {\n  position: static;\n  width: auto;\n  height: auto;\n  vertical-align: top;\n  -webkit-transform: none;\n          transform: none;\n  margin-right: 0.25rem;\n}\n\n/* Corner Icon */\ni.icons .corner.icon {\n  top: auto;\n  left: auto;\n  right: 0;\n  bottom: 0;\n  -webkit-transform: none;\n          transform: none;\n  font-size: 0.45em;\n  text-shadow: -1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF;\n}\ni.icons .inverted.corner.icon {\n  text-shadow: -1px -1px 0 #1B1C1D, 1px -1px 0 #1B1C1D, -1px 1px 0 #1B1C1D, 1px 1px 0 #1B1C1D;\n}\n/*\n * Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome\n * License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n\n\n/*******************************\n\nSemantic-UI integration of font-awesome :\n\n///class names are separated\ni.icon.circle => i.icon.circle\ni.icon.circle-o => i.icon.circle.outline\n\n//abbreviation are replaced by full letters:\ni.icon.ellipsis-h => i.icon.ellipsis.horizontal\ni.icon.ellipsis-v => i.icon.ellipsis.vertical\n.alpha => .i.icon.alphabet\n.asc => .i.icon.ascending\n.desc => .i.icon.descending\n.alt =>.alternate\n\nASCII order is conserved for easier maintenance.\n\nIcons that only have one style 'outline', 'square' etc do not require this class\nfor instance `lemon icon` not `lemon outline icon` since there is only one lemon\n\n*******************************/\n\n\n\n/*******************************\n            Icons\n*******************************/\n\n\n/* Web Content */\ni.icon.search:before {\n  content: \"\\F002\";\n}\ni.icon.mail.outline:before {\n  content: \"\\F003\";\n}\ni.icon.signal:before {\n  content: \"\\F012\";\n}\ni.icon.setting:before {\n  content: \"\\F013\";\n}\ni.icon.home:before {\n  content: \"\\F015\";\n}\ni.icon.inbox:before {\n  content: \"\\F01C\";\n}\ni.icon.browser:before {\n  content: \"\\F022\";\n}\ni.icon.tag:before {\n  content: \"\\F02B\";\n}\ni.icon.tags:before {\n  content: \"\\F02C\";\n}\ni.icon.image:before {\n  content: \"\\F03E\";\n}\ni.icon.calendar:before {\n  content: \"\\F073\";\n}\ni.icon.comment:before {\n  content: \"\\F075\";\n}\ni.icon.shop:before {\n  content: \"\\F07A\";\n}\ni.icon.comments:before {\n  content: \"\\F086\";\n}\ni.icon.external:before {\n  content: \"\\F08E\";\n}\ni.icon.privacy:before {\n  content: \"\\F084\";\n}\ni.icon.settings:before {\n  content: \"\\F085\";\n}\ni.icon.comments:before {\n  content: \"\\F086\";\n}\ni.icon.external:before {\n  content: \"\\F08E\";\n}\ni.icon.trophy:before {\n  content: \"\\F091\";\n}\ni.icon.payment:before {\n  content: \"\\F09D\";\n}\ni.icon.feed:before {\n  content: \"\\F09E\";\n}\ni.icon.alarm.outline:before {\n  content: \"\\F0A2\";\n}\ni.icon.tasks:before {\n  content: \"\\F0AE\";\n}\ni.icon.cloud:before {\n  content: \"\\F0C2\";\n}\ni.icon.lab:before {\n  content: \"\\F0C3\";\n}\ni.icon.mail:before {\n  content: \"\\F0E0\";\n}\ni.icon.dashboard:before {\n  content: \"\\F0E4\";\n}\ni.icon.comment.outline:before {\n  content: \"\\F0E5\";\n}\ni.icon.comments.outline:before {\n  content: \"\\F0E6\";\n}\ni.icon.sitemap:before {\n  content: \"\\F0E8\";\n}\ni.icon.idea:before {\n  content: \"\\F0EB\";\n}\ni.icon.alarm:before {\n  content: \"\\F0F3\";\n}\ni.icon.terminal:before {\n  content: \"\\F120\";\n}\ni.icon.code:before {\n  content: \"\\F121\";\n}\ni.icon.protect:before {\n  content: \"\\F132\";\n}\ni.icon.calendar.outline:before {\n  content: \"\\F133\";\n}\ni.icon.ticket:before {\n  content: \"\\F145\";\n}\ni.icon.external.square:before {\n  content: \"\\F14C\";\n}\ni.icon.bug:before {\n  content: \"\\F188\";\n}\ni.icon.mail.square:before {\n  content: \"\\F199\";\n}\ni.icon.history:before {\n  content: \"\\F1DA\";\n}\ni.icon.options:before {\n  content: \"\\F1DE\";\n}\ni.icon.text.telephone:before {\n  content: \"\\F1E4\";\n}\ni.icon.find:before {\n  content: \"\\F1E5\";\n}\ni.icon.alarm.mute:before {\n  content: \"\\F1F6\";\n}\ni.icon.alarm.mute.outline:before {\n  content: \"\\F1F7\";\n}\ni.icon.copyright:before {\n  content: \"\\F1F9\";\n}\ni.icon.at:before {\n  content: \"\\F1FA\";\n}\ni.icon.eyedropper:before {\n  content: \"\\F1FB\";\n}\ni.icon.paint.brush:before {\n  content: \"\\F1FC\";\n}\ni.icon.heartbeat:before {\n  content: \"\\F21E\";\n}\ni.icon.mouse.pointer:before {\n  content: \"\\F245\";\n}\ni.icon.hourglass.empty:before {\n  content: \"\\F250\";\n}\ni.icon.hourglass.start:before {\n  content: \"\\F251\";\n}\ni.icon.hourglass.half:before {\n  content: \"\\F252\";\n}\ni.icon.hourglass.end:before {\n  content: \"\\F253\";\n}\ni.icon.hourglass.full:before {\n  content: \"\\F254\";\n}\ni.icon.hand.pointer:before {\n  content: \"\\F25A\";\n}\ni.icon.trademark:before {\n  content: \"\\F25C\";\n}\ni.icon.registered:before {\n  content: \"\\F25D\";\n}\ni.icon.creative.commons:before {\n  content: \"\\F25E\";\n}\ni.icon.add.to.calendar:before {\n  content: \"\\F271\";\n}\ni.icon.remove.from.calendar:before {\n  content: \"\\F272\";\n}\ni.icon.delete.calendar:before {\n  content: \"\\F273\";\n}\ni.icon.checked.calendar:before {\n  content: \"\\F274\";\n}\ni.icon.industry:before {\n  content: \"\\F275\";\n}\ni.icon.shopping.bag:before {\n  content: \"\\F290\";\n}\ni.icon.shopping.basket:before {\n  content: \"\\F291\";\n}\ni.icon.hashtag:before {\n  content: \"\\F292\";\n}\ni.icon.percent:before {\n  content: \"\\F295\";\n}\ni.icon.handshake:before {\n  content: \"\\F2B5\";\n}\ni.icon.open.envelope:before {\n  content: \"\\F2B6\";\n}\ni.icon.open.envelope.outline:before {\n  content: \"\\F2B7\";\n}\ni.icon.address.book:before {\n  content: \"\\F2B9\";\n}\ni.icon.address.book.outline:before {\n  content: \"\\F2BA\";\n}\ni.icon.address.card:before {\n  content: \"\\F2BB\";\n}\ni.icon.address.card.outline:before {\n  content: \"\\F2BC\";\n}\ni.icon.id.badge:before {\n  content: \"\\F2C1\";\n}\ni.icon.id.card:before {\n  content: \"\\F2C2\";\n}\ni.icon.id.card.outline:before {\n  content: \"\\F2C3\";\n}\ni.icon.podcast:before {\n  content: \"\\F2CE\";\n}\ni.icon.window.maximize:before {\n  content: \"\\F2D0\";\n}\ni.icon.window.minimize:before {\n  content: \"\\F2D1\";\n}\ni.icon.window.restore:before {\n  content: \"\\F2D2\";\n}\ni.icon.window.close:before {\n  content: \"\\F2D3\";\n}\ni.icon.window.close.outline:before {\n  content: \"\\F2D4\";\n}\n\n/* User Actions */\ni.icon.wait:before {\n  content: \"\\F017\";\n}\ni.icon.download:before {\n  content: \"\\F019\";\n}\ni.icon.repeat:before {\n  content: \"\\F01E\";\n}\ni.icon.refresh:before {\n  content: \"\\F021\";\n}\ni.icon.lock:before {\n  content: \"\\F023\";\n}\ni.icon.bookmark:before {\n  content: \"\\F02E\";\n}\ni.icon.print:before {\n  content: \"\\F02F\";\n}\ni.icon.write:before {\n  content: \"\\F040\";\n}\ni.icon.adjust:before {\n  content: \"\\F042\";\n}\ni.icon.theme:before {\n  content: \"\\F043\";\n}\ni.icon.edit:before {\n  content: \"\\F044\";\n}\ni.icon.external.share:before {\n  content: \"\\F045\";\n}\ni.icon.ban:before {\n  content: \"\\F05E\";\n}\ni.icon.mail.forward:before {\n  content: \"\\F064\";\n}\ni.icon.share:before {\n  content: \"\\F064\";\n}\ni.icon.expand:before {\n  content: \"\\F065\";\n}\ni.icon.compress:before {\n  content: \"\\F066\";\n}\ni.icon.unhide:before {\n  content: \"\\F06E\";\n}\ni.icon.hide:before {\n  content: \"\\F070\";\n}\ni.icon.random:before {\n  content: \"\\F074\";\n}\ni.icon.retweet:before {\n  content: \"\\F079\";\n}\ni.icon.sign.out:before {\n  content: \"\\F08B\";\n}\ni.icon.pin:before {\n  content: \"\\F08D\";\n}\ni.icon.sign.in:before {\n  content: \"\\F090\";\n}\ni.icon.upload:before {\n  content: \"\\F093\";\n}\ni.icon.call:before {\n  content: \"\\F095\";\n}\ni.icon.remove.bookmark:before {\n  content: \"\\F097\";\n}\ni.icon.call.square:before {\n  content: \"\\F098\";\n}\ni.icon.unlock:before {\n  content: \"\\F09C\";\n}\ni.icon.configure:before {\n  content: \"\\F0AD\";\n}\ni.icon.filter:before {\n  content: \"\\F0B0\";\n}\ni.icon.wizard:before {\n  content: \"\\F0D0\";\n}\ni.icon.undo:before {\n  content: \"\\F0E2\";\n}\ni.icon.exchange:before {\n  content: \"\\F0EC\";\n}\ni.icon.cloud.download:before {\n  content: \"\\F0ED\";\n}\ni.icon.cloud.upload:before {\n  content: \"\\F0EE\";\n}\ni.icon.reply:before {\n  content: \"\\F112\";\n}\ni.icon.reply.all:before {\n  content: \"\\F122\";\n}\ni.icon.erase:before {\n  content: \"\\F12D\";\n}\ni.icon.unlock.alternate:before {\n  content: \"\\F13E\";\n}\ni.icon.write.square:before {\n  content: \"\\F14B\";\n}\ni.icon.share.square:before {\n  content: \"\\F14D\";\n}\ni.icon.archive:before {\n  content: \"\\F187\";\n}\ni.icon.translate:before {\n  content: \"\\F1AB\";\n}\ni.icon.recycle:before {\n  content: \"\\F1B8\";\n}\ni.icon.send:before {\n  content: \"\\F1D8\";\n}\ni.icon.send.outline:before {\n  content: \"\\F1D9\";\n}\ni.icon.share.alternate:before {\n  content: \"\\F1E0\";\n}\ni.icon.share.alternate.square:before {\n  content: \"\\F1E1\";\n}\ni.icon.add.to.cart:before {\n  content: \"\\F217\";\n}\ni.icon.in.cart:before {\n  content: \"\\F218\";\n}\ni.icon.add.user:before {\n  content: \"\\F234\";\n}\ni.icon.remove.user:before {\n  content: \"\\F235\";\n}\ni.icon.object.group:before {\n  content: \"\\F247\";\n}\ni.icon.object.ungroup:before {\n  content: \"\\F248\";\n}\ni.icon.clone:before {\n  content: \"\\F24D\";\n}\ni.icon.talk:before {\n  content: \"\\F27A\";\n}\ni.icon.talk.outline:before {\n  content: \"\\F27B\";\n}\n\n/* Messages */\ni.icon.help.circle:before {\n  content: \"\\F059\";\n}\ni.icon.info.circle:before {\n  content: \"\\F05A\";\n}\ni.icon.warning.circle:before {\n  content: \"\\F06A\";\n}\ni.icon.warning.sign:before {\n  content: \"\\F071\";\n}\ni.icon.announcement:before {\n  content: \"\\F0A1\";\n}\ni.icon.help:before {\n  content: \"\\F128\";\n}\ni.icon.info:before {\n  content: \"\\F129\";\n}\ni.icon.warning:before {\n  content: \"\\F12A\";\n}\ni.icon.birthday:before {\n  content: \"\\F1FD\";\n}\ni.icon.help.circle.outline:before {\n  content: \"\\F29C\";\n}\n\n/* Users */\ni.icon.user:before {\n  content: \"\\F007\";\n}\ni.icon.users:before {\n  content: \"\\F0C0\";\n}\ni.icon.doctor:before {\n  content: \"\\F0F0\";\n}\ni.icon.handicap:before {\n  content: \"\\F193\";\n}\ni.icon.student:before {\n  content: \"\\F19D\";\n}\ni.icon.child:before {\n  content: \"\\F1AE\";\n}\ni.icon.spy:before {\n  content: \"\\F21B\";\n}\ni.icon.user.circle:before {\n  content: \"\\F2BD\";\n}\ni.icon.user.circle.outline:before {\n  content: \"\\F2BE\";\n}\ni.icon.user.outline:before {\n  content: \"\\F2C0\";\n}\n\n/* Gender & Sexuality */\ni.icon.female:before {\n  content: \"\\F182\";\n}\ni.icon.male:before {\n  content: \"\\F183\";\n}\ni.icon.woman:before {\n  content: \"\\F221\";\n}\ni.icon.man:before {\n  content: \"\\F222\";\n}\ni.icon.non.binary.transgender:before {\n  content: \"\\F223\";\n}\ni.icon.intergender:before {\n  content: \"\\F224\";\n}\ni.icon.transgender:before {\n  content: \"\\F225\";\n}\ni.icon.lesbian:before {\n  content: \"\\F226\";\n}\ni.icon.gay:before {\n  content: \"\\F227\";\n}\ni.icon.heterosexual:before {\n  content: \"\\F228\";\n}\ni.icon.other.gender:before {\n  content: \"\\F229\";\n}\ni.icon.other.gender.vertical:before {\n  content: \"\\F22A\";\n}\ni.icon.other.gender.horizontal:before {\n  content: \"\\F22B\";\n}\ni.icon.neuter:before {\n  content: \"\\F22C\";\n}\ni.icon.genderless:before {\n  content: \"\\F22D\";\n}\n\n/* Accessibility */\ni.icon.universal.access:before {\n  content: \"\\F29A\";\n}\ni.icon.wheelchair:before {\n  content: \"\\F29B\";\n}\ni.icon.blind:before {\n  content: \"\\F29D\";\n}\ni.icon.audio.description:before {\n  content: \"\\F29E\";\n}\ni.icon.volume.control.phone:before {\n  content: \"\\F2A0\";\n}\ni.icon.braille:before {\n  content: \"\\F2A1\";\n}\ni.icon.asl:before {\n  content: \"\\F2A3\";\n}\ni.icon.assistive.listening.systems:before {\n  content: \"\\F2A2\";\n}\ni.icon.deafness:before {\n  content: \"\\F2A4\";\n}\ni.icon.sign.language:before {\n  content: \"\\F2A7\";\n}\ni.icon.low.vision:before {\n  content: \"\\F2A8\";\n}\n\n/* View Adjustment */\ni.icon.block.layout:before {\n  content: \"\\F009\";\n}\ni.icon.grid.layout:before {\n  content: \"\\F00A\";\n}\ni.icon.list.layout:before {\n  content: \"\\F00B\";\n}\ni.icon.zoom:before {\n  content: \"\\F00E\";\n}\ni.icon.zoom.out:before {\n  content: \"\\F010\";\n}\ni.icon.resize.vertical:before {\n  content: \"\\F07D\";\n}\ni.icon.resize.horizontal:before {\n  content: \"\\F07E\";\n}\ni.icon.maximize:before {\n  content: \"\\F0B2\";\n}\ni.icon.crop:before {\n  content: \"\\F125\";\n}\n\n/* Literal Objects */\ni.icon.cocktail:before {\n  content: \"\\F000\";\n}\ni.icon.road:before {\n  content: \"\\F018\";\n}\ni.icon.flag:before {\n  content: \"\\F024\";\n}\ni.icon.book:before {\n  content: \"\\F02D\";\n}\ni.icon.gift:before {\n  content: \"\\F06B\";\n}\ni.icon.leaf:before {\n  content: \"\\F06C\";\n}\ni.icon.fire:before {\n  content: \"\\F06D\";\n}\ni.icon.plane:before {\n  content: \"\\F072\";\n}\ni.icon.magnet:before {\n  content: \"\\F076\";\n}\ni.icon.lemon:before {\n  content: \"\\F094\";\n}\ni.icon.world:before {\n  content: \"\\F0AC\";\n}\ni.icon.travel:before {\n  content: \"\\F0B1\";\n}\ni.icon.shipping:before {\n  content: \"\\F0D1\";\n}\ni.icon.money:before {\n  content: \"\\F0D6\";\n}\ni.icon.legal:before {\n  content: \"\\F0E3\";\n}\ni.icon.lightning:before {\n  content: \"\\F0E7\";\n}\ni.icon.umbrella:before {\n  content: \"\\F0E9\";\n}\ni.icon.treatment:before {\n  content: \"\\F0F1\";\n}\ni.icon.suitcase:before {\n  content: \"\\F0F2\";\n}\ni.icon.bar:before {\n  content: \"\\F0FC\";\n}\ni.icon.flag.outline:before {\n  content: \"\\F11D\";\n}\ni.icon.flag.checkered:before {\n  content: \"\\F11E\";\n}\ni.icon.puzzle:before {\n  content: \"\\F12E\";\n}\ni.icon.fire.extinguisher:before {\n  content: \"\\F134\";\n}\ni.icon.rocket:before {\n  content: \"\\F135\";\n}\ni.icon.anchor:before {\n  content: \"\\F13D\";\n}\ni.icon.bullseye:before {\n  content: \"\\F140\";\n}\ni.icon.sun:before {\n  content: \"\\F185\";\n}\ni.icon.moon:before {\n  content: \"\\F186\";\n}\ni.icon.fax:before {\n  content: \"\\F1AC\";\n}\ni.icon.life.ring:before {\n  content: \"\\F1CD\";\n}\ni.icon.bomb:before {\n  content: \"\\F1E2\";\n}\ni.icon.soccer:before {\n  content: \"\\F1E3\";\n}\ni.icon.calculator:before {\n  content: \"\\F1EC\";\n}\ni.icon.diamond:before {\n  content: \"\\F219\";\n}\ni.icon.sticky.note:before {\n  content: \"\\F249\";\n}\ni.icon.sticky.note.outline:before {\n  content: \"\\F24A\";\n}\ni.icon.law:before {\n  content: \"\\F24E\";\n}\ni.icon.hand.peace:before {\n  content: \"\\F25B\";\n}\ni.icon.hand.rock:before {\n  content: \"\\F255\";\n}\ni.icon.hand.paper:before {\n  content: \"\\F256\";\n}\ni.icon.hand.scissors:before {\n  content: \"\\F257\";\n}\ni.icon.hand.lizard:before {\n  content: \"\\F258\";\n}\ni.icon.hand.spock:before {\n  content: \"\\F259\";\n}\ni.icon.tv:before {\n  content: \"\\F26C\";\n}\ni.icon.thermometer.full:before {\n  content: \"\\F2C7\";\n}\ni.icon.thermometer.three.quarters:before {\n  content: \"\\F2C8\";\n}\ni.icon.thermometer.half:before {\n  content: \"\\F2C9\";\n}\ni.icon.thermometer.quarter:before {\n  content: \"\\F2CA\";\n}\ni.icon.thermometer.empty:before {\n  content: \"\\F2CB\";\n}\ni.icon.shower:before {\n  content: \"\\F2CC\";\n}\ni.icon.bathtub:before {\n  content: \"\\F2CD\";\n}\ni.icon.snowflake:before {\n  content: \"\\F2DC\";\n}\n\n/* Shapes */\ni.icon.crosshairs:before {\n  content: \"\\F05B\";\n}\ni.icon.asterisk:before {\n  content: \"\\F069\";\n}\ni.icon.square.outline:before {\n  content: \"\\F096\";\n}\ni.icon.certificate:before {\n  content: \"\\F0A3\";\n}\ni.icon.square:before {\n  content: \"\\F0C8\";\n}\ni.icon.quote.left:before {\n  content: \"\\F10D\";\n}\ni.icon.quote.right:before {\n  content: \"\\F10E\";\n}\ni.icon.spinner:before {\n  content: \"\\F110\";\n}\ni.icon.circle:before {\n  content: \"\\F111\";\n}\ni.icon.ellipsis.horizontal:before {\n  content: \"\\F141\";\n}\ni.icon.ellipsis.vertical:before {\n  content: \"\\F142\";\n}\ni.icon.cube:before {\n  content: \"\\F1B2\";\n}\ni.icon.cubes:before {\n  content: \"\\F1B3\";\n}\ni.icon.circle.notched:before {\n  content: \"\\F1CE\";\n}\ni.icon.circle.thin:before {\n  content: \"\\F1DB\";\n}\n\n/* Item Selection */\ni.icon.checkmark:before {\n  content: \"\\F00C\";\n}\ni.icon.remove:before {\n  content: \"\\F00D\";\n}\ni.icon.checkmark.box:before {\n  content: \"\\F046\";\n}\ni.icon.move:before {\n  content: \"\\F047\";\n}\ni.icon.add.circle:before {\n  content: \"\\F055\";\n}\ni.icon.minus.circle:before {\n  content: \"\\F056\";\n}\ni.icon.remove.circle:before {\n  content: \"\\F057\";\n}\ni.icon.check.circle:before {\n  content: \"\\F058\";\n}\ni.icon.remove.circle.outline:before {\n  content: \"\\F05C\";\n}\ni.icon.check.circle.outline:before {\n  content: \"\\F05D\";\n}\ni.icon.plus:before {\n  content: \"\\F067\";\n}\ni.icon.minus:before {\n  content: \"\\F068\";\n}\ni.icon.add.square:before {\n  content: \"\\F0FE\";\n}\ni.icon.radio:before {\n  content: \"\\F10C\";\n}\ni.icon.minus.square:before {\n  content: \"\\F146\";\n}\ni.icon.minus.square.outline:before {\n  content: \"\\F147\";\n}\ni.icon.check.square:before {\n  content: \"\\F14A\";\n}\ni.icon.selected.radio:before {\n  content: \"\\F192\";\n}\ni.icon.plus.square.outline:before {\n  content: \"\\F196\";\n}\ni.icon.toggle.off:before {\n  content: \"\\F204\";\n}\ni.icon.toggle.on:before {\n  content: \"\\F205\";\n}\n\n/* Media */\ni.icon.film:before {\n  content: \"\\F008\";\n}\ni.icon.sound:before {\n  content: \"\\F025\";\n}\ni.icon.photo:before {\n  content: \"\\F030\";\n}\ni.icon.bar.chart:before {\n  content: \"\\F080\";\n}\ni.icon.camera.retro:before {\n  content: \"\\F083\";\n}\ni.icon.newspaper:before {\n  content: \"\\F1EA\";\n}\ni.icon.area.chart:before {\n  content: \"\\F1FE\";\n}\ni.icon.pie.chart:before {\n  content: \"\\F200\";\n}\ni.icon.line.chart:before {\n  content: \"\\F201\";\n}\n\n/* Pointers */\ni.icon.arrow.circle.outline.down:before {\n  content: \"\\F01A\";\n}\ni.icon.arrow.circle.outline.up:before {\n  content: \"\\F01B\";\n}\ni.icon.chevron.left:before {\n  content: \"\\F053\";\n}\ni.icon.chevron.right:before {\n  content: \"\\F054\";\n}\ni.icon.arrow.left:before {\n  content: \"\\F060\";\n}\ni.icon.arrow.right:before {\n  content: \"\\F061\";\n}\ni.icon.arrow.up:before {\n  content: \"\\F062\";\n}\ni.icon.arrow.down:before {\n  content: \"\\F063\";\n}\ni.icon.chevron.up:before {\n  content: \"\\F077\";\n}\ni.icon.chevron.down:before {\n  content: \"\\F078\";\n}\ni.icon.pointing.right:before {\n  content: \"\\F0A4\";\n}\ni.icon.pointing.left:before {\n  content: \"\\F0A5\";\n}\ni.icon.pointing.up:before {\n  content: \"\\F0A6\";\n}\ni.icon.pointing.down:before {\n  content: \"\\F0A7\";\n}\ni.icon.arrow.circle.left:before {\n  content: \"\\F0A8\";\n}\ni.icon.arrow.circle.right:before {\n  content: \"\\F0A9\";\n}\ni.icon.arrow.circle.up:before {\n  content: \"\\F0AA\";\n}\ni.icon.arrow.circle.down:before {\n  content: \"\\F0AB\";\n}\ni.icon.caret.down:before {\n  content: \"\\F0D7\";\n}\ni.icon.caret.up:before {\n  content: \"\\F0D8\";\n}\ni.icon.caret.left:before {\n  content: \"\\F0D9\";\n}\ni.icon.caret.right:before {\n  content: \"\\F0DA\";\n}\ni.icon.angle.double.left:before {\n  content: \"\\F100\";\n}\ni.icon.angle.double.right:before {\n  content: \"\\F101\";\n}\ni.icon.angle.double.up:before {\n  content: \"\\F102\";\n}\ni.icon.angle.double.down:before {\n  content: \"\\F103\";\n}\ni.icon.angle.left:before {\n  content: \"\\F104\";\n}\ni.icon.angle.right:before {\n  content: \"\\F105\";\n}\ni.icon.angle.up:before {\n  content: \"\\F106\";\n}\ni.icon.angle.down:before {\n  content: \"\\F107\";\n}\ni.icon.chevron.circle.left:before {\n  content: \"\\F137\";\n}\ni.icon.chevron.circle.right:before {\n  content: \"\\F138\";\n}\ni.icon.chevron.circle.up:before {\n  content: \"\\F139\";\n}\ni.icon.chevron.circle.down:before {\n  content: \"\\F13A\";\n}\ni.icon.toggle.down:before {\n  content: \"\\F150\";\n}\ni.icon.toggle.up:before {\n  content: \"\\F151\";\n}\ni.icon.toggle.right:before {\n  content: \"\\F152\";\n}\ni.icon.long.arrow.down:before {\n  content: \"\\F175\";\n}\ni.icon.long.arrow.up:before {\n  content: \"\\F176\";\n}\ni.icon.long.arrow.left:before {\n  content: \"\\F177\";\n}\ni.icon.long.arrow.right:before {\n  content: \"\\F178\";\n}\ni.icon.arrow.circle.outline.right:before {\n  content: \"\\F18E\";\n}\ni.icon.arrow.circle.outline.left:before {\n  content: \"\\F190\";\n}\ni.icon.toggle.left:before {\n  content: \"\\F191\";\n}\n\n/* Mobile */\ni.icon.tablet:before {\n  content: \"\\F10A\";\n}\ni.icon.mobile:before {\n  content: \"\\F10B\";\n}\ni.icon.battery.full:before {\n  content: \"\\F240\";\n}\ni.icon.battery.high:before {\n  content: \"\\F241\";\n}\ni.icon.battery.medium:before {\n  content: \"\\F242\";\n}\ni.icon.battery.low:before {\n  content: \"\\F243\";\n}\ni.icon.battery.empty:before {\n  content: \"\\F244\";\n}\n\n/* Computer */\ni.icon.power:before {\n  content: \"\\F011\";\n}\ni.icon.trash.outline:before {\n  content: \"\\F014\";\n}\ni.icon.disk.outline:before {\n  content: \"\\F0A0\";\n}\ni.icon.desktop:before {\n  content: \"\\F108\";\n}\ni.icon.laptop:before {\n  content: \"\\F109\";\n}\ni.icon.game:before {\n  content: \"\\F11B\";\n}\ni.icon.keyboard:before {\n  content: \"\\F11C\";\n}\ni.icon.plug:before {\n  content: \"\\F1E6\";\n}\n\n/* File System */\ni.icon.trash:before {\n  content: \"\\F1F8\";\n}\ni.icon.file.outline:before {\n  content: \"\\F016\";\n}\ni.icon.folder:before {\n  content: \"\\F07B\";\n}\ni.icon.folder.open:before {\n  content: \"\\F07C\";\n}\ni.icon.file.text.outline:before {\n  content: \"\\F0F6\";\n}\ni.icon.folder.outline:before {\n  content: \"\\F114\";\n}\ni.icon.folder.open.outline:before {\n  content: \"\\F115\";\n}\ni.icon.level.up:before {\n  content: \"\\F148\";\n}\ni.icon.level.down:before {\n  content: \"\\F149\";\n}\ni.icon.file:before {\n  content: \"\\F15B\";\n}\ni.icon.file.text:before {\n  content: \"\\F15C\";\n}\ni.icon.file.pdf.outline:before {\n  content: \"\\F1C1\";\n}\ni.icon.file.word.outline:before {\n  content: \"\\F1C2\";\n}\ni.icon.file.excel.outline:before {\n  content: \"\\F1C3\";\n}\ni.icon.file.powerpoint.outline:before {\n  content: \"\\F1C4\";\n}\ni.icon.file.image.outline:before {\n  content: \"\\F1C5\";\n}\ni.icon.file.archive.outline:before {\n  content: \"\\F1C6\";\n}\ni.icon.file.audio.outline:before {\n  content: \"\\F1C7\";\n}\ni.icon.file.video.outline:before {\n  content: \"\\F1C8\";\n}\ni.icon.file.code.outline:before {\n  content: \"\\F1C9\";\n}\n\n/* Technologies */\ni.icon.qrcode:before {\n  content: \"\\F029\";\n}\ni.icon.barcode:before {\n  content: \"\\F02A\";\n}\ni.icon.rss:before {\n  content: \"\\F09E\";\n}\ni.icon.fork:before {\n  content: \"\\F126\";\n}\ni.icon.html5:before {\n  content: \"\\F13B\";\n}\ni.icon.css3:before {\n  content: \"\\F13C\";\n}\ni.icon.rss.square:before {\n  content: \"\\F143\";\n}\ni.icon.openid:before {\n  content: \"\\F19B\";\n}\ni.icon.database:before {\n  content: \"\\F1C0\";\n}\ni.icon.wifi:before {\n  content: \"\\F1EB\";\n}\ni.icon.server:before {\n  content: \"\\F233\";\n}\ni.icon.usb:before {\n  content: \"\\F287\";\n}\ni.icon.bluetooth:before {\n  content: \"\\F293\";\n}\ni.icon.bluetooth.alternative:before {\n  content: \"\\F294\";\n}\ni.icon.microchip:before {\n  content: \"\\F2DB\";\n}\n\n/* Rating */\ni.icon.heart:before {\n  content: \"\\F004\";\n}\ni.icon.star:before {\n  content: \"\\F005\";\n}\ni.icon.empty.star:before {\n  content: \"\\F006\";\n}\ni.icon.thumbs.outline.up:before {\n  content: \"\\F087\";\n}\ni.icon.thumbs.outline.down:before {\n  content: \"\\F088\";\n}\ni.icon.star.half:before {\n  content: \"\\F089\";\n}\ni.icon.empty.heart:before {\n  content: \"\\F08A\";\n}\ni.icon.smile:before {\n  content: \"\\F118\";\n}\ni.icon.frown:before {\n  content: \"\\F119\";\n}\ni.icon.meh:before {\n  content: \"\\F11A\";\n}\ni.icon.star.half.empty:before {\n  content: \"\\F123\";\n}\ni.icon.thumbs.up:before {\n  content: \"\\F164\";\n}\ni.icon.thumbs.down:before {\n  content: \"\\F165\";\n}\n\n/* Audio */\ni.icon.music:before {\n  content: \"\\F001\";\n}\ni.icon.video.play.outline:before {\n  content: \"\\F01D\";\n}\ni.icon.volume.off:before {\n  content: \"\\F026\";\n}\ni.icon.volume.down:before {\n  content: \"\\F027\";\n}\ni.icon.volume.up:before {\n  content: \"\\F028\";\n}\ni.icon.record:before {\n  content: \"\\F03D\";\n}\ni.icon.step.backward:before {\n  content: \"\\F048\";\n}\ni.icon.fast.backward:before {\n  content: \"\\F049\";\n}\ni.icon.backward:before {\n  content: \"\\F04A\";\n}\ni.icon.play:before {\n  content: \"\\F04B\";\n}\ni.icon.pause:before {\n  content: \"\\F04C\";\n}\ni.icon.stop:before {\n  content: \"\\F04D\";\n}\ni.icon.forward:before {\n  content: \"\\F04E\";\n}\ni.icon.fast.forward:before {\n  content: \"\\F050\";\n}\ni.icon.step.forward:before {\n  content: \"\\F051\";\n}\ni.icon.eject:before {\n  content: \"\\F052\";\n}\ni.icon.unmute:before {\n  content: \"\\F130\";\n}\ni.icon.mute:before {\n  content: \"\\F131\";\n}\ni.icon.video.play:before {\n  content: \"\\F144\";\n}\ni.icon.closed.captioning:before {\n  content: \"\\F20A\";\n}\ni.icon.pause.circle:before {\n  content: \"\\F28B\";\n}\ni.icon.pause.circle.outline:before {\n  content: \"\\F28C\";\n}\ni.icon.stop.circle:before {\n  content: \"\\F28D\";\n}\ni.icon.stop.circle.outline:before {\n  content: \"\\F28E\";\n}\n\n/* Map, Locations, & Transportation */\ni.icon.marker:before {\n  content: \"\\F041\";\n}\ni.icon.coffee:before {\n  content: \"\\F0F4\";\n}\ni.icon.food:before {\n  content: \"\\F0F5\";\n}\ni.icon.building.outline:before {\n  content: \"\\F0F7\";\n}\ni.icon.hospital:before {\n  content: \"\\F0F8\";\n}\ni.icon.emergency:before {\n  content: \"\\F0F9\";\n}\ni.icon.first.aid:before {\n  content: \"\\F0FA\";\n}\ni.icon.military:before {\n  content: \"\\F0FB\";\n}\ni.icon.h:before {\n  content: \"\\F0FD\";\n}\ni.icon.location.arrow:before {\n  content: \"\\F124\";\n}\ni.icon.compass:before {\n  content: \"\\F14E\";\n}\ni.icon.space.shuttle:before {\n  content: \"\\F197\";\n}\ni.icon.university:before {\n  content: \"\\F19C\";\n}\ni.icon.building:before {\n  content: \"\\F1AD\";\n}\ni.icon.paw:before {\n  content: \"\\F1B0\";\n}\ni.icon.spoon:before {\n  content: \"\\F1B1\";\n}\ni.icon.car:before {\n  content: \"\\F1B9\";\n}\ni.icon.taxi:before {\n  content: \"\\F1BA\";\n}\ni.icon.tree:before {\n  content: \"\\F1BB\";\n}\ni.icon.bicycle:before {\n  content: \"\\F206\";\n}\ni.icon.bus:before {\n  content: \"\\F207\";\n}\ni.icon.ship:before {\n  content: \"\\F21A\";\n}\ni.icon.motorcycle:before {\n  content: \"\\F21C\";\n}\ni.icon.street.view:before {\n  content: \"\\F21D\";\n}\ni.icon.hotel:before {\n  content: \"\\F236\";\n}\ni.icon.train:before {\n  content: \"\\F238\";\n}\ni.icon.subway:before {\n  content: \"\\F239\";\n}\ni.icon.map.pin:before {\n  content: \"\\F276\";\n}\ni.icon.map.signs:before {\n  content: \"\\F277\";\n}\ni.icon.map.outline:before {\n  content: \"\\F278\";\n}\ni.icon.map:before {\n  content: \"\\F279\";\n}\n\n/* Tables */\ni.icon.table:before {\n  content: \"\\F0CE\";\n}\ni.icon.columns:before {\n  content: \"\\F0DB\";\n}\ni.icon.sort:before {\n  content: \"\\F0DC\";\n}\ni.icon.sort.descending:before {\n  content: \"\\F0DD\";\n}\ni.icon.sort.ascending:before {\n  content: \"\\F0DE\";\n}\ni.icon.sort.alphabet.ascending:before {\n  content: \"\\F15D\";\n}\ni.icon.sort.alphabet.descending:before {\n  content: \"\\F15E\";\n}\ni.icon.sort.content.ascending:before {\n  content: \"\\F160\";\n}\ni.icon.sort.content.descending:before {\n  content: \"\\F161\";\n}\ni.icon.sort.numeric.ascending:before {\n  content: \"\\F162\";\n}\ni.icon.sort.numeric.descending:before {\n  content: \"\\F163\";\n}\n\n/* Text Editor */\ni.icon.font:before {\n  content: \"\\F031\";\n}\ni.icon.bold:before {\n  content: \"\\F032\";\n}\ni.icon.italic:before {\n  content: \"\\F033\";\n}\ni.icon.text.height:before {\n  content: \"\\F034\";\n}\ni.icon.text.width:before {\n  content: \"\\F035\";\n}\ni.icon.align.left:before {\n  content: \"\\F036\";\n}\ni.icon.align.center:before {\n  content: \"\\F037\";\n}\ni.icon.align.right:before {\n  content: \"\\F038\";\n}\ni.icon.align.justify:before {\n  content: \"\\F039\";\n}\ni.icon.list:before {\n  content: \"\\F03A\";\n}\ni.icon.outdent:before {\n  content: \"\\F03B\";\n}\ni.icon.indent:before {\n  content: \"\\F03C\";\n}\ni.icon.linkify:before {\n  content: \"\\F0C1\";\n}\ni.icon.cut:before {\n  content: \"\\F0C4\";\n}\ni.icon.copy:before {\n  content: \"\\F0C5\";\n}\ni.icon.attach:before {\n  content: \"\\F0C6\";\n}\ni.icon.save:before {\n  content: \"\\F0C7\";\n}\ni.icon.content:before {\n  content: \"\\F0C9\";\n}\ni.icon.unordered.list:before {\n  content: \"\\F0CA\";\n}\ni.icon.ordered.list:before {\n  content: \"\\F0CB\";\n}\ni.icon.strikethrough:before {\n  content: \"\\F0CC\";\n}\ni.icon.underline:before {\n  content: \"\\F0CD\";\n}\ni.icon.paste:before {\n  content: \"\\F0EA\";\n}\ni.icon.unlinkify:before {\n  content: \"\\F127\";\n}\ni.icon.superscript:before {\n  content: \"\\F12B\";\n}\ni.icon.subscript:before {\n  content: \"\\F12C\";\n}\ni.icon.header:before {\n  content: \"\\F1DC\";\n}\ni.icon.paragraph:before {\n  content: \"\\F1DD\";\n}\ni.icon.text.cursor:before {\n  content: \"\\F246\";\n}\n\n/* Currency */\ni.icon.euro:before {\n  content: \"\\F153\";\n}\ni.icon.pound:before {\n  content: \"\\F154\";\n}\ni.icon.dollar:before {\n  content: \"\\F155\";\n}\ni.icon.rupee:before {\n  content: \"\\F156\";\n}\ni.icon.yen:before {\n  content: \"\\F157\";\n}\ni.icon.ruble:before {\n  content: \"\\F158\";\n}\ni.icon.won:before {\n  content: \"\\F159\";\n}\ni.icon.bitcoin:before {\n  content: \"\\F15A\";\n}\ni.icon.lira:before {\n  content: \"\\F195\";\n}\ni.icon.shekel:before {\n  content: \"\\F20B\";\n}\n\n/* Payment Options */\ni.icon.paypal:before {\n  content: \"\\F1ED\";\n}\ni.icon.google.wallet:before {\n  content: \"\\F1EE\";\n}\ni.icon.visa:before {\n  content: \"\\F1F0\";\n}\ni.icon.mastercard:before {\n  content: \"\\F1F1\";\n}\ni.icon.discover:before {\n  content: \"\\F1F2\";\n}\ni.icon.american.express:before {\n  content: \"\\F1F3\";\n}\ni.icon.paypal.card:before {\n  content: \"\\F1F4\";\n}\ni.icon.stripe:before {\n  content: \"\\F1F5\";\n}\ni.icon.japan.credit.bureau:before {\n  content: \"\\F24B\";\n}\ni.icon.diners.club:before {\n  content: \"\\F24C\";\n}\ni.icon.credit.card.alternative:before {\n  content: \"\\F283\";\n}\n/* Networks and Websites*/\ni.icon.twitter.square:before {\n  content: \"\\F081\";\n}\ni.icon.facebook.square:before {\n  content: \"\\F082\";\n}\ni.icon.linkedin.square:before {\n  content: \"\\F08C\";\n}\ni.icon.github.square:before {\n  content: \"\\F092\";\n}\ni.icon.twitter:before {\n  content: \"\\F099\";\n}\ni.icon.facebook.f:before {\n  content: \"\\F09A\";\n}\ni.icon.github:before {\n  content: \"\\F09B\";\n}\ni.icon.pinterest:before {\n  content: \"\\F0D2\";\n}\ni.icon.pinterest.square:before {\n  content: \"\\F0D3\";\n}\ni.icon.google.plus.square:before {\n  content: \"\\F0D4\";\n}\ni.icon.google.plus:before {\n  content: \"\\F0D5\";\n}\ni.icon.linkedin:before {\n  content: \"\\F0E1\";\n}\ni.icon.github.alternate:before {\n  content: \"\\F113\";\n}\ni.icon.maxcdn:before {\n  content: \"\\F136\";\n}\ni.icon.youtube.square:before {\n  content: \"\\F166\";\n}\ni.icon.youtube:before {\n  content: \"\\F167\";\n}\ni.icon.xing:before {\n  content: \"\\F168\";\n}\ni.icon.xing.square:before {\n  content: \"\\F169\";\n}\ni.icon.youtube.play:before {\n  content: \"\\F16A\";\n}\ni.icon.dropbox:before {\n  content: \"\\F16B\";\n}\ni.icon.stack.overflow:before {\n  content: \"\\F16C\";\n}\ni.icon.instagram:before {\n  content: \"\\F16D\";\n}\ni.icon.flickr:before {\n  content: \"\\F16E\";\n}\ni.icon.adn:before {\n  content: \"\\F170\";\n}\ni.icon.bitbucket:before {\n  content: \"\\F171\";\n}\ni.icon.bitbucket.square:before {\n  content: \"\\F172\";\n}\ni.icon.tumblr:before {\n  content: \"\\F173\";\n}\ni.icon.tumblr.square:before {\n  content: \"\\F174\";\n}\ni.icon.apple:before {\n  content: \"\\F179\";\n}\ni.icon.windows:before {\n  content: \"\\F17A\";\n}\ni.icon.android:before {\n  content: \"\\F17B\";\n}\ni.icon.linux:before {\n  content: \"\\F17C\";\n}\ni.icon.dribble:before {\n  content: \"\\F17D\";\n}\ni.icon.skype:before {\n  content: \"\\F17E\";\n}\ni.icon.foursquare:before {\n  content: \"\\F180\";\n}\ni.icon.trello:before {\n  content: \"\\F181\";\n}\ni.icon.gittip:before {\n  content: \"\\F184\";\n}\ni.icon.vk:before {\n  content: \"\\F189\";\n}\ni.icon.weibo:before {\n  content: \"\\F18A\";\n}\ni.icon.renren:before {\n  content: \"\\F18B\";\n}\ni.icon.pagelines:before {\n  content: \"\\F18C\";\n}\ni.icon.stack.exchange:before {\n  content: \"\\F18D\";\n}\ni.icon.vimeo.square:before {\n  content: \"\\F194\";\n}\ni.icon.slack:before {\n  content: \"\\F198\";\n}\ni.icon.wordpress:before {\n  content: \"\\F19A\";\n}\ni.icon.yahoo:before {\n  content: \"\\F19E\";\n}\ni.icon.google:before {\n  content: \"\\F1A0\";\n}\ni.icon.reddit:before {\n  content: \"\\F1A1\";\n}\ni.icon.reddit.square:before {\n  content: \"\\F1A2\";\n}\ni.icon.stumbleupon.circle:before {\n  content: \"\\F1A3\";\n}\ni.icon.stumbleupon:before {\n  content: \"\\F1A4\";\n}\ni.icon.delicious:before {\n  content: \"\\F1A5\";\n}\ni.icon.digg:before {\n  content: \"\\F1A6\";\n}\ni.icon.pied.piper:before {\n  content: \"\\F1A7\";\n}\ni.icon.pied.piper.alternate:before {\n  content: \"\\F1A8\";\n}\ni.icon.drupal:before {\n  content: \"\\F1A9\";\n}\ni.icon.joomla:before {\n  content: \"\\F1AA\";\n}\ni.icon.behance:before {\n  content: \"\\F1B4\";\n}\ni.icon.behance.square:before {\n  content: \"\\F1B5\";\n}\ni.icon.steam:before {\n  content: \"\\F1B6\";\n}\ni.icon.steam.square:before {\n  content: \"\\F1B7\";\n}\ni.icon.spotify:before {\n  content: \"\\F1BC\";\n}\ni.icon.deviantart:before {\n  content: \"\\F1BD\";\n}\ni.icon.soundcloud:before {\n  content: \"\\F1BE\";\n}\ni.icon.vine:before {\n  content: \"\\F1CA\";\n}\ni.icon.codepen:before {\n  content: \"\\F1CB\";\n}\ni.icon.jsfiddle:before {\n  content: \"\\F1CC\";\n}\ni.icon.rebel:before {\n  content: \"\\F1D0\";\n}\ni.icon.empire:before {\n  content: \"\\F1D1\";\n}\ni.icon.git.square:before {\n  content: \"\\F1D2\";\n}\ni.icon.git:before {\n  content: \"\\F1D3\";\n}\ni.icon.hacker.news:before {\n  content: \"\\F1D4\";\n}\ni.icon.tencent.weibo:before {\n  content: \"\\F1D5\";\n}\ni.icon.qq:before {\n  content: \"\\F1D6\";\n}\ni.icon.wechat:before {\n  content: \"\\F1D7\";\n}\ni.icon.slideshare:before {\n  content: \"\\F1E7\";\n}\ni.icon.twitch:before {\n  content: \"\\F1E8\";\n}\ni.icon.yelp:before {\n  content: \"\\F1E9\";\n}\ni.icon.lastfm:before {\n  content: \"\\F202\";\n}\ni.icon.lastfm.square:before {\n  content: \"\\F203\";\n}\ni.icon.ioxhost:before {\n  content: \"\\F208\";\n}\ni.icon.angellist:before {\n  content: \"\\F209\";\n}\ni.icon.meanpath:before {\n  content: \"\\F20C\";\n}\ni.icon.buysellads:before {\n  content: \"\\F20D\";\n}\ni.icon.connectdevelop:before {\n  content: \"\\F20E\";\n}\ni.icon.dashcube:before {\n  content: \"\\F210\";\n}\ni.icon.forumbee:before {\n  content: \"\\F211\";\n}\ni.icon.leanpub:before {\n  content: \"\\F212\";\n}\ni.icon.sellsy:before {\n  content: \"\\F213\";\n}\ni.icon.shirtsinbulk:before {\n  content: \"\\F214\";\n}\ni.icon.simplybuilt:before {\n  content: \"\\F215\";\n}\ni.icon.skyatlas:before {\n  content: \"\\F216\";\n}\ni.icon.facebook:before {\n  content: \"\\F230\";\n}\ni.icon.pinterest:before {\n  content: \"\\F231\";\n}\ni.icon.whatsapp:before {\n  content: \"\\F232\";\n}\ni.icon.viacoin:before {\n  content: \"\\F237\";\n}\ni.icon.medium:before {\n  content: \"\\F23A\";\n}\ni.icon.y.combinator:before {\n  content: \"\\F23B\";\n}\ni.icon.optinmonster:before {\n  content: \"\\F23C\";\n}\ni.icon.opencart:before {\n  content: \"\\F23D\";\n}\ni.icon.expeditedssl:before {\n  content: \"\\F23E\";\n}\ni.icon.gg:before {\n  content: \"\\F260\";\n}\ni.icon.gg.circle:before {\n  content: \"\\F261\";\n}\ni.icon.tripadvisor:before {\n  content: \"\\F262\";\n}\ni.icon.odnoklassniki:before {\n  content: \"\\F263\";\n}\ni.icon.odnoklassniki.square:before {\n  content: \"\\F264\";\n}\ni.icon.pocket:before {\n  content: \"\\F265\";\n}\ni.icon.wikipedia:before {\n  content: \"\\F266\";\n}\ni.icon.safari:before {\n  content: \"\\F267\";\n}\ni.icon.chrome:before {\n  content: \"\\F268\";\n}\ni.icon.firefox:before {\n  content: \"\\F269\";\n}\ni.icon.opera:before {\n  content: \"\\F26A\";\n}\ni.icon.internet.explorer:before {\n  content: \"\\F26B\";\n}\ni.icon.contao:before {\n  content: \"\\F26D\";\n}\ni.icon.\\35 00px:before {\n  content: \"\\F26E\";\n}\ni.icon.amazon:before {\n  content: \"\\F270\";\n}\ni.icon.houzz:before {\n  content: \"\\F27C\";\n}\ni.icon.vimeo:before {\n  content: \"\\F27D\";\n}\ni.icon.black.tie:before {\n  content: \"\\F27E\";\n}\ni.icon.fonticons:before {\n  content: \"\\F280\";\n}\ni.icon.reddit.alien:before {\n  content: \"\\F281\";\n}\ni.icon.microsoft.edge:before {\n  content: \"\\F282\";\n}\ni.icon.codiepie:before {\n  content: \"\\F284\";\n}\ni.icon.modx:before {\n  content: \"\\F285\";\n}\ni.icon.fort.awesome:before {\n  content: \"\\F286\";\n}\ni.icon.product.hunt:before {\n  content: \"\\F288\";\n}\ni.icon.mixcloud:before {\n  content: \"\\F289\";\n}\ni.icon.scribd:before {\n  content: \"\\F28A\";\n}\ni.icon.gitlab:before {\n  content: \"\\F296\";\n}\ni.icon.wpbeginner:before {\n  content: \"\\F297\";\n}\ni.icon.wpforms:before {\n  content: \"\\F298\";\n}\ni.icon.envira.gallery:before {\n  content: \"\\F299\";\n}\ni.icon.glide:before {\n  content: \"\\F2A5\";\n}\ni.icon.glide.g:before {\n  content: \"\\F2A6\";\n}\ni.icon.viadeo:before {\n  content: \"\\F2A9\";\n}\ni.icon.viadeo.square:before {\n  content: \"\\F2AA\";\n}\ni.icon.snapchat:before {\n  content: \"\\F2AB\";\n}\ni.icon.snapchat.ghost:before {\n  content: \"\\F2AC\";\n}\ni.icon.snapchat.square:before {\n  content: \"\\F2AD\";\n}\ni.icon.pied.piper.hat:before {\n  content: \"\\F2AE\";\n}\ni.icon.first.order:before {\n  content: \"\\F2B0\";\n}\ni.icon.yoast:before {\n  content: \"\\F2B1\";\n}\ni.icon.themeisle:before {\n  content: \"\\F2B2\";\n}\ni.icon.google.plus.circle:before {\n  content: \"\\F2B3\";\n}\ni.icon.font.awesome:before {\n  content: \"\\F2B4\";\n}\ni.icon.linode:before {\n  content: \"\\F2B8\";\n}\ni.icon.quora:before {\n  content: \"\\F2C4\";\n}\ni.icon.free.code.camp:before {\n  content: \"\\F2C5\";\n}\ni.icon.telegram:before {\n  content: \"\\F2C6\";\n}\ni.icon.bandcamp:before {\n  content: \"\\F2D5\";\n}\ni.icon.grav:before {\n  content: \"\\F2D6\";\n}\ni.icon.etsy:before {\n  content: \"\\F2D7\";\n}\ni.icon.imdb:before {\n  content: \"\\F2D8\";\n}\ni.icon.ravelry:before {\n  content: \"\\F2D9\";\n}\ni.icon.eercast:before {\n  content: \"\\F2DA\";\n}\ni.icon.superpowers:before {\n  content: \"\\F2DD\";\n}\ni.icon.wpexplorer:before {\n  content: \"\\F2DE\";\n}\ni.icon.meetup:before {\n  content: \"\\F2E0\";\n}\n\n\n/*******************************\n            Aliases\n*******************************/\n\ni.icon.like:before {\n  content: \"\\F004\";\n}\ni.icon.favorite:before {\n  content: \"\\F005\";\n}\ni.icon.video:before {\n  content: \"\\F008\";\n}\ni.icon.check:before {\n  content: \"\\F00C\";\n}\ni.icon.close:before {\n  content: \"\\F00D\";\n}\ni.icon.cancel:before {\n  content: \"\\F00D\";\n}\ni.icon.delete:before {\n  content: \"\\F00D\";\n}\ni.icon.x:before {\n  content: \"\\F00D\";\n}\ni.icon.zoom.in:before {\n  content: \"\\F00E\";\n}\ni.icon.magnify:before {\n  content: \"\\F00E\";\n}\ni.icon.shutdown:before {\n  content: \"\\F011\";\n}\ni.icon.clock:before {\n  content: \"\\F017\";\n}\ni.icon.time:before {\n  content: \"\\F017\";\n}\ni.icon.play.circle.outline:before {\n  content: \"\\F01D\";\n}\ni.icon.headphone:before {\n  content: \"\\F025\";\n}\ni.icon.camera:before {\n  content: \"\\F030\";\n}\ni.icon.video.camera:before {\n  content: \"\\F03D\";\n}\ni.icon.picture:before {\n  content: \"\\F03E\";\n}\ni.icon.pencil:before {\n  content: \"\\F040\";\n}\ni.icon.compose:before {\n  content: \"\\F040\";\n}\ni.icon.point:before {\n  content: \"\\F041\";\n}\ni.icon.tint:before {\n  content: \"\\F043\";\n}\ni.icon.signup:before {\n  content: \"\\F044\";\n}\ni.icon.plus.circle:before {\n  content: \"\\F055\";\n}\ni.icon.question.circle:before {\n  content: \"\\F059\";\n}\ni.icon.dont:before {\n  content: \"\\F05E\";\n}\ni.icon.minimize:before {\n  content: \"\\F066\";\n}\ni.icon.add:before {\n  content: \"\\F067\";\n}\ni.icon.exclamation.circle:before {\n  content: \"\\F06A\";\n}\ni.icon.attention:before {\n  content: \"\\F06A\";\n}\ni.icon.eye:before {\n  content: \"\\F06E\";\n}\ni.icon.exclamation.triangle:before {\n  content: \"\\F071\";\n}\ni.icon.shuffle:before {\n  content: \"\\F074\";\n}\ni.icon.chat:before {\n  content: \"\\F075\";\n}\ni.icon.cart:before {\n  content: \"\\F07A\";\n}\ni.icon.shopping.cart:before {\n  content: \"\\F07A\";\n}\ni.icon.bar.graph:before {\n  content: \"\\F080\";\n}\ni.icon.key:before {\n  content: \"\\F084\";\n}\ni.icon.cogs:before {\n  content: \"\\F085\";\n}\ni.icon.discussions:before {\n  content: \"\\F086\";\n}\ni.icon.like.outline:before {\n  content: \"\\F087\";\n}\ni.icon.dislike.outline:before {\n  content: \"\\F088\";\n}\ni.icon.heart.outline:before {\n  content: \"\\F08A\";\n}\ni.icon.log.out:before {\n  content: \"\\F08B\";\n}\ni.icon.thumb.tack:before {\n  content: \"\\F08D\";\n}\ni.icon.winner:before {\n  content: \"\\F091\";\n}\ni.icon.phone:before {\n  content: \"\\F095\";\n}\ni.icon.bookmark.outline:before {\n  content: \"\\F097\";\n}\ni.icon.phone.square:before {\n  content: \"\\F098\";\n}\ni.icon.credit.card:before {\n  content: \"\\F09D\";\n}\ni.icon.hdd.outline:before {\n  content: \"\\F0A0\";\n}\ni.icon.bullhorn:before {\n  content: \"\\F0A1\";\n}\ni.icon.bell.outline:before {\n  content: \"\\F0A2\";\n}\ni.icon.hand.outline.right:before {\n  content: \"\\F0A4\";\n}\ni.icon.hand.outline.left:before {\n  content: \"\\F0A5\";\n}\ni.icon.hand.outline.up:before {\n  content: \"\\F0A6\";\n}\ni.icon.hand.outline.down:before {\n  content: \"\\F0A7\";\n}\ni.icon.globe:before {\n  content: \"\\F0AC\";\n}\ni.icon.wrench:before {\n  content: \"\\F0AD\";\n}\ni.icon.briefcase:before {\n  content: \"\\F0B1\";\n}\ni.icon.group:before {\n  content: \"\\F0C0\";\n}\ni.icon.linkify:before {\n  content: \"\\F0C1\";\n}\ni.icon.chain:before {\n  content: \"\\F0C1\";\n}\ni.icon.flask:before {\n  content: \"\\F0C3\";\n}\ni.icon.sidebar:before {\n  content: \"\\F0C9\";\n}\ni.icon.bars:before {\n  content: \"\\F0C9\";\n}\ni.icon.list.ul:before {\n  content: \"\\F0CA\";\n}\ni.icon.list.ol:before {\n  content: \"\\F0CB\";\n}\ni.icon.numbered.list:before {\n  content: \"\\F0CB\";\n}\ni.icon.magic:before {\n  content: \"\\F0D0\";\n}\ni.icon.truck:before {\n  content: \"\\F0D1\";\n}\ni.icon.currency:before {\n  content: \"\\F0D6\";\n}\ni.icon.triangle.down:before {\n  content: \"\\F0D7\";\n}\ni.icon.dropdown:before {\n  content: \"\\F0D7\";\n}\ni.icon.triangle.up:before {\n  content: \"\\F0D8\";\n}\ni.icon.triangle.left:before {\n  content: \"\\F0D9\";\n}\ni.icon.triangle.right:before {\n  content: \"\\F0DA\";\n}\ni.icon.envelope:before {\n  content: \"\\F0E0\";\n}\ni.icon.conversation:before {\n  content: \"\\F0E6\";\n}\ni.icon.rain:before {\n  content: \"\\F0E9\";\n}\ni.icon.clipboard:before {\n  content: \"\\F0EA\";\n}\ni.icon.lightbulb:before {\n  content: \"\\F0EB\";\n}\ni.icon.bell:before {\n  content: \"\\F0F3\";\n}\ni.icon.ambulance:before {\n  content: \"\\F0F9\";\n}\ni.icon.medkit:before {\n  content: \"\\F0FA\";\n}\ni.icon.fighter.jet:before {\n  content: \"\\F0FB\";\n}\ni.icon.beer:before {\n  content: \"\\F0FC\";\n}\ni.icon.plus.square:before {\n  content: \"\\F0FE\";\n}\ni.icon.computer:before {\n  content: \"\\F108\";\n}\ni.icon.circle.outline:before {\n  content: \"\\F10C\";\n}\ni.icon.gamepad:before {\n  content: \"\\F11B\";\n}\ni.icon.star.half.full:before {\n  content: \"\\F123\";\n}\ni.icon.broken.chain:before {\n  content: \"\\F127\";\n}\ni.icon.question:before {\n  content: \"\\F128\";\n}\ni.icon.exclamation:before {\n  content: \"\\F12A\";\n}\ni.icon.eraser:before {\n  content: \"\\F12D\";\n}\ni.icon.microphone:before {\n  content: \"\\F130\";\n}\ni.icon.microphone.slash:before {\n  content: \"\\F131\";\n}\ni.icon.shield:before {\n  content: \"\\F132\";\n}\ni.icon.target:before {\n  content: \"\\F140\";\n}\ni.icon.play.circle:before {\n  content: \"\\F144\";\n}\ni.icon.pencil.square:before {\n  content: \"\\F14B\";\n}\ni.icon.eur:before {\n  content: \"\\F153\";\n}\ni.icon.gbp:before {\n  content: \"\\F154\";\n}\ni.icon.usd:before {\n  content: \"\\F155\";\n}\ni.icon.inr:before {\n  content: \"\\F156\";\n}\ni.icon.cny:before {\n  content: \"\\F157\";\n}\ni.icon.rmb:before {\n  content: \"\\F157\";\n}\ni.icon.jpy:before {\n  content: \"\\F157\";\n}\ni.icon.rouble:before {\n  content: \"\\F158\";\n}\ni.icon.rub:before {\n  content: \"\\F158\";\n}\ni.icon.krw:before {\n  content: \"\\F159\";\n}\ni.icon.btc:before {\n  content: \"\\F15A\";\n}\ni.icon.gratipay:before {\n  content: \"\\F184\";\n}\ni.icon.zip:before {\n  content: \"\\F187\";\n}\ni.icon.dot.circle.outline:before {\n  content: \"\\F192\";\n}\ni.icon.try:before {\n  content: \"\\F195\";\n}\ni.icon.graduation:before {\n  content: \"\\F19D\";\n}\ni.icon.circle.outline:before {\n  content: \"\\F1DB\";\n}\ni.icon.sliders:before {\n  content: \"\\F1DE\";\n}\ni.icon.weixin:before {\n  content: \"\\F1D7\";\n}\ni.icon.tty:before {\n  content: \"\\F1E4\";\n}\ni.icon.teletype:before {\n  content: \"\\F1E4\";\n}\ni.icon.binoculars:before {\n  content: \"\\F1E5\";\n}\ni.icon.power.cord:before {\n  content: \"\\F1E6\";\n}\ni.icon.wi-fi:before {\n  content: \"\\F1EB\";\n}\ni.icon.visa.card:before {\n  content: \"\\F1F0\";\n}\ni.icon.mastercard.card:before {\n  content: \"\\F1F1\";\n}\ni.icon.discover.card:before {\n  content: \"\\F1F2\";\n}\ni.icon.amex:before {\n  content: \"\\F1F3\";\n}\ni.icon.american.express.card:before {\n  content: \"\\F1F3\";\n}\ni.icon.stripe.card:before {\n  content: \"\\F1F5\";\n}\ni.icon.bell.slash:before {\n  content: \"\\F1F6\";\n}\ni.icon.bell.slash.outline:before {\n  content: \"\\F1F7\";\n}\ni.icon.area.graph:before {\n  content: \"\\F1FE\";\n}\ni.icon.pie.graph:before {\n  content: \"\\F200\";\n}\ni.icon.line.graph:before {\n  content: \"\\F201\";\n}\ni.icon.cc:before {\n  content: \"\\F20A\";\n}\ni.icon.sheqel:before {\n  content: \"\\F20B\";\n}\ni.icon.ils:before {\n  content: \"\\F20B\";\n}\ni.icon.plus.cart:before {\n  content: \"\\F217\";\n}\ni.icon.arrow.down.cart:before {\n  content: \"\\F218\";\n}\ni.icon.detective:before {\n  content: \"\\F21B\";\n}\ni.icon.venus:before {\n  content: \"\\F221\";\n}\ni.icon.mars:before {\n  content: \"\\F222\";\n}\ni.icon.mercury:before {\n  content: \"\\F223\";\n}\ni.icon.intersex:before {\n  content: \"\\F224\";\n}\ni.icon.venus.double:before {\n  content: \"\\F226\";\n}\ni.icon.female.homosexual:before {\n  content: \"\\F226\";\n}\ni.icon.mars.double:before {\n  content: \"\\F227\";\n}\ni.icon.male.homosexual:before {\n  content: \"\\F227\";\n}\ni.icon.venus.mars:before {\n  content: \"\\F228\";\n}\ni.icon.mars.stroke:before {\n  content: \"\\F229\";\n}\ni.icon.mars.alternate:before {\n  content: \"\\F229\";\n}\ni.icon.mars.vertical:before {\n  content: \"\\F22A\";\n}\ni.icon.mars.stroke.vertical:before {\n  content: \"\\F22A\";\n}\ni.icon.mars.horizontal:before {\n  content: \"\\F22B\";\n}\ni.icon.mars.stroke.horizontal:before {\n  content: \"\\F22B\";\n}\ni.icon.asexual:before {\n  content: \"\\F22D\";\n}\ni.icon.facebook.official:before {\n  content: \"\\F230\";\n}\ni.icon.user.plus:before {\n  content: \"\\F234\";\n}\ni.icon.user.times:before {\n  content: \"\\F235\";\n}\ni.icon.user.close:before {\n  content: \"\\F235\";\n}\ni.icon.user.cancel:before {\n  content: \"\\F235\";\n}\ni.icon.user.delete:before {\n  content: \"\\F235\";\n}\ni.icon.user.x:before {\n  content: \"\\F235\";\n}\ni.icon.bed:before {\n  content: \"\\F236\";\n}\ni.icon.yc:before {\n  content: \"\\F23B\";\n}\ni.icon.ycombinator:before {\n  content: \"\\F23B\";\n}\ni.icon.battery.four:before {\n  content: \"\\F240\";\n}\ni.icon.battery.three:before {\n  content: \"\\F241\";\n}\ni.icon.battery.three.quarters:before {\n  content: \"\\F241\";\n}\ni.icon.battery.two:before {\n  content: \"\\F242\";\n}\ni.icon.battery.half:before {\n  content: \"\\F242\";\n}\ni.icon.battery.one:before {\n  content: \"\\F243\";\n}\ni.icon.battery.quarter:before {\n  content: \"\\F243\";\n}\ni.icon.battery.zero:before {\n  content: \"\\F244\";\n}\ni.icon.i.cursor:before {\n  content: \"\\F246\";\n}\ni.icon.jcb:before {\n  content: \"\\F24B\";\n}\ni.icon.japan.credit.bureau.card:before {\n  content: \"\\F24B\";\n}\ni.icon.diners.club.card:before {\n  content: \"\\F24C\";\n}\ni.icon.balance:before {\n  content: \"\\F24E\";\n}\ni.icon.hourglass.outline:before {\n  content: \"\\F250\";\n}\ni.icon.hourglass.zero:before {\n  content: \"\\F250\";\n}\ni.icon.hourglass.one:before {\n  content: \"\\F251\";\n}\ni.icon.hourglass.two:before {\n  content: \"\\F252\";\n}\ni.icon.hourglass.three:before {\n  content: \"\\F253\";\n}\ni.icon.hourglass.four:before {\n  content: \"\\F254\";\n}\ni.icon.grab:before {\n  content: \"\\F255\";\n}\ni.icon.hand.victory:before {\n  content: \"\\F25B\";\n}\ni.icon.tm:before {\n  content: \"\\F25C\";\n}\ni.icon.r.circle:before {\n  content: \"\\F25D\";\n}\ni.icon.television:before {\n  content: \"\\F26C\";\n}\ni.icon.five.hundred.pixels:before {\n  content: \"\\F26E\";\n}\ni.icon.calendar.plus:before {\n  content: \"\\F271\";\n}\ni.icon.calendar.minus:before {\n  content: \"\\F272\";\n}\ni.icon.calendar.times:before {\n  content: \"\\F273\";\n}\ni.icon.calendar.check:before {\n  content: \"\\F274\";\n}\ni.icon.factory:before {\n  content: \"\\F275\";\n}\ni.icon.commenting:before {\n  content: \"\\F27A\";\n}\ni.icon.commenting.outline:before {\n  content: \"\\F27B\";\n}\ni.icon.edge:before {\n  content: \"\\F282\";\n}\ni.icon.ms.edge:before {\n  content: \"\\F282\";\n}\ni.icon.wordpress.beginner:before {\n  content: \"\\F297\";\n}\ni.icon.wordpress.forms:before {\n  content: \"\\F298\";\n}\ni.icon.envira:before {\n  content: \"\\F299\";\n}\ni.icon.question.circle.outline:before {\n  content: \"\\F29C\";\n}\ni.icon.assistive.listening.devices:before {\n  content: \"\\F2A2\";\n}\ni.icon.als:before {\n  content: \"\\F2A2\";\n}\ni.icon.ald:before {\n  content: \"\\F2A2\";\n}\ni.icon.asl.interpreting:before {\n  content: \"\\F2A3\";\n}\ni.icon.deaf:before {\n  content: \"\\F2A4\";\n}\ni.icon.american.sign.language.interpreting:before {\n  content: \"\\F2A3\";\n}\ni.icon.hard.of.hearing:before {\n  content: \"\\F2A4\";\n}\ni.icon.signing:before {\n  content: \"\\F2A7\";\n}\ni.icon.new.pied.piper:before {\n  content: \"\\F2AE\";\n}\ni.icon.theme.isle:before {\n  content: \"\\F2B2\";\n}\ni.icon.google.plus.official:before {\n  content: \"\\F2B3\";\n}\ni.icon.fa:before {\n  content: \"\\F2B4\";\n}\ni.icon.vcard:before {\n  content: \"\\F2BB\";\n}\ni.icon.vcard.outline:before {\n  content: \"\\F2BC\";\n}\ni.icon.drivers.license:before {\n  content: \"\\F2C2\";\n}\ni.icon.drivers.license.outline:before {\n  content: \"\\F2C3\";\n}\ni.icon.thermometer:before {\n  content: \"\\F2C7\";\n}\ni.icon.s15:before {\n  content: \"\\F2CD\";\n}\ni.icon.bath:before {\n  content: \"\\F2CD\";\n}\ni.icon.times.rectangle:before {\n  content: \"\\F2D3\";\n}\ni.icon.times.rectangle.outline:before {\n  content: \"\\F2D4\";\n}\n\n\n/*******************************\n         Site Overrides\n*******************************/\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "912ec66d7572ff821749319396470bde.svg";
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "b06871f281fee6b241d60582ae9369b9.ttf";
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "fee66e712a8a08eef5805a46892932ad.woff";
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "af7ae505a9eed503f8b8e6982036873e.woff2";
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -3688,7 +3772,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -3699,7 +3783,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 /**
@@ -3726,15 +3810,15 @@ module.exports = apply;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseTimes = __webpack_require__(44),
-    isArguments = __webpack_require__(63),
-    isArray = __webpack_require__(64),
-    isBuffer = __webpack_require__(65),
+var baseTimes = __webpack_require__(45),
+    isArguments = __webpack_require__(64),
+    isArray = __webpack_require__(65),
+    isBuffer = __webpack_require__(66),
     isIndex = __webpack_require__(14),
-    isTypedArray = __webpack_require__(66);
+    isTypedArray = __webpack_require__(67);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3781,7 +3865,7 @@ module.exports = arrayLikeKeys;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(0),
@@ -3805,13 +3889,13 @@ module.exports = baseIsArguments;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isFunction = __webpack_require__(18),
-    isMasked = __webpack_require__(53),
+    isMasked = __webpack_require__(54),
     isObject = __webpack_require__(3),
-    toSource = __webpack_require__(61);
+    toSource = __webpack_require__(62);
 
 /**
  * Used to match `RegExp`
@@ -3858,7 +3942,7 @@ module.exports = baseIsNative;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(0),
@@ -3924,11 +4008,11 @@ module.exports = baseIsTypedArray;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isPrototype = __webpack_require__(15),
-    nativeKeys = __webpack_require__(54);
+    nativeKeys = __webpack_require__(55);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -3960,12 +4044,12 @@ module.exports = baseKeys;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var identity = __webpack_require__(17),
-    overRest = __webpack_require__(58),
-    setToString = __webpack_require__(59);
+    overRest = __webpack_require__(59),
+    setToString = __webpack_require__(60);
 
 /**
  * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -3983,10 +4067,10 @@ module.exports = baseRest;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var constant = __webpack_require__(62),
+var constant = __webpack_require__(63),
     defineProperty = __webpack_require__(12),
     identity = __webpack_require__(17);
 
@@ -4011,7 +4095,7 @@ module.exports = baseSetToString;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 /**
@@ -4037,7 +4121,7 @@ module.exports = baseTimes;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 /**
@@ -4057,7 +4141,7 @@ module.exports = baseUnary;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assignValue = __webpack_require__(10),
@@ -4103,7 +4187,7 @@ module.exports = copyObject;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(1);
@@ -4115,11 +4199,11 @@ module.exports = coreJsData;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseRest = __webpack_require__(42),
-    isIterateeCall = __webpack_require__(52);
+var baseRest = __webpack_require__(43),
+    isIterateeCall = __webpack_require__(53);
 
 /**
  * Creates a function like `_.assign`.
@@ -4158,11 +4242,11 @@ module.exports = createAssigner;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsNative = __webpack_require__(39),
-    getValue = __webpack_require__(51);
+var baseIsNative = __webpack_require__(40),
+    getValue = __webpack_require__(52);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -4181,7 +4265,7 @@ module.exports = getNative;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(9);
@@ -4233,7 +4317,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 /**
@@ -4252,7 +4336,7 @@ module.exports = getValue;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var eq = __webpack_require__(16),
@@ -4288,10 +4372,10 @@ module.exports = isIterateeCall;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var coreJsData = __webpack_require__(47);
+var coreJsData = __webpack_require__(48);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -4314,10 +4398,10 @@ module.exports = isMasked;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(57);
+var overArg = __webpack_require__(58);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -4326,7 +4410,7 @@ module.exports = nativeKeys;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(13);
@@ -4355,7 +4439,7 @@ module.exports = nodeUtil;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module)))
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -4383,7 +4467,7 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 /**
@@ -4404,10 +4488,10 @@ module.exports = overArg;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = __webpack_require__(36);
+var apply = __webpack_require__(37);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -4446,11 +4530,11 @@ module.exports = overRest;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetToString = __webpack_require__(43),
-    shortOut = __webpack_require__(60);
+var baseSetToString = __webpack_require__(44),
+    shortOut = __webpack_require__(61);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -4466,7 +4550,7 @@ module.exports = setToString;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
@@ -4509,7 +4593,7 @@ module.exports = shortOut;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -4541,7 +4625,7 @@ module.exports = toSource;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 /**
@@ -4573,10 +4657,10 @@ module.exports = constant;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsArguments = __webpack_require__(38),
+var baseIsArguments = __webpack_require__(39),
     isObjectLike = __webpack_require__(4);
 
 /** Used for built-in method references. */
@@ -4615,7 +4699,7 @@ module.exports = isArguments;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports) {
 
 /**
@@ -4647,11 +4731,11 @@ module.exports = isArray;
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(1),
-    stubFalse = __webpack_require__(68);
+    stubFalse = __webpack_require__(69);
 
 /** Detect free variable `exports`. */
 var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -4692,12 +4776,12 @@ module.exports = isBuffer;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module)))
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsTypedArray = __webpack_require__(40),
-    baseUnary = __webpack_require__(45),
-    nodeUtil = __webpack_require__(55);
+var baseIsTypedArray = __webpack_require__(41),
+    baseUnary = __webpack_require__(46),
+    nodeUtil = __webpack_require__(56);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -4725,11 +4809,11 @@ module.exports = isTypedArray;
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeKeys = __webpack_require__(37),
-    baseKeys = __webpack_require__(41),
+var arrayLikeKeys = __webpack_require__(38),
+    baseKeys = __webpack_require__(42),
     isArrayLike = __webpack_require__(2);
 
 /**
@@ -4768,7 +4852,7 @@ module.exports = keys;
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 /**
@@ -4792,7 +4876,7 @@ module.exports = stubFalse;
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -6085,7 +6169,7 @@ if (true) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports) {
 
 
