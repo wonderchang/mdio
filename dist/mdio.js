@@ -1123,7 +1123,18 @@ var read = function read(text) {
         continue;
       }
       if (t.type === 'image') {
-        img = t;
+        var optionParseResult = /.*<!--\s*({.*})\s*-->/.exec(t.text);
+        var options = optionParseResult ? JSON.parse(optionParseResult[1]) : null;
+        img = (0, _assign2.default)({}, t, options);
+        if (img.wait) {
+          i += 1;
+          actions.push({
+            id: i,
+            img: img,
+            text: null,
+            options: {}
+          });
+        }
         continue;
       }
       if (t.type === 'space') {
@@ -1194,6 +1205,10 @@ var Player = function () {
     this.controllerHeight = 44;
     this.progressBarHeight = 5;
     this.screenHeight = this.wrapperHeight - this.controllerHeight - this.progressBarHeight;
+
+    // Audio
+    this.audio = document.createElement('audio');
+    this.wrapper.appendChild(this.audio);
 
     // container
     this.container = document.createElement('div');
@@ -1359,7 +1374,7 @@ var Player = function () {
   _createClass(Player, [{
     key: 'setProgress',
     value: function setProgress(cur, total) {
-      var ratio = cur > 0 ? 100 * (cur - 1) / total : 0;
+      var ratio = cur > 0 ? 100 * cur / total : 0;
       this.progressNumber.innerHTML = cur + ' / ' + total;
       this.progressBar.style.width = ratio + '%';
     }
@@ -1376,6 +1391,11 @@ var Player = function () {
     key: 'setSubtitle',
     value: function setSubtitle(text) {
       this.subtitle.innerHTML = text;
+    }
+  }, {
+    key: 'setAudioSrc',
+    value: function setAudioSrc(src) {
+      this.audio.src = src;
     }
   }, {
     key: 'showPlayButton',
@@ -1511,6 +1531,7 @@ var Mdio = function () {
     this.wrapper = document.querySelector(this.options.selector);
     this.script = this.wrapper.innerHTML;
     this.show = _director2.default.read(this.script);
+    console.log(this.show);
     this.actionI = 0;
     this.speechRecord = 0;
     this.player = new _player2.default(this.options.selector);
@@ -1653,6 +1674,7 @@ var Mdio = function () {
         case 'start':
         case 'end':
         case 'paused':
+          this.player.audio.pause();
           return this._updateScreen(this.show.actions[this.actionI]);
       }
     }
@@ -1667,6 +1689,7 @@ var Mdio = function () {
       this.player.showCover(this.show.title, this.show.cover);
       this.player.showPlayButton();
       this.player.setProgress(this.actionI, this.show.length);
+      this.player.audio.pause();
     }
   }, {
     key: '_setToEnd',
@@ -1675,14 +1698,27 @@ var Mdio = function () {
       this.player.showCover('The End', null);
       this.player.showReplayButton();
       this.status = 'end';
+      this.player.audio.pause();
     }
   }, {
     key: '_action',
     value: function _action() {
+      var _this3 = this;
+
       if (this.actionI < this.show.length) {
         var act = this.show.actions[this.actionI];
-        this._updateScreen(Object.assign({}, act, { text: null }));
-        this._speech(act);
+        if (act.img.audio) {
+          this.player.setAudioSrc(act.img.audio);
+          this.player.audio.play();
+        }
+        setTimeout(function () {
+          _this3._updateScreen(Object.assign({}, act, { text: null }));
+          if (act.text) {
+            return _this3._speech(act);
+          }
+          _this3.actionI += 1;
+          _this3._action();
+        }, act.img.wait);
         return;
       }
       this._setToEnd();
@@ -1690,7 +1726,7 @@ var Mdio = function () {
   }, {
     key: '_speech',
     value: function _speech(action) {
-      var _this3 = this;
+      var _this4 = this;
 
       var text = action.text.replace(/&quot;/g, '"').replace(/&apos;/g, '\'');
       window.speechSynthesis.cancel();
@@ -1700,27 +1736,21 @@ var Mdio = function () {
       window.utterance.pitch = action.options.utterancePitch || this.options.utterancePitch;
       window.utterance.volume = action.options.utteranceVolume || this.options.utteranceVolume;
       window.utterance.onstart = function () {
-        _this3.player.setSubtitle(text);
+        _this4.player.setSubtitle(text);
       };
       window.utterance.onboundary = function () {
-        _this3.speechRecord += 1;
+        _this4.speechRecord += 1;
       };
       window.utterance.onend = function () {
-        if (_this3.status !== 'playing' || window.speechSynthesis.speaking) {
+        if (_this4.status !== 'playing' || window.speechSynthesis.speaking) {
           return;
         }
-        _this3.actionI += 1;
-        _this3._action();
-        /*
-        if (this.actionI < this.show.length) {
-          return this._action()
-        }
-        this._setToStart()
-        */
+        _this4.actionI += 1;
+        _this4._action();
       };
       window.speechSynthesis.speak(window.utterance);
       window.onbeforeunload = function () {
-        _this3._pause();
+        _this4._pause();
       };
     }
   }, {
