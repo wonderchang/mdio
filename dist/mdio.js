@@ -1191,8 +1191,9 @@ var Player = function () {
     this.wrapper.style.position = 'relative';
     this.wrapper.style.overflow = 'hidden';
     this.wrapperHeight = this.wrapper.clientHeight;
-    this.playbarHeight = 44;
-    this.screenHeight = this.wrapperHeight - this.playbarHeight;
+    this.controllerHeight = 44;
+    this.progressBarHeight = 5;
+    this.screenHeight = this.wrapperHeight - this.controllerHeight - this.progressBarHeight;
 
     // container
     this.container = document.createElement('div');
@@ -1244,6 +1245,19 @@ var Player = function () {
     this.subtitle.style.textShadow = '0 0 8px #000';
     this.subtitle.style.fontSize = '3vh';
     this.screen.appendChild(this.subtitle);
+
+    // progress bar
+    this.progress = document.createElement('div');
+    this.progress.style.width = '100%';
+    this.progress.style.height = this.progressBarHeight;
+    this.progress.style.position = 'relative';
+    this.progress.style.cursor = 'pointer';
+    this.progressBar = document.createElement('div');
+    this.progressBar.style.backgroundColor = 'rgb(0, 158, 160)';
+    this.progressBar.style.height = '100%';
+    this.progressBar.style.width = '0%';
+    this.progress.appendChild(this.progressBar);
+    this.container.appendChild(this.progress);
 
     // controller
     this.controller = document.createElement('div');
@@ -1343,15 +1357,18 @@ var Player = function () {
   }
 
   _createClass(Player, [{
-    key: 'setProgressNumber',
-    value: function setProgressNumber(text) {
-      this.progressNumber.innerHTML = text;
+    key: 'setProgress',
+    value: function setProgress(cur, total) {
+      var ratio = cur > 0 ? 100 * (cur - 1) / total : 0;
+      this.progressNumber.innerHTML = cur + ' / ' + total;
+      this.progressBar.style.width = ratio + '%';
     }
   }, {
     key: 'setSceneImage',
     value: function setSceneImage(imageUrl) {
       if (!imageUrl) {
-        return this.scene.style.backgroundImage = 'url("")';
+        this.scene.style.backgroundImage = 'url("")';
+        return;
       }
       this.scene.style.backgroundImage = 'url(\'' + imageUrl + '\')';
     }
@@ -1509,7 +1526,7 @@ var Mdio = function () {
       this.actionI = 0;
       this.status = 'start';
       this.player.showCover(this.show.title, this.show.cover);
-      this.player.setProgressNumber(this.actionI + ' / ' + this.show.length);
+      this.player.setProgress(this.actionI, this.show.length);
     }
     this.player.prevButton.onclick = function () {
       return _this._prev();
@@ -1528,6 +1545,12 @@ var Mdio = function () {
           _this.actionI = 0;
           return _this._play();
       }
+    };
+    this.player.progress.onclick = function (evt) {
+      var ratio = evt.clientX / _this.player.progress.clientWidth;
+      var actionI = Math.round(_this.show.length * ratio);
+      _this.actionI = actionI < 1 ? 0 : actionI - 1;
+      _this._transition();
     };
     window.onkeydown = function (evt) {
       switch (evt.key) {
@@ -1552,7 +1575,7 @@ var Mdio = function () {
       this.player.hideCover();
       this.player.setSceneImage(action.img.src);
       this.player.setSubtitle(action.text);
-      this.player.setProgressNumber(action.id + ' / ' + this.show.length);
+      this.player.setProgress(action.id, this.show.length);
       this._rewriteUrl(this.baseUrl + '?' + this.show.actions[this.actionI].id.toString());
     }
   }, {
@@ -1628,6 +1651,7 @@ var Mdio = function () {
         case 'playing':
           return this._action();
         case 'start':
+        case 'end':
         case 'paused':
           return this._updateScreen(this.show.actions[this.actionI]);
       }
@@ -1642,7 +1666,7 @@ var Mdio = function () {
       this._rewriteUrl(this.baseUrl);
       this.player.showCover(this.show.title, this.show.cover);
       this.player.showPlayButton();
-      this.player.setProgressNumber(this.actionI + ' / ' + this.show.length);
+      this.player.setProgress(this.actionI, this.show.length);
     }
   }, {
     key: '_setToEnd',
